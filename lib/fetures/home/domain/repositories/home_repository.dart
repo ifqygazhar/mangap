@@ -5,5 +5,5 @@ abstract class HomeRepository {
   const HomeRepository();
 
   ResultFuture<List<KomikEntity>> getPopular();
-  ResultFuture<List<KomikEntity>> getLatest();
+  ResultFuture<List<KomikEntity>> getListByUpdate({required String page});
 }

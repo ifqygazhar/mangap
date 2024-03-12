@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
 
 class KomikEntity extends Equatable {
-  const KomikEntity({
+  const KomikEntity(
+    this.completed, {
     required this.coverImg,
     required this.title,
     required this.type,
@@ -16,8 +17,9 @@ class KomikEntity extends Equatable {
   final String latestChapter;
   final String rating;
   final String slug;
+  final bool? completed;
 
   @override
-  List<Object> get props =>
-      [coverImg, title, type, latestChapter, rating, slug];
+  List<Object?> get props =>
+      [coverImg, title, type, latestChapter, rating, slug, completed];
 }

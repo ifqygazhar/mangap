@@ -12,20 +12,21 @@ Future<void> _initHome() async {
     ..registerFactory(
       () => HomeBloc(
         getPopularKomik: sl(),
-        getLatestKomik: sl(),
+        getUpdateKomik: sl(),
       ),
     )
     //usecase
-    ..registerLazySingleton(
-      () => GetLatestKomik(
-        repository: sl(),
-      ),
-    )
     ..registerLazySingleton(
       () => GetPopularKomik(
         repository: sl(),
       ),
     )
+    ..registerLazySingleton(
+      () => GetListByUpdate(
+        repository: sl(),
+      ),
+    )
+
     //repository
     ..registerLazySingleton<HomeRepository>(
       () => HomeRepositoryImpl(

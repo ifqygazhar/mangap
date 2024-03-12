@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mangap/core/common/widget/title_icon.dart';
+import 'package:mangap/core/constants/color.dart';
 import 'package:mangap/fetures/home/domain/entities/komik_entity.dart';
 import 'package:mangap/fetures/home/presentation/widgets/hot_komik_card_widget.dart';
 
@@ -10,15 +12,7 @@ class ListKomikWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    IconData icon;
-    switch (title) {
-      case "Popular Komik":
-        icon = Icons.local_fire_department;
-      case "New Chapter":
-        icon = Icons.library_books;
-      default:
-        icon = Icons.post_add;
-    }
+    IconData icon = TitleIconWidget.getIcon(title);
 
     return Padding(
       padding: const EdgeInsets.all(16),
@@ -29,14 +23,15 @@ class ListKomikWidget extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color: Colors.white,
+                color: ColorConstant.whiteColor,
               ),
               const SizedBox(
                 width: 4,
               ),
               Text(
                 title,
-                style: const TextStyle(color: Colors.white, fontSize: 20),
+                style: const TextStyle(
+                    color: ColorConstant.whiteColor, fontSize: 20),
               ),
             ],
           ),
@@ -49,12 +44,15 @@ class ListKomikWidget extends StatelessWidget {
                 final komik = komiks[index];
                 return Padding(
                   padding: const EdgeInsets.only(right: 16, top: 8.0),
-                  child: HotKomikCardWidget(
-                    coverImg: komik.coverImg,
-                    title: komik.title,
-                    chapter: komik.latestChapter,
-                    rating: komik.rating,
-                    type: komik.type,
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: HotKomikCardWidget(
+                      coverImg: komik.coverImg,
+                      title: komik.title,
+                      chapter: komik.latestChapter,
+                      rating: komik.rating,
+                      type: komik.type,
+                    ),
                   ),
                 );
               },

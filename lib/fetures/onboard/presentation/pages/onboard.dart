@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mangap/core/common/widget/button.dart';
 import 'package:mangap/fetures/home/presentation/pages/home_page.dart';
 
 import 'package:mangap/fetures/onboard/presentation/widgets/caraousel_widget.dart';
@@ -11,7 +12,7 @@ class OnboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kPrimary,
+      backgroundColor: ColorConstant.kPrimary,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -24,7 +25,7 @@ class OnboardScreen extends StatelessWidget {
               Text(
                 "Read Popular Komik",
                 style: GoogleFonts.openSans(
-                  color: Colors.white,
+                  color: ColorConstant.whiteColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 50,
                 ),
@@ -35,7 +36,7 @@ class OnboardScreen extends StatelessWidget {
               Text(
                 "We provide complete and popular manga updates faster than other apps",
                 style: GoogleFonts.openSans(
-                  color: lightText,
+                  color: ColorConstant.lightText,
                   fontWeight: FontWeight.w300,
                   fontSize: 20,
                 ),
@@ -46,25 +47,15 @@ class OnboardScreen extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 height: 58,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const HomePage(),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: kThird,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14),
-                      )),
-                  child: Text(
-                    "Get Started",
-                    style: GoogleFonts.openSans(fontSize: 18),
+                child: ButtonWidget(
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const HomePage(),
+                    ),
                   ),
+                  color: ColorConstant.kThird,
+                  text: "Get Started",
+                  circular: 14,
                 ),
               )
             ],

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mangap/core/common/widget/error.dart';
 import 'package:mangap/core/constants/color.dart';
 import 'package:mangap/fetures/home/presentation/bloc/home_bloc.dart';
+import 'package:mangap/fetures/home/presentation/widgets/list_komik_update.dart';
 import 'package:mangap/fetures/home/presentation/widgets/list_komik_widget.dart';
 
 class HomePage extends StatelessWidget {
@@ -10,10 +12,10 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<HomeBloc>(context).add(HomeGetPopularKomik());
-    BlocProvider.of<HomeBloc>(context).add(HomeGetLatestKomik());
+    BlocProvider.of<HomeBloc>(context).add(const HomeGetUpdateKomik(page: "1"));
 
     return Scaffold(
-      backgroundColor: kPrimary,
+      backgroundColor: ColorConstant.kPrimary,
       body: SafeArea(
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
@@ -27,24 +29,55 @@ class HomePage extends StatelessWidget {
   Widget _buildContent(BuildContext context, HomeState state) {
     switch (state.status) {
       case HomeStatus.loading:
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      case HomeStatus.error:
         return Center(
-          child: Text(
-            state.errorMessage,
-            style: const TextStyle(color: Colors.white),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/images/kuru.gif',
+                width: 240,
+                height: 240,
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              const Text(
+                'Loading Please Wait',
+                style: TextStyle(
+                  color: ColorConstant.whiteColor,
+                  fontSize: 22,
+                ),
+              ),
+            ],
           ),
         );
+      case HomeStatus.error:
+        return ErrorWidgetComponent(
+          errorMessage: state.errorMessage,
+          onTap: () => context.read<HomeBloc>().add(
+                HomeRefresh(),
+              ),
+        );
       case HomeStatus.success:
-        final popularKomiks = state.popularKomiks;
-        final latestKomiks = state.latestKomiks;
-
-        return ListView(children: [
-          ListKomikWidget(title: 'Popular Komik', komiks: popularKomiks),
-          ListKomikWidget(title: 'Latest Komik', komiks: latestKomiks),
-        ]);
+        return RefreshIndicator(
+          backgroundColor: ColorConstant.whiteColor,
+          color: ColorConstant.kThird,
+          onRefresh: () async {
+            context.read<HomeBloc>().add(HomeRefresh());
+          },
+          child: ListView(
+            children: [
+              ListKomikWidget(
+                title: 'Popular Komik',
+                komiks: state.popularKomiks,
+              ),
+              ListKomikUpdate(
+                title: 'Chapter Terbaru',
+                komiks: state.updateKomiks,
+              ),
+            ],
+          ),
+        );
       default:
         return Container(); // Menangani kasus default
     }

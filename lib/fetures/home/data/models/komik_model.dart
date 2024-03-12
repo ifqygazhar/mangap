@@ -5,7 +5,8 @@ part 'komik_model.g.dart';
 
 @JsonSerializable()
 class KomikModel extends KomikEntity {
-  const KomikModel({
+  const KomikModel(
+    super.completed, {
     required super.coverImg,
     required super.title,
     required super.type,

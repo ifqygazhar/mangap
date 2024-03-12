@@ -7,8 +7,14 @@ sealed class HomeEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class HomeGetHotKomik extends HomeEvent {}
-
 class HomeGetPopularKomik extends HomeEvent {}
 
-class HomeGetLatestKomik extends HomeEvent {}
+class HomeGetUpdateKomik extends HomeEvent {
+  const HomeGetUpdateKomik({required this.page});
+  final String page;
+
+  @override
+  List<String> get props => [page];
+}
+
+class HomeRefresh extends HomeEvent {}

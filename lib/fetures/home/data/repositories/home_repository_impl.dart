@@ -18,12 +18,12 @@ class HomeRepositoryImpl implements HomeRepository {
   final NetworkInfo _networkInfo;
 
   @override
-  ResultFuture<List<KomikEntity>> getLatest() async {
+  ResultFuture<List<KomikEntity>> getPopular() async {
     try {
       if (!await _networkInfo.isConnected) {
         return const Left(InternetFailure());
       }
-      final result = await _dataSource.getLatest();
+      final result = await _dataSource.getPopular();
       return Right(result);
     } on ServerException catch (e) {
       return left(ServerFailure.fromException(e));
@@ -31,12 +31,13 @@ class HomeRepositoryImpl implements HomeRepository {
   }
 
   @override
-  ResultFuture<List<KomikEntity>> getPopular() async {
+  ResultFuture<List<KomikEntity>> getListByUpdate(
+      {required String page}) async {
     try {
       if (!await _networkInfo.isConnected) {
         return const Left(InternetFailure());
       }
-      final result = await _dataSource.getPopular();
+      final result = await _dataSource.getListByUpdate(page);
       return Right(result);
     } on ServerException catch (e) {
       return left(ServerFailure.fromException(e));

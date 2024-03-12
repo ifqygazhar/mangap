@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mangap/core/common/widget/type_flag.dart';
 import 'package:mangap/core/constants/color.dart';
-import 'package:mangap/core/constants/flag.dart';
 
 class HotKomikCardWidget extends StatelessWidget {
   const HotKomikCardWidget({
@@ -24,27 +24,14 @@ class HotKomikCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String flag;
-    switch (type) {
-      case 'Manga':
-        flag = FlagConstant.japanFlag; // Bendera Jepang
-
-      case 'Manhwa':
-        flag = FlagConstant.koreaFlag; // Bendera Korea
-
-      case 'Manhua':
-        flag = FlagConstant.chinaFlag; // Bendera China
-
-      default:
-        flag = ''; // Tidak ada bendera untuk jenis komik lainnya
-    }
+    String flag = TypeFlagWidget.getFlag(type);
 
     return Container(
       width: 240,
       height: 320, // Sesuaikan tinggi dengan kebutuhan Anda
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: kThird,
+        color: ColorConstant.kThird,
       ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -60,7 +47,7 @@ class HotKomikCardWidget extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: GoogleFonts.openSans(
-                color: Colors.white,
+                color: ColorConstant.whiteColor,
                 fontSize: 15,
               ),
             ),
@@ -88,14 +75,14 @@ class HotKomikCardWidget extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
-            color: buttonBlue,
+            color: ColorConstant.whiteColor,
           ),
           child: Text(
             "Ch $chapter",
             style: GoogleFonts.openSans(
-              color: Colors.white,
+              color: ColorConstant.kThird,
               fontWeight: FontWeight.w600,
-              fontSize: 15,
+              fontSize: 14,
             ),
           ),
         ),
@@ -113,7 +100,7 @@ class HotKomikCardWidget extends StatelessWidget {
             Text(
               rating,
               style: GoogleFonts.openSans(
-                color: Colors.white,
+                color: ColorConstant.whiteColor,
                 fontWeight: FontWeight.w600,
                 fontSize: 14,
               ),
@@ -132,14 +119,13 @@ class HotKomikCardWidget extends StatelessWidget {
           child: CachedNetworkImage(
             key: key,
             imageUrl: coverImg,
-            fit: BoxFit
-                .cover, // Atur agar gambar diisi ke dalam wadah tanpa distorsi
-            width: 240, // Sesuaikan dengan lebar kontainer
+            fit: BoxFit.cover,
+            width: 240,
             height: 320,
             cacheManager: CacheManager(
               Config(
                 'komik',
-                stalePeriod: const Duration(minutes: 5),
+                stalePeriod: const Duration(minutes: 30),
               ),
             ), // Sesuaikan dengan tinggi kontainer
           ),
@@ -159,7 +145,7 @@ class HotKomikCardWidget extends StatelessWidget {
                 Text(
                   type.toUpperCase(),
                   style: GoogleFonts.openSans(
-                    color: Colors.white,
+                    color: ColorConstant.whiteColor,
                     fontWeight: FontWeight.normal,
                     fontSize: 12,
                   ),

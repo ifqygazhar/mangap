@@ -7,6 +7,7 @@ part of 'komik_model.dart';
 // **************************************************************************
 
 KomikModel _$KomikModelFromJson(Map<String, dynamic> json) => KomikModel(
+      json['completed'] as bool?,
       coverImg: json['coverImg'] as String,
       title: json['title'] as String,
       type: json['type'] as String,
@@ -23,4 +24,5 @@ Map<String, dynamic> _$KomikModelToJson(KomikModel instance) =>
       'latestChapter': instance.latestChapter,
       'rating': instance.rating,
       'slug': instance.slug,
+      'completed': instance.completed,
     };
