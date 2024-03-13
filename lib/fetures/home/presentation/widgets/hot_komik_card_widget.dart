@@ -33,29 +33,34 @@ class HotKomikCardWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         color: ColorConstant.kThird,
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _imageWidget(flag),
-            const SizedBox(
-              height: 12,
-            ),
-            Text(
-              title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.openSans(
-                color: ColorConstant.whiteColor,
-                fontSize: 15,
+      child: GestureDetector(
+        onTap: () {
+          print("tap");
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _imageWidget(flag),
+              const SizedBox(
+                height: 12,
               ),
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-            _ratingWidget(chapter, rating),
-          ],
+              Text(
+                title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.openSans(
+                  color: ColorConstant.whiteColor,
+                  fontSize: 15,
+                ),
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              _ratingWidget(chapter, rating),
+            ],
+          ),
         ),
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mangap/core/common/widget/error.dart';
+import 'package:mangap/core/common/widget/loading.dart';
 import 'package:mangap/core/constants/color.dart';
 import 'package:mangap/fetures/home/presentation/bloc/home_bloc.dart';
 import 'package:mangap/fetures/home/presentation/widgets/list_komik_update.dart';
@@ -29,28 +30,7 @@ class HomePage extends StatelessWidget {
   Widget _buildContent(BuildContext context, HomeState state) {
     switch (state.status) {
       case HomeStatus.loading:
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/images/kuru.gif',
-                width: 240,
-                height: 240,
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              const Text(
-                'Loading Please Wait',
-                style: TextStyle(
-                  color: ColorConstant.whiteColor,
-                  fontSize: 22,
-                ),
-              ),
-            ],
-          ),
-        );
+        return const LoadingWidget(textColor: ColorConstant.whiteColor);
       case HomeStatus.error:
         return ErrorWidgetComponent(
           errorMessage: state.errorMessage,

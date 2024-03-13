@@ -79,7 +79,6 @@ flutter:
     - assets/images/jujutsu.jpg
     - assets/images/onepiece.jpg
     - assets/images/solo.jpg
-    - assets/images/error.jpg
     #gif
     - assets/images/error.gif
     - assets/images/kuru.gif

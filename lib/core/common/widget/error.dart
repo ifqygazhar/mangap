@@ -23,7 +23,7 @@ class _ErrorWidgetComponentState extends State<ErrorWidgetComponent> {
   void initState() {
     super.initState();
     errorImage = Image.asset(
-      "assets/images/error.jpg",
+      "assets/images/error.gif",
       width: 240,
       height: 240,
     );
@@ -41,11 +41,7 @@ class _ErrorWidgetComponentState extends State<ErrorWidgetComponent> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(
-            "assets/images/error.gif",
-            width: 240,
-            height: 240,
-          ),
+          errorImage,
           const SizedBox(height: 12),
           Text(
             widget.errorMessage,

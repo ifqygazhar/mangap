@@ -35,33 +35,38 @@ class UpdateKomikWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         color: ColorConstant.kThird,
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: CachedNetworkImage(
-                    key: key,
-                    imageUrl: coverImg,
-                    fit: BoxFit.cover,
-                    width: 80,
-                    height: 80,
-                    cacheManager: CacheManager(
-                      Config(
-                        'komik',
-                        stalePeriod: const Duration(minutes: 30),
-                      ),
-                    ), // Sesuaikan dengan tinggi kontainer
+      child: GestureDetector(
+        onTap: () {
+          print("tap");
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: CachedNetworkImage(
+                      key: key,
+                      imageUrl: coverImg,
+                      fit: BoxFit.cover,
+                      width: 80,
+                      height: 80,
+                      cacheManager: CacheManager(
+                        Config(
+                          'komik',
+                          stalePeriod: const Duration(minutes: 30),
+                        ),
+                      ), // Sesuaikan dengan tinggi kontainer
+                    ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                _buildTypeStatusCh(rectangleColor, textColor),
-              ],
-            ),
-          ],
+                  const SizedBox(width: 8),
+                  _buildTypeStatusCh(rectangleColor, textColor),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

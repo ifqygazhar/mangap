@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mangap/core/services/depedency_container.dart';
 import 'package:mangap/fetures/home/presentation/bloc/home_bloc.dart';
 import 'package:mangap/fetures/home/presentation/pages/home_page.dart';
+
 import 'package:mangap/fetures/onboard/presentation/pages/onboard.dart';
 
 Future<void> main() async {
@@ -30,3 +31,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
