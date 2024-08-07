@@ -1,7 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:mangap/fetures/home/domain/entities/komik_entity.dart';
-import 'package:mangap/fetures/home/domain/usecases/get_list_by_update_komik.dart';
+import 'package:mangap/fetures/home/domain/entities/komik_popular_entity.dart';
+import 'package:mangap/fetures/home/domain/entities/komik_recommended_entity.dart';
+import 'package:mangap/fetures/home/domain/usecases/get_recommended_komik.dart';
 import 'package:mangap/fetures/home/domain/usecases/get_popular_komik.dart';
 
 part 'home_event.dart';
@@ -10,17 +11,20 @@ part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc({
     required GetPopularKomik getPopularKomik,
-    required GetListByUpdate getUpdateKomik,
+    required GetRecommended getRecommendedKomik,
   })  : _getPopularKomik = getPopularKomik,
-        _getUpdateKomik = getUpdateKomik,
+        _getRecommendedKomik = getRecommendedKomik,
         super(const HomeState()) {
     on<HomeGetPopularKomik>(getPopularKomikHandler);
-    on<HomeGetUpdateKomik>(getUpdateKomikHandler);
+    on<HomeGetRecommendedKomik>(getUpdateKomikHandler);
     on<HomeRefresh>(refreshHandler);
+
+    add(HomeGetPopularKomik());
+    add(HomeGetRecommendedKomik());
   }
 
   final GetPopularKomik _getPopularKomik;
-  final GetListByUpdate _getUpdateKomik;
+  final GetRecommended _getRecommendedKomik;
 
   Future<void> getPopularKomikHandler(
       HomeEvent event, Emitter<HomeState> emit) async {
@@ -28,7 +32,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     result.fold((failure) {
       emit(
         state.copyWith(
-            status: HomeStatus.error, errorMessage: failure.errorMessage),
+          status: HomeStatus.error,
+          errorMessage: failure.errorMessage,
+        ),
       );
     }, (komiks) {
       emit(
@@ -42,22 +48,21 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Future<void> getUpdateKomikHandler(
       HomeEvent event, Emitter<HomeState> emit) async {
-    if (event is HomeGetUpdateKomik) {
-      final result = await _getUpdateKomik(event.page);
+    if (event is HomeGetRecommendedKomik) {
+      final result = await _getRecommendedKomik();
 
       result.fold((failure) {
         emit(
           state.copyWith(
-              status: HomeStatus.error, errorMessage: failure.errorMessage),
+            status: HomeStatus.error,
+            errorMessage: failure.errorMessage,
+          ),
         );
       }, (komiks) {
-        final newStories = List.of(state.updateKomiks)..addAll(komiks);
-        final hasReachedMax = komiks.isEmpty;
         emit(
           state.copyWith(
             status: HomeStatus.success,
-            updateKomiks: hasReachedMax ? state.updateKomiks : newStories,
-            hasReachedMax: hasReachedMax,
+            recommendedKomiks: komiks,
           ),
         );
       });
@@ -66,11 +71,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   Future<void> refreshHandler(
       HomeRefresh event, Emitter<HomeState> emit) async {
-    emit(state.copyWith(
-        status: HomeStatus.loading)); // Set status to loading before refreshing
+    emit(state.copyWith(status: HomeStatus.loading));
 
     final popularResult = await _getPopularKomik();
-    final updateResult = await _getUpdateKomik("1");
+    final recommendedResult = await _getRecommendedKomik();
 
     popularResult.fold((failure) {
       emit(state.copyWith(
@@ -78,17 +82,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         errorMessage: failure.errorMessage,
       ));
     }, (popularKomiks) {
-      updateResult.fold((failure) {
+      recommendedResult.fold((failure) {
         emit(state.copyWith(
           status: HomeStatus.error,
           errorMessage: failure.errorMessage,
         ));
-      }, (updateKomiks) {
+      }, (recommendedKomiks) {
         emit(state.copyWith(
           status: HomeStatus.success,
           popularKomiks: popularKomiks,
-          updateKomiks: updateKomiks,
-          hasReachedMax: updateKomiks.isEmpty,
+          recommendedKomiks: recommendedKomiks,
         ));
       });
     });

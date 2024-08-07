@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mangap/core/common/widget/button.dart';
-import 'package:mangap/fetures/home/presentation/pages/home_page.dart';
+import 'package:mangap/fetures/main/main_page.dart';
 
 import 'package:mangap/fetures/onboard/presentation/widgets/caraousel_widget.dart';
 import 'package:mangap/core/constants/color.dart';
@@ -48,9 +48,9 @@ class OnboardScreen extends StatelessWidget {
                 width: double.infinity,
                 height: 58,
                 child: ButtonWidget(
-                  onTap: () => Navigator.of(context).push(
+                  onTap: () => Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
-                      builder: (context) => const HomePage(),
+                      builder: (context) => const MainPage(),
                     ),
                   ),
                   color: ColorConstant.kThird,

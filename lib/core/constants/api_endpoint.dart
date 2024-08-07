@@ -3,9 +3,10 @@
 class ApiConstant {
   const ApiConstant._();
 
-  static const BASE_URL = "https://api-manga.koidevz.net";
-  static const KOMIK_HOME = "$BASE_URL/komik-home";
-  static const KOMIK_DETAIL = "$BASE_URL/komik";
-  static const KOMIK_LIST = "$BASE_URL/komik-list?sortby=update";
+  static const BASE_URL = "https://facebook.69dev.id";
+  static const KOMIK_RECOMENDED = "$BASE_URL/recommended";
+  static const KOMIK_POPULAR = "$BASE_URL/popular";
+  static const KOMIK_LIST = "$BASE_URL/daftar-komik";
+  static const KOMIK_DETAIL = "$BASE_URL/detail";
   static const SEARCH = "$BASE_URL/search";
 }

@@ -4,14 +4,15 @@ import 'package:mangap/core/constants/api_endpoint.dart';
 import 'package:mangap/core/constants/app_constant.dart';
 import 'package:mangap/core/errors/exception.dart';
 import 'package:mangap/core/utils/typedef.dart';
-import 'package:mangap/fetures/home/data/models/komik_model.dart';
+import 'package:mangap/fetures/home/data/models/komik_popular_model.dart';
+import 'package:mangap/fetures/home/data/models/komik_recommended_model.dart';
 import 'package:http/http.dart' as http;
 
 abstract class HomeRemoteDataSource {
   const HomeRemoteDataSource();
 
-  Future<List<KomikModel>> getPopular();
-  Future<List<KomikModel>> getListByUpdate(String page);
+  Future<List<KomikPopularModel>> getPopular();
+  Future<List<KomikRecommendedModel>> getRecommended();
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
@@ -22,8 +23,8 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   final http.Client _client;
 
   @override
-  Future<List<KomikModel>> getPopular() async {
-    final url = Uri.parse(ApiConstant.KOMIK_HOME);
+  Future<List<KomikPopularModel>> getPopular() async {
+    final url = Uri.parse(ApiConstant.KOMIK_POPULAR);
 
     final response = await _client.get(url);
 
@@ -32,15 +33,15 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     if (response.statusCode != AppConstant.successfulHttpGetStatusCode) {
       throw ServerException(message: decode['message'] as String);
     }
-    final listHotKomik = decode['data']['popular'] as List<dynamic>;
-    return listHotKomik
-        .map((komik) => KomikModel.fromJson(komik as ResultMap))
+    final listPopularKomik = decode['data'] as List<dynamic>;
+    return listPopularKomik
+        .map((komik) => KomikPopularModel.fromJson(komik as ResultMap))
         .toList();
   }
 
   @override
-  Future<List<KomikModel>> getListByUpdate(String page) async {
-    final url = Uri.parse("${ApiConstant.KOMIK_LIST}&page=$page");
+  Future<List<KomikRecommendedModel>> getRecommended() async {
+    final url = Uri.parse(ApiConstant.KOMIK_RECOMENDED);
 
     final response = await _client.get(url);
 
@@ -52,10 +53,10 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
       throw const ServerException(message: "Tidak ada komik lagi");
     }
 
-    final listUpdateKomik = decode['data'] as List<dynamic>;
+    final listRecommendedKomik = decode['data'] as List<dynamic>;
 
-    return listUpdateKomik
-        .map((komik) => KomikModel.fromJson(komik as ResultMap))
+    return listRecommendedKomik
+        .map((komik) => KomikRecommendedModel.fromJson(komik as ResultMap))
         .toList();
   }
 }

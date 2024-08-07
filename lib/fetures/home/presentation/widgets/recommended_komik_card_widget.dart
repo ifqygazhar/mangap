@@ -6,37 +6,39 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mangap/core/common/widget/type_flag.dart';
 import 'package:mangap/core/constants/color.dart';
 
-class HotKomikCardWidget extends StatelessWidget {
-  const HotKomikCardWidget({
+class RecommendedKomikCardWidget extends StatelessWidget {
+  const RecommendedKomikCardWidget({
     super.key,
-    required this.coverImg,
     required this.title,
-    required this.chapter,
+    required this.href,
     required this.rating,
+    required this.thumbnail,
+    required this.chapter,
     required this.type,
   });
 
-  final String coverImg;
   final String title;
-  final String chapter;
+  final String href;
   final String rating;
+  final String thumbnail;
+  final String chapter;
   final String type;
 
   @override
   Widget build(BuildContext context) {
     String flag = TypeFlagWidget.getFlag(type);
 
-    return Container(
-      width: 240,
-      height: 320, // Sesuaikan tinggi dengan kebutuhan Anda
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: ColorConstant.kThird,
-      ),
-      child: GestureDetector(
-        onTap: () {
-          print("tap");
-        },
+    return GestureDetector(
+      onTap: () {
+        print("tap");
+      },
+      child: Container(
+        width: 240,
+        height: 320,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: ColorConstant.kThird,
+        ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -83,7 +85,7 @@ class HotKomikCardWidget extends StatelessWidget {
             color: ColorConstant.whiteColor,
           ),
           child: Text(
-            "Ch $chapter",
+            chapter,
             style: GoogleFonts.openSans(
               color: ColorConstant.kThird,
               fontWeight: FontWeight.w600,
@@ -123,7 +125,7 @@ class HotKomikCardWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           child: CachedNetworkImage(
             key: key,
-            imageUrl: coverImg,
+            imageUrl: thumbnail,
             fit: BoxFit.cover,
             width: 240,
             height: 320,

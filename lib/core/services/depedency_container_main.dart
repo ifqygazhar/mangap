@@ -7,12 +7,17 @@ Future<void> init() async {
 }
 
 Future<void> _initHome() async {
+  //feature main page
+  sl.registerFactory(
+    () => NavigationBloc(),
+  );
+
   //feature home
   sl
     ..registerFactory(
       () => HomeBloc(
         getPopularKomik: sl(),
-        getUpdateKomik: sl(),
+        getRecommendedKomik: sl(),
       ),
     )
     //usecase
@@ -22,7 +27,7 @@ Future<void> _initHome() async {
       ),
     )
     ..registerLazySingleton(
-      () => GetListByUpdate(
+      () => GetRecommended(
         repository: sl(),
       ),
     )

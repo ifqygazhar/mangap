@@ -1,21 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mangap/core/common/widget/error.dart';
 import 'package:mangap/core/common/widget/loading.dart';
 import 'package:mangap/core/constants/color.dart';
 import 'package:mangap/fetures/home/presentation/bloc/home_bloc.dart';
-import 'package:mangap/fetures/home/presentation/widgets/list_komik_update.dart';
-import 'package:mangap/fetures/home/presentation/widgets/list_komik_widget.dart';
+import 'package:mangap/fetures/home/presentation/widgets/list_popular_widget.dart';
+import 'package:mangap/fetures/home/presentation/widgets/list_recommended_komik_widget.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<HomeBloc>(context).add(HomeGetPopularKomik());
-    BlocProvider.of<HomeBloc>(context).add(const HomeGetUpdateKomik(page: "1"));
-
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: ColorConstant.kThird,
+        title: Text(
+          "Mangapp",
+          style: GoogleFonts.openSans(
+            color: ColorConstant.whiteColor,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 18.0),
+            child: FaIcon(
+              FontAwesomeIcons.magnifyingGlass,
+              color: ColorConstant.whiteColor,
+            ),
+          )
+        ],
+      ),
       backgroundColor: ColorConstant.kPrimary,
       body: SafeArea(
         child: BlocBuilder<HomeBloc, HomeState>(
@@ -42,24 +61,24 @@ class HomePage extends StatelessWidget {
         return RefreshIndicator(
           backgroundColor: ColorConstant.whiteColor,
           color: ColorConstant.kThird,
+          child: ListView(
+            children: [
+              ListRecommendedKomikWidget(
+                title: 'Recommended Komik',
+                komiks: state.recommendedKomiks,
+              ),
+              ListPopularWidget(
+                title: "Popular Komik",
+                komiks: state.popularKomiks,
+              )
+            ],
+          ),
           onRefresh: () async {
             context.read<HomeBloc>().add(HomeRefresh());
           },
-          child: ListView(
-            children: [
-              ListKomikWidget(
-                title: 'Popular Komik',
-                komiks: state.popularKomiks,
-              ),
-              ListKomikUpdate(
-                title: 'Chapter Terbaru',
-                komiks: state.updateKomiks,
-              ),
-            ],
-          ),
         );
       default:
-        return Container(); // Menangani kasus default
+        return const LoadingWidget(textColor: ColorConstant.whiteColor);
     }
   }
 }

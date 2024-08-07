@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mangap/core/common/widget/title_icon.dart';
 import 'package:mangap/core/constants/color.dart';
-import 'package:mangap/fetures/home/domain/entities/komik_entity.dart';
-import 'package:mangap/fetures/home/presentation/widgets/hot_komik_card_widget.dart';
+import 'package:mangap/fetures/home/domain/entities/komik_recommended_entity.dart';
+import 'package:mangap/fetures/home/presentation/widgets/recommended_komik_card_widget.dart';
 
-class ListKomikWidget extends StatelessWidget {
-  const ListKomikWidget({super.key, required this.title, required this.komiks});
+class ListRecommendedKomikWidget extends StatelessWidget {
+  const ListRecommendedKomikWidget({
+    super.key,
+    required this.title,
+    required this.komiks,
+  });
 
   final String title;
-  final List<KomikEntity> komiks;
+  final List<KomikRecommendedEntity> komiks;
 
   @override
   Widget build(BuildContext context) {
@@ -21,17 +26,19 @@ class ListKomikWidget extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(
+              FaIcon(
                 icon,
                 color: ColorConstant.whiteColor,
               ),
               const SizedBox(
-                width: 4,
+                width: 14,
               ),
               Text(
                 title,
                 style: const TextStyle(
-                    color: ColorConstant.whiteColor, fontSize: 20),
+                  color: ColorConstant.whiteColor,
+                  fontSize: 20,
+                ),
               ),
             ],
           ),
@@ -44,15 +51,13 @@ class ListKomikWidget extends StatelessWidget {
                 final komik = komiks[index];
                 return Padding(
                   padding: const EdgeInsets.only(right: 16, top: 8.0),
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: HotKomikCardWidget(
-                      coverImg: komik.coverImg,
-                      title: komik.title,
-                      chapter: komik.latestChapter,
-                      rating: komik.rating,
-                      type: komik.type,
-                    ),
+                  child: RecommendedKomikCardWidget(
+                    thumbnail: komik.thumbnail,
+                    title: komik.title,
+                    chapter: komik.chapter,
+                    rating: komik.rating,
+                    type: komik.type,
+                    href: komik.href,
                   ),
                 );
               },

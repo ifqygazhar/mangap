@@ -2,43 +2,37 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mangap/core/common/widget/type_color.dart';
 import 'package:mangap/core/constants/color.dart';
 
-class UpdateKomikWidget extends StatelessWidget {
-  const UpdateKomikWidget({
+class PopularKomikWidget extends StatelessWidget {
+  const PopularKomikWidget({
     super.key,
-    required this.coverImg,
     required this.title,
-    required this.chapter,
-    required this.rating,
-    required this.type,
-    required this.completed,
+    required this.href,
+    required this.genre,
+    required this.year,
+    required this.thumbnail,
   });
 
-  final String coverImg;
   final String title;
-  final String chapter;
-  final String rating;
-  final String type;
-  final bool completed;
+  final String href;
+  final String genre;
+  final String year;
+  final String thumbnail;
 
   @override
   Widget build(BuildContext context) {
-    final rectangleColor = TypeColor.getColorType(type);
-    final textColor = TypeColor.getTextColorType(type);
-
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.only(bottom: 8, top: 8),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: ColorConstant.kThird,
-      ),
-      child: GestureDetector(
-        onTap: () {
-          print("tap");
-        },
+    return GestureDetector(
+      onTap: () {
+        print("tap");
+      },
+      child: Container(
+        width: double.infinity,
+        margin: const EdgeInsets.only(bottom: 8, top: 8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: ColorConstant.kThird,
+        ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -49,7 +43,7 @@ class UpdateKomikWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                     child: CachedNetworkImage(
                       key: key,
-                      imageUrl: coverImg,
+                      imageUrl: thumbnail,
                       fit: BoxFit.cover,
                       width: 80,
                       height: 80,
@@ -58,11 +52,11 @@ class UpdateKomikWidget extends StatelessWidget {
                           'komik',
                           stalePeriod: const Duration(minutes: 30),
                         ),
-                      ), // Sesuaikan dengan tinggi kontainer
+                      ),
                     ),
                   ),
                   const SizedBox(width: 8),
-                  _buildTypeStatusCh(rectangleColor, textColor),
+                  _buildTypeStatusCh(),
                 ],
               ),
             ],
@@ -72,7 +66,7 @@ class UpdateKomikWidget extends StatelessWidget {
     );
   }
 
-  Expanded _buildTypeStatusCh(Color rectangleColor, Color textColor) {
+  Expanded _buildTypeStatusCh() {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,41 +86,10 @@ class UpdateKomikWidget extends StatelessWidget {
           Row(
             children: [
               _buildContainerRectangle(
-                rectangleColor: rectangleColor,
-                textColor: textColor,
-                text: type,
-              ),
-              const SizedBox(
-                width: 8,
-              ),
-              _buildContainerRectangle(
-                rectangleColor:
-                    completed == false ? ColorConstant.whiteColor : Colors.grey,
-                textColor: ColorConstant.kThird,
-                text: completed == false ? "Ongoing" : "Completed",
-              ),
-              const Spacer(),
-              _buildContainerRectangle(
                 rectangleColor: ColorConstant.whiteColor,
                 textColor: ColorConstant.kThird,
-                text: "Ch $chapter",
+                text: year,
               ),
-              const Spacer(),
-              const Icon(
-                Icons.star,
-                color: Colors.amber,
-                size: 20,
-              ),
-              const SizedBox(
-                width: 2,
-              ),
-              Text(
-                rating,
-                style: GoogleFonts.openSans(
-                  color: ColorConstant.whiteColor,
-                  fontWeight: FontWeight.w600,
-                ),
-              )
             ],
           ),
         ],
@@ -141,7 +104,6 @@ class UpdateKomikWidget extends StatelessWidget {
   }) {
     return Container(
       margin: const EdgeInsets.only(bottom: 8, top: 8),
-      width: 64,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
         color: rectangleColor,

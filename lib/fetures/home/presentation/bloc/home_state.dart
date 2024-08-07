@@ -6,31 +6,27 @@ class HomeState extends Equatable {
   const HomeState({
     this.status = HomeStatus.loading,
     this.popularKomiks = const [],
-    this.updateKomiks = const [],
-    this.hasReachedMax = false,
+    this.recommendedKomiks = const [],
     this.errorMessage = '',
   });
 
   final HomeStatus status;
 
-  final List<KomikEntity> popularKomiks;
-  final List<KomikEntity> updateKomiks;
-  final bool hasReachedMax;
+  final List<KomikPopularEntity> popularKomiks;
+  final List<KomikRecommendedEntity> recommendedKomiks;
 
   final String errorMessage;
 
   HomeState copyWith({
     HomeStatus? status,
-    List<KomikEntity>? popularKomiks,
-    List<KomikEntity>? updateKomiks,
-    bool? hasReachedMax,
+    List<KomikPopularEntity>? popularKomiks,
+    List<KomikRecommendedEntity>? recommendedKomiks,
     String? errorMessage,
   }) {
     return HomeState(
       status: status ?? this.status,
       popularKomiks: popularKomiks ?? this.popularKomiks,
-      updateKomiks: updateKomiks ?? this.updateKomiks,
-      hasReachedMax: hasReachedMax ?? this.hasReachedMax,
+      recommendedKomiks: recommendedKomiks ?? this.recommendedKomiks,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }
@@ -39,8 +35,7 @@ class HomeState extends Equatable {
   List<Object> get props => [
         status,
         popularKomiks,
-        updateKomiks,
-        hasReachedMax,
+        recommendedKomiks,
         errorMessage,
       ];
 }

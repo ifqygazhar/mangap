@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TitleIconWidget {
   static IconData getIcon(String title) {
     IconData icon;
     switch (title) {
       case "Popular Komik":
-        icon = Icons.local_fire_department;
+        icon = FontAwesomeIcons.fire;
 
       case "Chapter Terbaru":
         icon = Icons.library_books;
 
       default:
-        icon = Icons.post_add;
+        icon = FontAwesomeIcons.solidThumbsUp;
     }
     return icon;
   }
