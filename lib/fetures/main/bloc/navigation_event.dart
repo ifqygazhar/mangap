@@ -15,3 +15,7 @@ class NavigateToPage extends NavigationEvent {
   @override
   List<Object> get props => [pageIndex];
 }
+
+class HideBottomBarEvent extends NavigationEvent {}
+
+class ShowBottomBarEvent extends NavigationEvent {}

@@ -48,9 +48,9 @@ class OnboardScreen extends StatelessWidget {
                 width: double.infinity,
                 height: 58,
                 child: ButtonWidget(
-                  onTap: () => Navigator.of(context).push(
+                  onTap: () => Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
-                      builder: (context) => const MainPage(),
+                      builder: (context) => MainPage(),
                     ),
                   ),
                   color: ColorConstant.kThird,

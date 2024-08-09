@@ -32,7 +32,7 @@ class DetailRemoteDataSourceImpl implements DetailRemoteDataSource {
     final decode = jsonDecode(response.body) as ResultMap;
 
     if (response.statusCode != AppConstant.successfulHttpGetStatusCode) {
-      throw ServerException(message: decode['message'] as String);
+      throw ServerException(message: decode['status'] as String);
     }
     final listDetail = decode['data'] as Map<String, dynamic>;
 
@@ -48,7 +48,7 @@ class DetailRemoteDataSourceImpl implements DetailRemoteDataSource {
     final decode = jsonDecode(response.body) as ResultMap;
 
     if (response.statusCode != AppConstant.successfulHttpGetStatusCode) {
-      throw ServerException(message: decode['message'] as String);
+      throw ServerException(message: decode['status'] as String);
     }
     final listChapter = decode['data']['chapter'] as List<dynamic>;
 
@@ -66,7 +66,7 @@ class DetailRemoteDataSourceImpl implements DetailRemoteDataSource {
     final decode = jsonDecode(response.body) as ResultMap;
 
     if (response.statusCode != AppConstant.successfulHttpGetStatusCode) {
-      throw ServerException(message: decode['message'] as String);
+      throw ServerException(message: decode['status'] as String);
     }
     final listGenre = decode['data']['genre'] as List<dynamic>;
 

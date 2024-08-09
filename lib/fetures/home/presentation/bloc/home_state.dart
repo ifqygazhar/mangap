@@ -7,6 +7,7 @@ class HomeState extends Equatable {
     this.status = HomeStatus.loading,
     this.popularKomiks = const [],
     this.recommendedKomiks = const [],
+    this.genreKomiks = const [],
     this.errorMessage = '',
   });
 
@@ -14,6 +15,7 @@ class HomeState extends Equatable {
 
   final List<KomikPopularEntity> popularKomiks;
   final List<KomikRecommendedEntity> recommendedKomiks;
+  final List<KomikGenreEntity> genreKomiks;
 
   final String errorMessage;
 
@@ -21,12 +23,14 @@ class HomeState extends Equatable {
     HomeStatus? status,
     List<KomikPopularEntity>? popularKomiks,
     List<KomikRecommendedEntity>? recommendedKomiks,
+    List<KomikGenreEntity>? genreKomiks,
     String? errorMessage,
   }) {
     return HomeState(
       status: status ?? this.status,
       popularKomiks: popularKomiks ?? this.popularKomiks,
       recommendedKomiks: recommendedKomiks ?? this.recommendedKomiks,
+      genreKomiks: genreKomiks ?? this.genreKomiks,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }
@@ -36,6 +40,7 @@ class HomeState extends Equatable {
         status,
         popularKomiks,
         recommendedKomiks,
+        genreKomiks,
         errorMessage,
       ];
 }

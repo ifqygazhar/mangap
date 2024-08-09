@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mangap/core/common/widget/type_flag.dart';
 import 'package:mangap/core/constants/color.dart';
 import 'package:mangap/fetures/detail/presentation/pages/detail_page.dart';
+import 'package:mangap/fetures/main/bloc/navigation_bloc.dart';
 
 class RecommendedKomikCardWidget extends StatelessWidget {
   const RecommendedKomikCardWidget({
@@ -30,11 +32,15 @@ class RecommendedKomikCardWidget extends StatelessWidget {
     String flag = TypeFlagWidget.getFlag(type);
 
     return GestureDetector(
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) {
-          return DetailPage(href: href);
-        },
-      )),
+      onTap: () async {
+        context.read<NavigationBloc>().add(HideBottomBarEvent());
+        await Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => DetailPage(href: href),
+          ),
+        );
+        context.read<NavigationBloc>().add(ShowBottomBarEvent());
+      },
       child: Container(
         width: 240,
         height: 320,

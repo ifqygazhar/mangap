@@ -4,6 +4,7 @@ import 'package:mangap/core/errors/failures.dart';
 import 'package:mangap/core/services/network_info.dart';
 import 'package:mangap/core/utils/typedef.dart';
 import 'package:mangap/fetures/home/data/datasources/home_remote_datasource.dart';
+import 'package:mangap/fetures/home/domain/entities/komik_genre.dart';
 import 'package:mangap/fetures/home/domain/entities/komik_popular_entity.dart';
 import 'package:mangap/fetures/home/domain/entities/komik_recommended_entity.dart';
 import 'package:mangap/fetures/home/domain/repositories/home_repository.dart';
@@ -38,6 +39,19 @@ class HomeRepositoryImpl implements HomeRepository {
         return const Left(InternetFailure());
       }
       final result = await _dataSource.getRecommended();
+      return Right(result);
+    } on ServerException catch (e) {
+      return left(ServerFailure.fromException(e));
+    }
+  }
+
+  @override
+  ResultFuture<List<KomikGenreEntity>> getGenre() async {
+    try {
+      if (!await _networkInfo.isConnected) {
+        return const Left(InternetFailure());
+      }
+      final result = await _dataSource.getGenre();
       return Right(result);
     } on ServerException catch (e) {
       return left(ServerFailure.fromException(e));

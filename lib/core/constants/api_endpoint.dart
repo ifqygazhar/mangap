@@ -9,4 +9,5 @@ class ApiConstant {
   static const KOMIK_LIST = "$BASE_URL/daftar-komik";
   static const KOMIK_DETAIL = "$BASE_URL/detail";
   static const SEARCH = "$BASE_URL/search";
+  static const GENRE = "$BASE_URL/genre";
 }

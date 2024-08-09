@@ -11,4 +11,6 @@ class HomeGetPopularKomik extends HomeEvent {}
 
 class HomeGetRecommendedKomik extends HomeEvent {}
 
+class HomeGetGenreKomik extends HomeEvent {}
+
 class HomeRefresh extends HomeEvent {}

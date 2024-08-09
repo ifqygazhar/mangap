@@ -7,7 +7,10 @@ import 'package:mangap/fetures/main/bloc/navigation_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
 class MainPage extends StatelessWidget {
-  const MainPage({super.key});
+  MainPage({super.key});
+
+  final PersistentTabController _controller =
+      PersistentTabController(initialIndex: 0);
 
   List<Widget> _buildScreens() {
     return [
@@ -71,23 +74,29 @@ class MainPage extends StatelessWidget {
       child: Scaffold(
         body: BlocBuilder<NavigationBloc, NavigationState>(
           builder: (context, state) {
-            final PersistentTabController controller =
-                PersistentTabController(initialIndex: 0);
-            return PersistentTabView(
-              context,
-              controller: controller,
-              screens: _buildScreens(),
-              items: _navBarsItems(),
-              navBarStyle: NavBarStyle.style1,
-              onItemSelected: (index) {
-                context.read<NavigationBloc>().add(NavigateToPage(index));
-              },
-              backgroundColor: ColorConstant.kThird,
-              decoration: NavBarDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              handleAndroidBackButtonPress: true,
-              resizeToAvoidBottomInset: true,
+            _controller.index = state.pageIndex;
+            return Stack(
+              children: [
+                PersistentTabView(
+                  context,
+                  controller: _controller,
+                  screens: _buildScreens(),
+                  items: _navBarsItems(),
+                  navBarStyle: NavBarStyle.style1,
+                  onItemSelected: (index) {
+                    context.read<NavigationBloc>().add(NavigateToPage(index));
+                  },
+                  backgroundColor: ColorConstant.kThird,
+                  decoration: NavBarDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  handleAndroidBackButtonPress: true,
+                  resizeToAvoidBottomInset: true,
+                  hideNavigationBarWhenKeyboardAppears: true,
+                  navBarHeight:
+                      state.showBottomBar ? kBottomNavigationBarHeight : 0,
+                ),
+              ],
             );
           },
         ),

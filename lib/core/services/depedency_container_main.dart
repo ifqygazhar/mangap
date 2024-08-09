@@ -18,6 +18,7 @@ Future<void> _initHome() async {
       () => HomeBloc(
         getPopularKomik: sl(),
         getRecommendedKomik: sl(),
+        getGenreKomik: sl(),
       ),
     )
 
@@ -29,6 +30,11 @@ Future<void> _initHome() async {
     )
     ..registerLazySingleton(
       () => GetRecommended(
+        repository: sl(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => GetGenreKomik(
         repository: sl(),
       ),
     )

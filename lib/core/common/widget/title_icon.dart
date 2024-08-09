@@ -8,8 +8,8 @@ class TitleIconWidget {
       case "Popular Komik":
         icon = FontAwesomeIcons.fire;
 
-      case "Chapter Terbaru":
-        icon = Icons.library_books;
+      case "Genre":
+        icon = FontAwesomeIcons.yinYang;
 
       default:
         icon = FontAwesomeIcons.solidThumbsUp;

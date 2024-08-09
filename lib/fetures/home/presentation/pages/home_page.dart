@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mangap/core/common/widget/appbar.dart';
-import 'package:mangap/core/common/widget/button.dart';
 import 'package:mangap/core/common/widget/error.dart';
 import 'package:mangap/core/common/widget/loading.dart';
 import 'package:mangap/core/constants/color.dart';
-import 'package:mangap/fetures/genre/presentation/pages/genre_page.dart';
 import 'package:mangap/fetures/home/presentation/bloc/home_bloc.dart';
+import 'package:mangap/fetures/home/presentation/widgets/list_genre_widget.dart';
 import 'package:mangap/fetures/home/presentation/widgets/list_popular_widget.dart';
 import 'package:mangap/fetures/home/presentation/widgets/list_recommended_komik_widget.dart';
 
@@ -80,21 +79,10 @@ class HomePage extends StatelessWidget {
                 const SizedBox(
                   height: 14,
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  child: ButtonWidget(
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const GenrePage(),
-                      ),
-                    ),
-                    color: ColorConstant.kThird,
-                    text: "Genre List",
-                    circular: 8,
-                    foregroundColor: ColorConstant.whiteColor,
-                    fontSize: 18,
-                  ),
-                ),
+                ListGenreWidget(
+                  title: "Genre",
+                  genres: state.genreKomiks,
+                )
               ],
             ),
           ),
