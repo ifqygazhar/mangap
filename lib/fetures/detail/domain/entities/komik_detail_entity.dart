@@ -1,47 +1,47 @@
 class KomikDetailEntity {
   const KomikDetailEntity({
     required this.title,
-    required this.coverImg,
-    required this.alternativeTitle,
-    required this.released,
-    required this.status,
-    required this.totalChapter,
-    required this.author,
-    required this.type,
+    required this.altTitle,
+    required this.updatedOn,
     required this.rating,
-    required this.synopsis,
+    required this.status,
+    required this.type,
+    required this.released,
+    required this.author,
+    required this.description,
+    required this.thumbnail,
   });
 
   final String title;
-  final String coverImg;
-  final String alternativeTitle;
-  final String released;
-  final String status;
-  final String totalChapter;
-  final String author;
-  final String type;
+  final String altTitle;
+  final String updatedOn;
   final String rating;
-  final String synopsis;
+  final String status;
+  final String type;
+  final String released;
+  final String author;
+  final String description;
+  final String thumbnail;
 }
 
 class GenreEntity {
   const GenreEntity({
-    required this.name,
-    required this.slug,
+    required this.title,
+    required this.href,
   });
 
-  final String name;
-  final String slug;
+  final String title;
+  final String href;
 }
 
 class ChapterEntity {
   const ChapterEntity({
-    required this.number,
-    required this.slug,
+    required this.title,
+    required this.href,
     required this.date,
   });
 
-  final String number;
-  final String slug;
+  final String title;
+  final String href;
   final String date;
 }

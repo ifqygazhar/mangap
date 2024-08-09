@@ -26,25 +26,37 @@ class MainPage extends StatelessWidget {
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: const FaIcon(FontAwesomeIcons.house),
+        icon: const FaIcon(
+          FontAwesomeIcons.house,
+          size: 22,
+        ),
         title: "Home",
         activeColorPrimary: ColorConstant.whiteColor,
         inactiveColorPrimary: ColorConstant.whiteColor,
       ),
       PersistentBottomNavBarItem(
-        icon: const Icon(Icons.menu_book),
+        icon: const Icon(
+          Icons.menu_book,
+          size: 22,
+        ),
         title: "Manga List",
         activeColorPrimary: ColorConstant.whiteColor,
         inactiveColorPrimary: ColorConstant.whiteColor,
       ),
       PersistentBottomNavBarItem(
-        icon: const FaIcon(FontAwesomeIcons.bookOpenReader),
+        icon: const FaIcon(
+          FontAwesomeIcons.bookOpenReader,
+          size: 22,
+        ),
         title: "History",
         activeColorPrimary: ColorConstant.whiteColor,
         inactiveColorPrimary: ColorConstant.whiteColor,
       ),
       PersistentBottomNavBarItem(
-        icon: const FaIcon(FontAwesomeIcons.solidBookmark),
+        icon: const FaIcon(
+          FontAwesomeIcons.solidBookmark,
+          size: 22,
+        ),
         title: "Bookmark",
         activeColorPrimary: ColorConstant.whiteColor,
         inactiveColorPrimary: ColorConstant.whiteColor,

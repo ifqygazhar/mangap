@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mangap/core/constants/color.dart';
 
 class ButtonWidget extends StatelessWidget {
   const ButtonWidget({
@@ -9,19 +8,23 @@ class ButtonWidget extends StatelessWidget {
     required this.color,
     required this.text,
     required this.circular,
+    required this.foregroundColor,
+    required this.fontSize,
   });
 
   final Function() onTap;
   final Color color;
   final String text;
   final double circular;
+  final Color foregroundColor;
+  final double? fontSize;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onTap,
       style: ElevatedButton.styleFrom(
-          foregroundColor: ColorConstant.whiteColor,
+          foregroundColor: foregroundColor,
           backgroundColor: color,
           elevation: 0,
           shape: RoundedRectangleBorder(
@@ -29,7 +32,7 @@ class ButtonWidget extends StatelessWidget {
           )),
       child: Text(
         text,
-        style: GoogleFonts.openSans(fontSize: 18),
+        style: GoogleFonts.openSans(fontSize: fontSize),
       ),
     );
   }

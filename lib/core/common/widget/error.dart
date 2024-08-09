@@ -56,6 +56,8 @@ class _ErrorWidgetComponentState extends State<ErrorWidgetComponent> {
             color: ColorConstant.kThird,
             text: "Refresh",
             circular: 8,
+            foregroundColor: ColorConstant.whiteColor,
+            fontSize: 18,
           )
         ],
       ),

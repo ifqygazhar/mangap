@@ -18,12 +18,12 @@ class DetailRepositoryImpl implements DetailRepository {
   final NetworkInfo _networkInfo;
 
   @override
-  ResultFuture<List<ChapterEntity>> getChapter(String slug) async {
+  ResultFuture<List<ChapterEntity>> getChapter(String href) async {
     try {
       if (!await _networkInfo.isConnected) {
         return const Left(InternetFailure());
       }
-      final result = await _dataSource.getChapter(slug);
+      final result = await _dataSource.getChapter(href);
       return Right(result);
     } on ServerException catch (e) {
       return left(ServerFailure.fromException(e));
@@ -31,12 +31,12 @@ class DetailRepositoryImpl implements DetailRepository {
   }
 
   @override
-  ResultFuture<List<KomikDetailEntity>> getDetail(String slug) async {
+  ResultFuture<KomikDetailEntity> getDetail(String href) async {
     try {
       if (!await _networkInfo.isConnected) {
         return const Left(InternetFailure());
       }
-      final result = await _dataSource.getDetail(slug);
+      final result = await _dataSource.getDetail(href);
       return Right(result);
     } on ServerException catch (e) {
       return left(ServerFailure.fromException(e));
@@ -44,12 +44,12 @@ class DetailRepositoryImpl implements DetailRepository {
   }
 
   @override
-  ResultFuture<List<GenreEntity>> getGenre(String slug) async {
+  ResultFuture<List<GenreEntity>> getGenre(String href) async {
     try {
       if (!await _networkInfo.isConnected) {
         return const Left(InternetFailure());
       }
-      final result = await _dataSource.getGenre(slug);
+      final result = await _dataSource.getGenre(href);
       return Right(result);
     } on ServerException catch (e) {
       return left(ServerFailure.fromException(e));

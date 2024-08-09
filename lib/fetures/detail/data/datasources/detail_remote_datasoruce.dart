@@ -11,9 +11,9 @@ import 'package:http/http.dart' as http;
 abstract class DetailRemoteDataSource {
   const DetailRemoteDataSource();
 
-  Future<List<KomikDetailEntity>> getDetail(String slug);
-  Future<List<GenreEntity>> getGenre(String slug);
-  Future<List<ChapterEntity>> getChapter(String slug);
+  Future<KomikDetailEntity> getDetail(String href);
+  Future<List<GenreEntity>> getGenre(String href);
+  Future<List<ChapterEntity>> getChapter(String href);
 }
 
 class DetailRemoteDataSourceImpl implements DetailRemoteDataSource {
@@ -24,8 +24,8 @@ class DetailRemoteDataSourceImpl implements DetailRemoteDataSource {
   final http.Client _client;
 
   @override
-  Future<List<KomikDetailEntity>> getDetail(String slug) async {
-    final url = Uri.parse("${ApiConstant.KOMIK_DETAIL}/$slug");
+  Future<KomikDetailEntity> getDetail(String href) async {
+    final url = Uri.parse("${ApiConstant.KOMIK_DETAIL}/$href");
 
     final response = await _client.get(url);
 
@@ -34,15 +34,14 @@ class DetailRemoteDataSourceImpl implements DetailRemoteDataSource {
     if (response.statusCode != AppConstant.successfulHttpGetStatusCode) {
       throw ServerException(message: decode['message'] as String);
     }
-    final listDetail = decode['data'] as List<dynamic>;
-    return listDetail
-        .map((komik) => KomikDetailModel.fromJson(komik as ResultMap))
-        .toList();
+    final listDetail = decode['data'] as Map<String, dynamic>;
+
+    return KomikDetailModel.fromJson(listDetail);
   }
 
   @override
-  Future<List<ChapterEntity>> getChapter(String slug) async {
-    final url = Uri.parse("${ApiConstant.KOMIK_DETAIL}/$slug");
+  Future<List<ChapterEntity>> getChapter(String href) async {
+    final url = Uri.parse("${ApiConstant.KOMIK_DETAIL}/$href");
 
     final response = await _client.get(url);
 
@@ -51,15 +50,16 @@ class DetailRemoteDataSourceImpl implements DetailRemoteDataSource {
     if (response.statusCode != AppConstant.successfulHttpGetStatusCode) {
       throw ServerException(message: decode['message'] as String);
     }
-    final listChapter = decode['data']['chapters'] as List<dynamic>;
+    final listChapter = decode['data']['chapter'] as List<dynamic>;
+
     return listChapter
         .map((komik) => ChapterModel.fromJson(komik as ResultMap))
         .toList();
   }
 
   @override
-  Future<List<GenreEntity>> getGenre(String slug) async {
-    final url = Uri.parse("${ApiConstant.KOMIK_DETAIL}/$slug");
+  Future<List<GenreEntity>> getGenre(String href) async {
+    final url = Uri.parse("${ApiConstant.KOMIK_DETAIL}/$href");
 
     final response = await _client.get(url);
 
@@ -68,7 +68,8 @@ class DetailRemoteDataSourceImpl implements DetailRemoteDataSource {
     if (response.statusCode != AppConstant.successfulHttpGetStatusCode) {
       throw ServerException(message: decode['message'] as String);
     }
-    final listGenre = decode['data']['genres'] as List<dynamic>;
+    final listGenre = decode['data']['genre'] as List<dynamic>;
+
     return listGenre
         .map((komik) => GenreModel.fromJson(komik as ResultMap))
         .toList();

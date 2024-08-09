@@ -10,6 +10,6 @@ class GetGenre implements UseCaseWithParams<List<GenreEntity>, String> {
   final DetailRepository _repository;
 
   @override
-  ResultFuture<List<GenreEntity>> call(String slug) =>
-      _repository.getGenre(slug);
+  ResultFuture<List<GenreEntity>> call(String href) =>
+      _repository.getGenre(href);
 }

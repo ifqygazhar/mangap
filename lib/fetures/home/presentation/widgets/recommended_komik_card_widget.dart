@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mangap/core/common/widget/type_flag.dart';
 import 'package:mangap/core/constants/color.dart';
+import 'package:mangap/fetures/detail/presentation/pages/detail_page.dart';
 
 class RecommendedKomikCardWidget extends StatelessWidget {
   const RecommendedKomikCardWidget({
@@ -29,9 +30,11 @@ class RecommendedKomikCardWidget extends StatelessWidget {
     String flag = TypeFlagWidget.getFlag(type);
 
     return GestureDetector(
-      onTap: () {
-        print("tap");
-      },
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) {
+          return DetailPage(href: href);
+        },
+      )),
       child: Container(
         width: 240,
         height: 320,
@@ -124,7 +127,7 @@ class RecommendedKomikCardWidget extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(8),
           child: CachedNetworkImage(
-            key: key,
+            key: UniqueKey(),
             imageUrl: thumbnail,
             fit: BoxFit.cover,
             width: 240,
@@ -132,9 +135,9 @@ class RecommendedKomikCardWidget extends StatelessWidget {
             cacheManager: CacheManager(
               Config(
                 'komik',
-                stalePeriod: const Duration(minutes: 30),
+                stalePeriod: const Duration(minutes: 10),
               ),
-            ), // Sesuaikan dengan tinggi kontainer
+            ),
           ),
         ),
         Positioned(

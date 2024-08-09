@@ -20,6 +20,7 @@ Future<void> _initHome() async {
         getRecommendedKomik: sl(),
       ),
     )
+
     //usecase
     ..registerLazySingleton(
       () => GetPopularKomik(
@@ -44,7 +45,50 @@ Future<void> _initHome() async {
       () => HomeRemoteDataSourceImpl(
         client: sl(),
       ),
+    );
+
+  //feature detail
+  sl
+    ..registerFactory(
+      () => DetailBloc(
+        getDetail: sl(),
+        getGenre: sl(),
+        getChapter: sl(),
+      ),
     )
+
+    //usecase
+    ..registerLazySingleton(
+      () => GetDetail(
+        repository: sl(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => GetGenre(
+        repository: sl(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => GetChapter(
+        repository: sl(),
+      ),
+    )
+
+    //repository
+    ..registerLazySingleton<DetailRepository>(
+      () => DetailRepositoryImpl(
+        dataSource: sl(),
+        networkInfo: sl(),
+      ),
+    )
+
+    //data source
+    ..registerLazySingleton<DetailRemoteDataSource>(
+      () => DetailRemoteDataSourceImpl(
+        client: sl(),
+      ),
+    )
+
     //other
     ..registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImpl(networkInfo: sl()),

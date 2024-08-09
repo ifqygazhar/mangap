@@ -10,6 +10,6 @@ class GetChapter implements UseCaseWithParams<List<ChapterEntity>, String> {
   final DetailRepository _repository;
 
   @override
-  ResultFuture<List<ChapterEntity>> call(String slug) =>
-      _repository.getChapter(slug);
+  ResultFuture<List<ChapterEntity>> call(String href) =>
+      _repository.getChapter(href);
 }

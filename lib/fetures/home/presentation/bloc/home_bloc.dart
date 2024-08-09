@@ -15,9 +15,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   })  : _getPopularKomik = getPopularKomik,
         _getRecommendedKomik = getRecommendedKomik,
         super(const HomeState()) {
-    on<HomeGetPopularKomik>(getPopularKomikHandler);
-    on<HomeGetRecommendedKomik>(getUpdateKomikHandler);
-    on<HomeRefresh>(refreshHandler);
+    on<HomeGetPopularKomik>(_getPopularKomikHandler);
+    on<HomeGetRecommendedKomik>(_getRecommendedKomikHandler);
+    on<HomeRefresh>(_refreshHandler);
 
     add(HomeGetPopularKomik());
     add(HomeGetRecommendedKomik());
@@ -26,7 +26,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final GetPopularKomik _getPopularKomik;
   final GetRecommended _getRecommendedKomik;
 
-  Future<void> getPopularKomikHandler(
+  Future<void> _getPopularKomikHandler(
       HomeEvent event, Emitter<HomeState> emit) async {
     final result = await _getPopularKomik();
     result.fold((failure) {
@@ -46,30 +46,28 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     });
   }
 
-  Future<void> getUpdateKomikHandler(
+  Future<void> _getRecommendedKomikHandler(
       HomeEvent event, Emitter<HomeState> emit) async {
-    if (event is HomeGetRecommendedKomik) {
-      final result = await _getRecommendedKomik();
+    final result = await _getRecommendedKomik();
 
-      result.fold((failure) {
-        emit(
-          state.copyWith(
-            status: HomeStatus.error,
-            errorMessage: failure.errorMessage,
-          ),
-        );
-      }, (komiks) {
-        emit(
-          state.copyWith(
-            status: HomeStatus.success,
-            recommendedKomiks: komiks,
-          ),
-        );
-      });
-    }
+    result.fold((failure) {
+      emit(
+        state.copyWith(
+          status: HomeStatus.error,
+          errorMessage: failure.errorMessage,
+        ),
+      );
+    }, (komiks) {
+      emit(
+        state.copyWith(
+          status: HomeStatus.success,
+          recommendedKomiks: komiks,
+        ),
+      );
+    });
   }
 
-  Future<void> refreshHandler(
+  Future<void> _refreshHandler(
       HomeRefresh event, Emitter<HomeState> emit) async {
     emit(state.copyWith(status: HomeStatus.loading));
 

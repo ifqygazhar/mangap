@@ -19,52 +19,49 @@ class ListRecommendedKomikWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     IconData icon = TitleIconWidget.getIcon(title);
 
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              FaIcon(
-                icon,
-                color: ColorConstant.whiteColor,
-              ),
-              const SizedBox(
-                width: 14,
-              ),
-              Text(
-                title,
-                style: const TextStyle(
-                  color: ColorConstant.whiteColor,
-                  fontSize: 20,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 420,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: komiks.length,
-              itemBuilder: (context, index) {
-                final komik = komiks[index];
-                return Padding(
-                  padding: const EdgeInsets.only(right: 16, top: 8.0),
-                  child: RecommendedKomikCardWidget(
-                    thumbnail: komik.thumbnail,
-                    title: komik.title,
-                    chapter: komik.chapter,
-                    rating: komik.rating,
-                    type: komik.type,
-                    href: komik.href,
-                  ),
-                );
-              },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            FaIcon(
+              icon,
+              color: ColorConstant.whiteColor,
             ),
+            const SizedBox(
+              width: 14,
+            ),
+            Text(
+              title,
+              style: const TextStyle(
+                color: ColorConstant.whiteColor,
+                fontSize: 20,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 420,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: komiks.length,
+            itemBuilder: (context, index) {
+              final komik = komiks[index];
+              return Padding(
+                padding: const EdgeInsets.only(right: 16, top: 8.0),
+                child: RecommendedKomikCardWidget(
+                  thumbnail: komik.thumbnail,
+                  title: komik.title,
+                  chapter: komik.chapter,
+                  rating: komik.rating,
+                  type: komik.type,
+                  href: komik.href,
+                ),
+              );
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

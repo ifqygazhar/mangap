@@ -48,7 +48,7 @@ class OnboardScreen extends StatelessWidget {
                 width: double.infinity,
                 height: 58,
                 child: ButtonWidget(
-                  onTap: () => Navigator.of(context).pushReplacement(
+                  onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => const MainPage(),
                     ),
@@ -56,6 +56,8 @@ class OnboardScreen extends StatelessWidget {
                   color: ColorConstant.kThird,
                   text: "Get Started",
                   circular: 14,
+                  foregroundColor: ColorConstant.whiteColor,
+                  fontSize: 18,
                 ),
               )
             ],

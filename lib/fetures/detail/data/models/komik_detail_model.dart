@@ -7,15 +7,15 @@ part 'komik_detail_model.g.dart';
 class KomikDetailModel extends KomikDetailEntity {
   const KomikDetailModel({
     required super.title,
-    required super.coverImg,
-    required super.alternativeTitle,
-    required super.released,
-    required super.status,
-    required super.totalChapter,
-    required super.author,
-    required super.type,
+    required super.altTitle,
+    required super.updatedOn,
     required super.rating,
-    required super.synopsis,
+    required super.status,
+    required super.type,
+    required super.released,
+    required super.author,
+    required super.description,
+    required super.thumbnail,
   });
 
   factory KomikDetailModel.fromJson(Map<String, dynamic> json) =>
@@ -25,8 +25,8 @@ class KomikDetailModel extends KomikDetailEntity {
 @JsonSerializable()
 class GenreModel extends GenreEntity {
   const GenreModel({
-    required super.name,
-    required super.slug,
+    required super.title,
+    required super.href,
   });
 
   factory GenreModel.fromJson(Map<String, dynamic> json) =>
@@ -36,8 +36,8 @@ class GenreModel extends GenreEntity {
 @JsonSerializable()
 class ChapterModel extends ChapterEntity {
   const ChapterModel({
-    required super.number,
-    required super.slug,
+    required super.title,
+    required super.href,
     required super.date,
   });
 

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mangap/core/services/depedency_container.dart';
+import 'package:mangap/fetures/detail/presentation/bloc/detail_bloc.dart';
 import 'package:mangap/fetures/home/presentation/bloc/home_bloc.dart';
-import 'package:mangap/fetures/home/presentation/pages/home_page.dart';
 import 'package:mangap/fetures/main/bloc/navigation_bloc.dart';
-import 'package:mangap/fetures/main/main_page.dart';
-
 import 'package:mangap/fetures/onboard/presentation/pages/onboard.dart';
 
 Future<void> main() async {
@@ -23,11 +21,12 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (_) => sl<NavigationBloc>(),
-          child: const MainPage(),
         ),
         BlocProvider(
           create: (_) => sl<HomeBloc>(),
-          child: const HomePage(),
+        ),
+        BlocProvider(
+          create: (_) => sl<DetailBloc>(),
         ),
       ],
       child: const MaterialApp(
