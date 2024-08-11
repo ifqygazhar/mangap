@@ -9,7 +9,7 @@ class CarouselWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return CarouselSlider(
       options: CarouselOptions(
-        height: 480.0,
+        height: 440.0,
         enlargeCenterPage: true,
         autoPlay: true,
         aspectRatio: 16 / 9,
@@ -24,7 +24,7 @@ class CarouselWidget extends StatelessWidget {
           child: Container(
             width: 320,
             height: 320,
-            margin: const EdgeInsets.only(left: 2.0, top: 8.0, bottom: 8.0),
+            margin: const EdgeInsets.only(left: 2.0, top: 14.0, bottom: 8.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
               image: DecorationImage(

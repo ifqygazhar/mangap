@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mangap/core/common/widget/appbar.dart';
+import 'package:mangap/core/common/widget/error.dart';
+import 'package:mangap/core/common/widget/loading.dart';
 import 'package:mangap/core/constants/color.dart';
 import 'package:mangap/fetures/genre/domain/entities/genre_detail_entity.dart';
 import 'package:mangap/fetures/genre/presentation/widgets/komik_genre_card_widget.dart';
@@ -53,6 +55,15 @@ class _GenrePageState extends State<GenrePage> {
     super.dispose();
   }
 
+  void _refresh() {
+    _pagingController.refresh();
+    context.read<GenreDetailBloc>().add(GenreDetailReset());
+    context.read<GenreDetailBloc>().add(GenreDetailGetPage(widget.href, 1));
+    context
+        .read<GenreDetailBloc>()
+        .add(GenreDetailGetDataGenre(widget.href, 1));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,7 +91,21 @@ class _GenrePageState extends State<GenrePage> {
                   _pagingController.appendPage(newKomiks, nextPageKey);
                 }
               } else if (state.status == GenreStatus.error) {
-                ErrorWidget(state.errorMessage);
+                Center(
+                  child: ErrorWidgetComponent(
+                    errorMessage: state.errorMessage,
+                    onTap: () {
+                      context.read<GenreDetailBloc>().add(GenreDetailReset());
+                      context
+                          .read<GenreDetailBloc>()
+                          .add(GenreDetailGetPage(widget.href, 1));
+                      context
+                          .read<GenreDetailBloc>()
+                          .add(GenreDetailGetDataGenre(widget.href, 1));
+                    },
+                  ),
+                );
+                _pagingController.error = state.errorMessage;
               }
             },
             child: PagedListView<int, KomikGenreDetailDataEntity>(
@@ -101,18 +126,55 @@ class _GenrePageState extends State<GenrePage> {
                     thumbnail: komik.thumbnail,
                   );
                 },
-                firstPageProgressIndicatorBuilder: (context) =>
-                    const Center(child: CircularProgressIndicator()),
-                newPageProgressIndicatorBuilder: (context) =>
-                    const Center(child: CircularProgressIndicator()),
-                noItemsFoundIndicatorBuilder: (context) =>
-                    const Center(child: Text('No Data Available')),
-                firstPageErrorIndicatorBuilder: (context) =>
-                    const Center(child: Text('Error loading data')),
-                newPageErrorIndicatorBuilder: (context) =>
-                    const Center(child: Text('Error loading more data')),
-                noMoreItemsIndicatorBuilder: (context) =>
-                    const Center(child: Text('All Data Has Been Loaded')),
+                firstPageProgressIndicatorBuilder: (context) => const Center(
+                  child: LoadingWidget(textColor: ColorConstant.whiteColor),
+                ),
+                newPageProgressIndicatorBuilder: (context) => const Center(
+                  child: LoadingWidget(
+                      widthImage: 132,
+                      heightImage: 132,
+                      textSize: 14,
+                      textColor: ColorConstant.whiteColor),
+                ),
+                noItemsFoundIndicatorBuilder: (context) => Center(
+                  child: ErrorWidgetComponent(
+                    widthImage: 132,
+                    heightImage: 132,
+                    textSize: 14,
+                    errorMessage: "No Data Available",
+                    onTap: () {
+                      _refresh();
+                    },
+                  ),
+                ),
+                firstPageErrorIndicatorBuilder: (context) => Center(
+                  child: ErrorWidgetComponent(
+                    errorMessage: "Error Load Data",
+                    onTap: () {
+                      _refresh();
+                    },
+                  ),
+                ),
+                newPageErrorIndicatorBuilder: (context) => Center(
+                  child: ErrorWidgetComponent(
+                      widthImage: 132,
+                      heightImage: 132,
+                      textSize: 14,
+                      errorMessage: "Error Load More Data",
+                      onTap: () {
+                        _refresh();
+                      }),
+                ),
+                noMoreItemsIndicatorBuilder: (context) => Center(
+                  child: ErrorWidgetComponent(
+                    widthImage: 132,
+                    heightImage: 132,
+                    textSize: 14,
+                    textButton: "Back",
+                    errorMessage: "All data has been loaded",
+                    onTap: () => Navigator.pop(context),
+                  ),
+                ),
               ),
             ),
           ),

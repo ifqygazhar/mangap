@@ -85,7 +85,6 @@ class GenreDetailBloc extends Bloc<GenreDetailEvent, GenreDetailState> {
   ) {
     emit(const GenreDetailState(
       genreKomiks: [],
-      pageKomiks: KomikGenreDetailEntity(current_page: 1, length_page: 1),
       hasReachedMax: false,
       status: GenreStatus.loading,
     ));

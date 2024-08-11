@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 
 class LoadingWidget extends StatelessWidget {
-  const LoadingWidget({super.key, required this.textColor});
+  const LoadingWidget({
+    super.key,
+    required this.textColor,
+    this.heightImage = 240,
+    this.widthImage = 240,
+    this.textSize = 22,
+  });
 
   final Color textColor;
+  final double heightImage;
+  final double widthImage;
+  final double textSize;
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +22,8 @@ class LoadingWidget extends StatelessWidget {
         children: [
           Image.asset(
             'assets/images/kuru.gif',
-            width: 240,
-            height: 240,
+            width: widthImage,
+            height: heightImage,
           ),
           const SizedBox(
             height: 8,
@@ -23,7 +32,7 @@ class LoadingWidget extends StatelessWidget {
             'Loading Please Wait',
             style: TextStyle(
               color: textColor,
-              fontSize: 22,
+              fontSize: textSize,
             ),
           ),
         ],

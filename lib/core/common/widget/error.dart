@@ -7,10 +7,17 @@ class ErrorWidgetComponent extends StatefulWidget {
     super.key,
     required this.errorMessage,
     required this.onTap,
+    this.widthImage = 240,
+    this.heightImage = 240,
+    this.textSize = 18,
+    this.textButton = "Refresh",
   });
 
   final String errorMessage;
   final Function() onTap;
+  final double widthImage, heightImage;
+  final double textSize;
+  final String textButton;
 
   @override
   State<ErrorWidgetComponent> createState() => _ErrorWidgetComponentState();
@@ -24,8 +31,8 @@ class _ErrorWidgetComponentState extends State<ErrorWidgetComponent> {
     super.initState();
     errorImage = Image.asset(
       "assets/images/error.gif",
-      width: 240,
-      height: 240,
+      width: widget.widthImage,
+      height: widget.heightImage,
     );
   }
 
@@ -45,19 +52,19 @@ class _ErrorWidgetComponentState extends State<ErrorWidgetComponent> {
           const SizedBox(height: 12),
           Text(
             widget.errorMessage,
-            style: const TextStyle(
+            style: TextStyle(
               color: ColorConstant.whiteColor,
-              fontSize: 18,
+              fontSize: widget.textSize,
             ),
           ),
           const SizedBox(height: 8),
           ButtonWidget(
             onTap: widget.onTap,
             color: ColorConstant.kThird,
-            text: "Refresh",
+            text: widget.textButton,
             circular: 8,
             foregroundColor: ColorConstant.whiteColor,
-            fontSize: 18,
+            fontSize: widget.textSize,
           )
         ],
       ),
