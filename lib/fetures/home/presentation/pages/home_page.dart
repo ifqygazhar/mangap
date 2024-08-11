@@ -70,14 +70,14 @@ class HomePage extends StatelessWidget {
                   komiks: state.recommendedKomiks,
                 ),
                 const SizedBox(
-                  height: 14,
+                  height: 24,
                 ),
                 ListPopularWidget(
                   title: "Popular Komik",
                   komiks: state.popularKomiks,
                 ),
                 const SizedBox(
-                  height: 14,
+                  height: 24,
                 ),
                 ListGenreWidget(
                   title: "Genre",

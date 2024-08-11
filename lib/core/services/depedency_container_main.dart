@@ -93,6 +93,42 @@ Future<void> _initHome() async {
       () => DetailRemoteDataSourceImpl(
         client: sl(),
       ),
+    );
+
+  //feature genre detail
+  sl
+    ..registerFactory(
+      () => GenreDetailBloc(
+        getDetailGenreData: sl(),
+        getGenrePage: sl(),
+      ),
+    )
+
+    //use case
+    ..registerLazySingleton(
+      () => GetGenrePage(
+        repository: sl(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => GetDetailGenreData(
+        repository: sl(),
+      ),
+    )
+
+    //repository
+    ..registerLazySingleton<GenreRepository>(
+      () => GenreRepositoryImpl(
+        dataSource: sl(),
+        networkInfo: sl(),
+      ),
+    )
+
+    //data source
+    ..registerLazySingleton<GenreRemoteDatasource>(
+      () => GenreRemoteDataSourceImpl(
+        client: sl(),
+      ),
     )
 
     //other

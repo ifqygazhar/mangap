@@ -14,53 +14,55 @@ class OnboardScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: ColorConstant.kPrimary,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              const CarouselWidget(),
-              const SizedBox(
-                height: 12,
-              ),
-              Text(
-                "Read Popular Komik",
-                style: GoogleFonts.openSans(
-                  color: ColorConstant.whiteColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 50,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                const CarouselWidget(),
+                const SizedBox(
+                  height: 12,
                 ),
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              Text(
-                "We provide complete and popular manga updates faster than other apps",
-                style: GoogleFonts.openSans(
-                  color: ColorConstant.lightText,
-                  fontWeight: FontWeight.w300,
-                  fontSize: 20,
-                ),
-              ),
-              const SizedBox(
-                height: 18,
-              ),
-              SizedBox(
-                width: double.infinity,
-                height: 58,
-                child: ButtonWidget(
-                  onTap: () => Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (context) => MainPage(),
-                    ),
+                Text(
+                  "Read Popular Komik",
+                  style: GoogleFonts.openSans(
+                    color: ColorConstant.whiteColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 50,
                   ),
-                  color: ColorConstant.kThird,
-                  text: "Get Started",
-                  circular: 14,
-                  foregroundColor: ColorConstant.whiteColor,
-                  fontSize: 18,
                 ),
-              )
-            ],
+                const SizedBox(
+                  height: 12,
+                ),
+                Text(
+                  "We provide complete and popular manga updates faster than other apps",
+                  style: GoogleFonts.openSans(
+                    color: ColorConstant.lightText,
+                    fontWeight: FontWeight.w300,
+                    fontSize: 20,
+                  ),
+                ),
+                const SizedBox(
+                  height: 18,
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  height: 58,
+                  child: ButtonWidget(
+                    onTap: () => Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => MainPage(),
+                      ),
+                    ),
+                    color: ColorConstant.kThird,
+                    text: "Get Started",
+                    circular: 14,
+                    foregroundColor: ColorConstant.whiteColor,
+                    fontSize: 18,
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

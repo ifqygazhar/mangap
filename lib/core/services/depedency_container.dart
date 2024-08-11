@@ -9,6 +9,12 @@ import 'package:mangap/fetures/detail/domain/usecases/get_detail_chapter_komik.d
 import 'package:mangap/fetures/detail/domain/usecases/get_detail_genre_komik.dart';
 import 'package:mangap/fetures/detail/domain/usecases/get_detail_komik.dart';
 import 'package:mangap/fetures/detail/presentation/bloc/detail_bloc.dart';
+import 'package:mangap/fetures/genre/data/datasources/genre_remote_datasource.dart';
+import 'package:mangap/fetures/genre/data/repositories/genre_repository_impl.dart';
+import 'package:mangap/fetures/genre/domain/repositories/genre_repository.dart';
+import 'package:mangap/fetures/genre/domain/usecases/get_detail_genre_data.dart';
+import 'package:mangap/fetures/genre/domain/usecases/get_detail_genre_page.dart';
+import 'package:mangap/fetures/genre/presentation/bloc/genre_detail_bloc.dart';
 import 'package:mangap/fetures/home/data/datasources/home_remote_datasource.dart';
 import 'package:mangap/fetures/home/data/repositories/home_repository_impl.dart';
 import 'package:mangap/fetures/home/domain/repositories/home_repository.dart';

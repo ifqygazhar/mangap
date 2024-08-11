@@ -47,13 +47,17 @@ class ListRecommendedKomikWidget extends StatelessWidget {
             itemCount: komiks.length,
             itemBuilder: (context, index) {
               final komik = komiks[index];
+              String formattedRate = komik.rating == "?"
+                  ? "0.00"
+                  : komik.rating.replaceAll(',', '.');
+              double rating = double.tryParse(formattedRate) ?? 0.00;
               return Padding(
                 padding: const EdgeInsets.only(right: 16, top: 8.0),
                 child: RecommendedKomikCardWidget(
                   thumbnail: komik.thumbnail,
                   title: komik.title,
                   chapter: komik.chapter,
-                  rating: komik.rating,
+                  rating: rating.toString(),
                   type: komik.type,
                   href: komik.href,
                 ),

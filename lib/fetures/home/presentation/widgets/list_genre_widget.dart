@@ -43,7 +43,7 @@ class ListGenreWidget extends StatelessWidget {
           height: 8,
         ),
         SizedBox(
-          height: 420,
+          height: 400,
           child: ListView.builder(
             itemCount: genres.length,
             itemBuilder: (context, index) {

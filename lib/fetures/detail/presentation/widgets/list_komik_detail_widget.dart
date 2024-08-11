@@ -22,7 +22,6 @@ class ListKomikDetailWidget extends StatelessWidget {
       status: details.status,
       type: details.type,
       thumbnail: details.thumbnail,
-      genres: genres,
     );
   }
 }
