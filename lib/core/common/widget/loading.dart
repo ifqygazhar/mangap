@@ -29,7 +29,7 @@ class LoadingWidget extends StatelessWidget {
             height: 8,
           ),
           Text(
-            'Loading Please Wait',
+            'Lagi Memuat Komik...',
             style: TextStyle(
               color: textColor,
               fontSize: textSize,

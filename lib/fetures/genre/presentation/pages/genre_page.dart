@@ -141,7 +141,7 @@ class _GenrePageState extends State<GenrePage> {
                     widthImage: 132,
                     heightImage: 132,
                     textSize: 14,
-                    errorMessage: "No Data Available",
+                    errorMessage: "Tidak Ada Komik Coba Lagi!",
                     onTap: () {
                       _refresh();
                     },
@@ -149,7 +149,7 @@ class _GenrePageState extends State<GenrePage> {
                 ),
                 firstPageErrorIndicatorBuilder: (context) => Center(
                   child: ErrorWidgetComponent(
-                    errorMessage: "Error Load Data",
+                    errorMessage: "Gagal Memuat Komik",
                     onTap: () {
                       _refresh();
                     },
@@ -160,7 +160,7 @@ class _GenrePageState extends State<GenrePage> {
                       widthImage: 132,
                       heightImage: 132,
                       textSize: 14,
-                      errorMessage: "Error Load More Data",
+                      errorMessage: "Gagal Memuat Lebih Banyak Komik",
                       onTap: () {
                         _refresh();
                       }),
@@ -170,8 +170,8 @@ class _GenrePageState extends State<GenrePage> {
                     widthImage: 132,
                     heightImage: 132,
                     textSize: 14,
-                    textButton: "Back",
-                    errorMessage: "All data has been loaded",
+                    textButton: "Kembali",
+                    errorMessage: "Semua Komik Sudah Ditampilkan",
                     onTap: () => Navigator.pop(context),
                   ),
                 ),

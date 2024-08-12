@@ -3,9 +3,8 @@ class AppConstant {
 
   static const int successfulHttpGetStatusCode = 200;
 
-  static const String noInternetConnection = 'Please check your connection';
-  static const String serverFailureMessage =
-      'Ups, API Error. please try again!';
-  static const String cacheFailureMessage = 'Ups, API Error. please try again!';
-  static const String generalFailureMessage = 'Ups, check your connection';
+  static const String noInternetConnection = 'Periksa Koneksi Internet Anda!';
+  static const String serverFailureMessage = 'Server Sedang Bermasalah!';
+  static const String cacheFailureMessage = 'Server Sedang Bermasalah!';
+  static const String generalFailureMessage = 'Periksa Koneksi Internet Anda!';
 }

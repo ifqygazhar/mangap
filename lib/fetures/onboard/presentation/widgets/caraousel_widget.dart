@@ -22,8 +22,6 @@ class CarouselWidget extends StatelessWidget {
         return Transform.rotate(
           angle: 0.1,
           child: Container(
-            width: 320,
-            height: 320,
             margin: const EdgeInsets.only(left: 2.0, top: 14.0, bottom: 8.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),

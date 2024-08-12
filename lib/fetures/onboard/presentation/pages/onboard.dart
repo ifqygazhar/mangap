@@ -16,6 +16,7 @@ class OnboardScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const CarouselWidget(),
               const SizedBox(
@@ -27,7 +28,7 @@ class OnboardScreen extends StatelessWidget {
                   right: 16,
                 ),
                 child: Text(
-                  "Read Popular Komik",
+                  "Baca Komik Populer",
                   style: GoogleFonts.openSans(
                     color: ColorConstant.whiteColor,
                     fontWeight: FontWeight.bold,
@@ -44,7 +45,7 @@ class OnboardScreen extends StatelessWidget {
                   right: 16,
                 ),
                 child: Text(
-                  "We provide complete and popular manga updates faster than other apps",
+                  "Kami menyediakan pembaruan manga yang lengkap dan populer lebih cepat daripada aplikasi lain",
                   style: GoogleFonts.openSans(
                     color: ColorConstant.lightText,
                     fontWeight: FontWeight.w300,
@@ -70,7 +71,7 @@ class OnboardScreen extends StatelessWidget {
                       ),
                     ),
                     color: ColorConstant.kThird,
-                    text: "Get Started",
+                    text: "Ayo Mulai",
                     circular: 14,
                     foregroundColor: ColorConstant.whiteColor,
                     fontSize: 18,

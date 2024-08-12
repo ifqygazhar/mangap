@@ -39,8 +39,18 @@ Widget _buildContent(BuildContext context, DetailState state, String href) {
     case DetailStatus.loading:
       return const LoadingWidget(textColor: ColorConstant.whiteColor);
     case DetailStatus.error:
+      String extractErrorMessage(String errorMessage) {
+        final startIndex = errorMessage.indexOf('(');
+        final endIndex = errorMessage.indexOf(')');
+
+        if (startIndex != -1 && endIndex != -1 && endIndex > startIndex) {
+          return errorMessage.substring(startIndex + 1, endIndex);
+        }
+
+        return errorMessage;
+      }
       return ErrorWidgetComponent(
-        errorMessage: state.errorMessage,
+        errorMessage: extractErrorMessage(state.errorMessage),
         onTap: () => context.read<DetailBloc>().add(
               DetailRefresh(href),
             ),
