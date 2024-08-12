@@ -129,6 +129,34 @@ Future<void> _initHome() async {
       () => GenreRemoteDataSourceImpl(
         client: sl(),
       ),
+    );
+
+  //feature manga list
+  sl
+    ..registerFactory(
+      () => MangaBloc(
+        getAllManga: sl(),
+      ),
+    )
+
+    //usecase
+    ..registerLazySingleton(
+      () => GetAllManga(repository: sl()),
+    )
+
+    //repository
+    ..registerLazySingleton<MangaRepository>(
+      () => MangaRepositoryImpl(
+        dataSource: sl(),
+        networkInfo: sl(),
+      ),
+    )
+
+    //data source
+    ..registerLazySingleton<MangaRemoteDataSource>(
+      () => MangaRemoteDataSourceImpl(
+        client: sl(),
+      ),
     )
 
     //other

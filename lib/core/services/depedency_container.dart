@@ -23,5 +23,10 @@ import 'package:mangap/fetures/home/domain/usecases/get_recommended_komik.dart';
 import 'package:mangap/fetures/home/domain/usecases/get_popular_komik.dart';
 import 'package:mangap/fetures/home/presentation/bloc/home_bloc.dart';
 import 'package:mangap/fetures/main/bloc/navigation_bloc.dart';
+import 'package:mangap/fetures/manga/data/datasources/manga_remote_datasource.dart';
+import 'package:mangap/fetures/manga/data/repositories/manga_repository_impl.dart';
+import 'package:mangap/fetures/manga/domain/repositories/manga_repository.dart';
+import 'package:mangap/fetures/manga/domain/usecases/get_all_manga.dart';
+import 'package:mangap/fetures/manga/presentation/bloc/manga_bloc.dart';
 
 part 'depedency_container_main.dart';

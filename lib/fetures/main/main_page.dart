@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mangap/core/constants/color.dart';
 import 'package:mangap/fetures/home/presentation/pages/home_page.dart';
 import 'package:mangap/fetures/main/bloc/navigation_bloc.dart';
+import 'package:mangap/fetures/manga/presentation/pages/manga_page.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
 class MainPage extends StatelessWidget {
@@ -15,7 +16,7 @@ class MainPage extends StatelessWidget {
   List<Widget> _buildScreens() {
     return [
       const HomePage(),
-      const Center(child: Text("Page 1: List of items")),
+      const MangaPage(),
       const Center(child: Text("Page 1: List of items")),
       Center(
         child: ElevatedButton(
@@ -42,7 +43,7 @@ class MainPage extends StatelessWidget {
           Icons.menu_book,
           size: 22,
         ),
-        title: "Manga List",
+        title: "Komik List",
         activeColorPrimary: ColorConstant.whiteColor,
         inactiveColorPrimary: ColorConstant.whiteColor,
       ),

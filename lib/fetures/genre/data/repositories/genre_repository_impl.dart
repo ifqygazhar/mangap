@@ -35,7 +35,9 @@ class GenreRepositoryImpl implements GenreRepository {
 
   @override
   ResultFuture<KomikGenreDetailEntity> getGenrePage(
-      String href, int page) async {
+    String href,
+    int page,
+  ) async {
     try {
       if (!await _networkInfo.isConnected) {
         return const Left(InternetFailure());

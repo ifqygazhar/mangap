@@ -39,3 +39,11 @@ class RatingWidget extends StatelessWidget {
     );
   }
 }
+
+String fixedRating(String strRating) {
+  String formattedRate =
+      strRating == "?" ? "0.00" : strRating.replaceAll(',', '.');
+  double rating = double.tryParse(formattedRate) ?? 0.00;
+
+  return rating.toString();
+}

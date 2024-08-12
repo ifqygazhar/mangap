@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mangap/core/common/widget/rating.dart';
 import 'package:mangap/core/common/widget/title_icon.dart';
 import 'package:mangap/core/constants/color.dart';
 import 'package:mangap/fetures/home/domain/entities/komik_recommended_entity.dart';
@@ -41,23 +42,20 @@ class ListRecommendedKomikWidget extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: 420,
+          height: 350,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: komiks.length,
             itemBuilder: (context, index) {
               final komik = komiks[index];
-              String formattedRate = komik.rating == "?"
-                  ? "0.00"
-                  : komik.rating.replaceAll(',', '.');
-              double rating = double.tryParse(formattedRate) ?? 0.00;
+
               return Padding(
                 padding: const EdgeInsets.only(right: 16, top: 8.0),
                 child: RecommendedKomikCardWidget(
                   thumbnail: komik.thumbnail,
                   title: komik.title,
                   chapter: komik.chapter,
-                  rating: rating.toString(),
+                  rating: fixedRating(komik.rating),
                   type: komik.type,
                   href: komik.href,
                 ),

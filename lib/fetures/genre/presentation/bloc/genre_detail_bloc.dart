@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mangap/fetures/genre/domain/entities/genre_detail_entity.dart';
@@ -67,8 +65,7 @@ class GenreDetailBloc extends Bloc<GenreDetailEvent, GenreDetailState> {
 
         final allKomiks = List.of(state.genreKomiks)..addAll(filteredNewKomiks);
         final hasNoMoreItems = newKomiks.isEmpty;
-        log("page ${event.page}, length ${state.pageKomiks.length_page}");
-        log(hasNoMoreItems.toString());
+
         emit(state.copyWith(
           status: GenreStatus.success,
           genreKomiks: allKomiks,

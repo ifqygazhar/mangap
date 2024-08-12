@@ -5,6 +5,7 @@ import 'package:mangap/fetures/detail/presentation/bloc/detail_bloc.dart';
 import 'package:mangap/fetures/genre/presentation/bloc/genre_detail_bloc.dart';
 import 'package:mangap/fetures/home/presentation/bloc/home_bloc.dart';
 import 'package:mangap/fetures/main/bloc/navigation_bloc.dart';
+import 'package:mangap/fetures/manga/presentation/bloc/manga_bloc.dart';
 import 'package:mangap/fetures/onboard/presentation/pages/onboard.dart';
 
 Future<void> main() async {
@@ -31,6 +32,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => sl<GenreDetailBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => sl<MangaBloc>(),
         ),
       ],
       child: const MaterialApp(

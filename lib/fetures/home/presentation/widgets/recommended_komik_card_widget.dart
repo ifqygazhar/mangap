@@ -43,7 +43,6 @@ class RecommendedKomikCardWidget extends StatelessWidget {
       },
       child: Container(
         width: 240,
-        height: 320,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           color: ColorConstant.kThird,
@@ -136,8 +135,8 @@ class RecommendedKomikCardWidget extends StatelessWidget {
             key: UniqueKey(),
             imageUrl: thumbnail,
             fit: BoxFit.cover,
-            width: 240,
-            height: 320,
+            width: 224,
+            height: 240,
             cacheManager: CacheManager(
               Config(
                 'komik',

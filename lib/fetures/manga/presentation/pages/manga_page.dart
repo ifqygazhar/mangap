@@ -1,45 +1,34 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mangap/core/common/widget/appbar.dart';
 import 'package:mangap/core/common/widget/error.dart';
+import 'package:mangap/core/common/widget/komik_card.dart';
 import 'package:mangap/core/common/widget/loading.dart';
-import 'package:mangap/core/common/widget/rating.dart';
 import 'package:mangap/core/constants/color.dart';
-import 'package:mangap/fetures/genre/domain/entities/genre_detail_entity.dart';
-import 'package:mangap/fetures/genre/presentation/widgets/komik_genre_card_widget.dart';
-import 'package:mangap/fetures/genre/presentation/bloc/genre_detail_bloc.dart';
+import 'package:mangap/fetures/detail/presentation/pages/detail_page.dart';
+import 'package:mangap/fetures/main/bloc/navigation_bloc.dart';
+import 'package:mangap/fetures/manga/domain/entities/manga_entity.dart';
+import 'package:mangap/fetures/manga/presentation/bloc/manga_bloc.dart';
 
-class GenrePage extends StatefulWidget {
-  const GenrePage({super.key, required this.href, required this.title});
-
-  final String href;
-  final String title;
+class MangaPage extends StatefulWidget {
+  const MangaPage({super.key});
 
   @override
-  State<GenrePage> createState() => _GenrePageState();
-
-  String get cleanTitle {
-    return title.split('(').first.trim();
-  }
+  State<MangaPage> createState() => _MangaPageState();
 }
 
-class _GenrePageState extends State<GenrePage> {
-  final PagingController<int, KomikGenreDetailDataEntity> _pagingController =
+class _MangaPageState extends State<MangaPage> {
+  final PagingController<int, MangaEntity> _pagingController =
       PagingController(firstPageKey: 1);
 
   @override
   void initState() {
     super.initState();
     _pagingController.addPageRequestListener((pageKey) {
-      context
-          .read<GenreDetailBloc>()
-          .add(GenreDetailGetPage(widget.href, pageKey));
-      context
-          .read<GenreDetailBloc>()
-          .add(GenreDetailGetDataGenre(widget.href, pageKey));
+      context.read<MangaBloc>().add(MangaReset());
+      context.read<MangaBloc>().add(Manga(pageKey));
     });
   }
 
@@ -47,7 +36,7 @@ class _GenrePageState extends State<GenrePage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _pagingController.refresh();
-    context.read<GenreDetailBloc>().add(GenreDetailReset());
+    context.read<MangaBloc>().add(MangaReset());
   }
 
   @override
@@ -58,61 +47,94 @@ class _GenrePageState extends State<GenrePage> {
 
   void _refresh() {
     _pagingController.refresh();
-    context.read<GenreDetailBloc>().add(GenreDetailReset());
-    context.read<GenreDetailBloc>().add(GenreDetailGetPage(widget.href, 1));
-    context
-        .read<GenreDetailBloc>()
-        .add(GenreDetailGetDataGenre(widget.href, 1));
+    context.read<MangaBloc>().add(MangaReset());
+    context.read<MangaBloc>().add(const Manga(1));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppbarWidget(title: widget.cleanTitle),
       backgroundColor: ColorConstant.kPrimary,
+      appBar: const AppbarWidget(
+        title: "Mangapp",
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 18.0),
+            child: FaIcon(
+              FontAwesomeIcons.magnifyingGlass,
+              color: ColorConstant.whiteColor,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(right: 18.0),
+            child: FaIcon(
+              FontAwesomeIcons.circleInfo,
+              color: ColorConstant.whiteColor,
+            ),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: BlocListener<GenreDetailBloc, GenreDetailState>(
+          child: BlocListener<MangaBloc, MangaState>(
             listener: (context, state) {
-              if (state.status == GenreStatus.success) {
+              if (state.status == MangaStatus.success) {
                 final existingIds = _pagingController.itemList
                         ?.map((komik) => komik.href)
                         .toSet() ??
                     {};
-                final newKomiks = state.genreKomiks
+                final newKomiks = state.manga
                     .where((komik) => !existingIds.contains(komik.href))
                     .toList();
 
                 if (state.hasReachedMax) {
-                  log(state.hasReachedMax.toString());
                   _pagingController.appendLastPage(newKomiks);
                 } else {
-                  final nextPageKey = state.pageKomiks.current_page + 1;
+                  final nextPageKey = (_pagingController.nextPageKey ?? 1) + 1;
                   _pagingController.appendPage(newKomiks, nextPageKey);
                 }
-              } else if (state.status == GenreStatus.error) {
+              } else if (state.status == MangaStatus.error) {
                 Center(
                   child: ErrorWidgetComponent(
                     errorMessage: state.errorMessage,
-                    onTap: () => _refresh(),
+                    onTap: () {
+                      _refresh();
+                    },
                   ),
                 );
                 _pagingController.error = state.errorMessage;
               }
             },
-            child: PagedListView<int, KomikGenreDetailDataEntity>(
+            child: PagedListView<int, MangaEntity>(
               pagingController: _pagingController,
-              builderDelegate:
-                  PagedChildBuilderDelegate<KomikGenreDetailDataEntity>(
+              builderDelegate: PagedChildBuilderDelegate<MangaEntity>(
                 itemBuilder: (context, komik, index) {
-                  return KomikGenreCardWidget(
-                    title: komik.title,
-                    chapter: komik.chapter,
-                    href: komik.href,
-                    rate: fixedRating(komik.rating),
-                    type: komik.type,
-                    thumbnail: komik.thumbnail,
+                  String formattedRate = komik.rating == "?"
+                      ? "0.00"
+                      : komik.rating.replaceAll(',', '.');
+                  double rating = double.tryParse(formattedRate) ?? 0.00;
+                  return GestureDetector(
+                    onTap: () async {
+                      context.read<NavigationBloc>().add(HideBottomBarEvent());
+                      await Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => DetailPage(
+                            href: komik.href,
+                          ),
+                        ),
+                      );
+                      context.read<NavigationBloc>().add(ShowBottomBarEvent());
+                    },
+                    child: KomikCardWidget(
+                      title: komik.title,
+                      chapter: komik.chapter,
+                      href: komik.href,
+                      rate: rating.toString(),
+                      type: komik.type,
+                      thumbnail: komik.thumbnail,
+                      onTap: () {},
+                    ),
                   );
                 },
                 firstPageProgressIndicatorBuilder: (context) => const Center(
@@ -120,10 +142,11 @@ class _GenrePageState extends State<GenrePage> {
                 ),
                 newPageProgressIndicatorBuilder: (context) => const Center(
                   child: LoadingWidget(
-                      widthImage: 132,
-                      heightImage: 132,
-                      textSize: 14,
-                      textColor: ColorConstant.whiteColor),
+                    widthImage: 132,
+                    heightImage: 132,
+                    textSize: 14,
+                    textColor: ColorConstant.whiteColor,
+                  ),
                 ),
                 noItemsFoundIndicatorBuilder: (context) => Center(
                   child: ErrorWidgetComponent(
