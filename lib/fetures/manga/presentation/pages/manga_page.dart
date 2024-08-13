@@ -77,114 +77,126 @@ class _MangaPageState extends State<MangaPage> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: BlocListener<MangaBloc, MangaState>(
-            listener: (context, state) {
-              if (state.status == MangaStatus.success) {
-                final existingIds = _pagingController.itemList
-                        ?.map((komik) => komik.href)
-                        .toSet() ??
-                    {};
-                final newKomiks = state.manga
-                    .where((komik) => !existingIds.contains(komik.href))
-                    .toList();
-
-                if (state.hasReachedMax) {
-                  _pagingController.appendLastPage(newKomiks);
-                } else {
-                  final nextPageKey = (_pagingController.nextPageKey ?? 1) + 1;
-                  _pagingController.appendPage(newKomiks, nextPageKey);
-                }
-              } else if (state.status == MangaStatus.error) {
-                Center(
-                  child: ErrorWidgetComponent(
-                    errorMessage: state.errorMessage,
-                    onTap: () {
-                      _refresh();
-                    },
-                  ),
-                );
-                _pagingController.error = state.errorMessage;
-              }
+          child: RefreshIndicator(
+            backgroundColor: ColorConstant.whiteColor,
+            color: ColorConstant.kThird,
+            onRefresh: () async {
+              _refresh();
             },
-            child: PagedListView<int, MangaEntity>(
-              pagingController: _pagingController,
-              builderDelegate: PagedChildBuilderDelegate<MangaEntity>(
-                itemBuilder: (context, komik, index) {
-                  String formattedRate = komik.rating == "?"
-                      ? "0.00"
-                      : komik.rating.replaceAll(',', '.');
-                  double rating = double.tryParse(formattedRate) ?? 0.00;
-                  return GestureDetector(
-                    onTap: () async {
-                      context.read<NavigationBloc>().add(HideBottomBarEvent());
-                      await Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => DetailPage(
-                            href: komik.href,
-                          ),
-                        ),
-                      );
-                      context.read<NavigationBloc>().add(ShowBottomBarEvent());
-                    },
-                    child: KomikCardWidget(
-                      title: komik.title,
-                      chapter: komik.chapter,
-                      href: komik.href,
-                      rate: rating.toString(),
-                      type: komik.type,
-                      thumbnail: komik.thumbnail,
-                      onTap: () {},
+            child: BlocListener<MangaBloc, MangaState>(
+              listener: (context, state) {
+                if (state.status == MangaStatus.success) {
+                  final existingIds = _pagingController.itemList
+                          ?.map((komik) => komik.href)
+                          .toSet() ??
+                      {};
+                  final newKomiks = state.manga
+                      .where((komik) => !existingIds.contains(komik.href))
+                      .toList();
+
+                  if (state.hasReachedMax) {
+                    _pagingController.appendLastPage(newKomiks);
+                  } else {
+                    final nextPageKey =
+                        (_pagingController.nextPageKey ?? 1) + 1;
+                    _pagingController.appendPage(newKomiks, nextPageKey);
+                  }
+                } else if (state.status == MangaStatus.error) {
+                  Center(
+                    child: ErrorWidgetComponent(
+                      errorMessage: state.errorMessage,
+                      onTap: () {
+                        _refresh();
+                      },
                     ),
                   );
-                },
-                firstPageProgressIndicatorBuilder: (context) => const Center(
-                  child: LoadingWidget(textColor: ColorConstant.whiteColor),
-                ),
-                newPageProgressIndicatorBuilder: (context) => const Center(
-                  child: LoadingWidget(
-                    widthImage: 132,
-                    heightImage: 132,
-                    textSize: 14,
-                    textColor: ColorConstant.whiteColor,
+                  _pagingController.error = state.errorMessage;
+                }
+              },
+              child: PagedListView<int, MangaEntity>(
+                pagingController: _pagingController,
+                builderDelegate: PagedChildBuilderDelegate<MangaEntity>(
+                  itemBuilder: (context, komik, index) {
+                    String formattedRate = komik.rating == "?"
+                        ? "0.00"
+                        : komik.rating.replaceAll(',', '.');
+                    double rating = double.tryParse(formattedRate) ?? 0.00;
+                    return GestureDetector(
+                      onTap: () async {
+                        context
+                            .read<NavigationBloc>()
+                            .add(HideBottomBarEvent());
+                        await Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => DetailPage(
+                              href: komik.href,
+                            ),
+                          ),
+                        );
+                        context
+                            .read<NavigationBloc>()
+                            .add(ShowBottomBarEvent());
+                      },
+                      child: KomikCardWidget(
+                        title: komik.title,
+                        chapter: komik.chapter,
+                        href: komik.href,
+                        rate: rating.toString(),
+                        type: komik.type,
+                        thumbnail: komik.thumbnail,
+                        onTap: () {},
+                      ),
+                    );
+                  },
+                  firstPageProgressIndicatorBuilder: (context) => const Center(
+                    child: LoadingWidget(textColor: ColorConstant.whiteColor),
                   ),
-                ),
-                noItemsFoundIndicatorBuilder: (context) => Center(
-                  child: ErrorWidgetComponent(
-                    widthImage: 132,
-                    heightImage: 132,
-                    textSize: 14,
-                    errorMessage: "Tidak Ada Komik Coba Lagi!",
-                    onTap: () {
-                      _refresh();
-                    },
-                  ),
-                ),
-                firstPageErrorIndicatorBuilder: (context) => Center(
-                  child: ErrorWidgetComponent(
-                    errorMessage: "Gagal Memuat Komik",
-                    onTap: () {
-                      _refresh();
-                    },
-                  ),
-                ),
-                newPageErrorIndicatorBuilder: (context) => Center(
-                  child: ErrorWidgetComponent(
+                  newPageProgressIndicatorBuilder: (context) => const Center(
+                    child: LoadingWidget(
                       widthImage: 132,
                       heightImage: 132,
                       textSize: 14,
-                      errorMessage: "Gagal Memuat Lebih Banyak Komik",
+                      textColor: ColorConstant.whiteColor,
+                    ),
+                  ),
+                  noItemsFoundIndicatorBuilder: (context) => Center(
+                    child: ErrorWidgetComponent(
+                      widthImage: 132,
+                      heightImage: 132,
+                      textSize: 14,
+                      errorMessage: "Tidak Ada Komik Coba Lagi!",
                       onTap: () {
                         _refresh();
-                      }),
-                ),
-                noMoreItemsIndicatorBuilder: (context) => Center(
-                  child: ErrorWidgetComponent(
-                    widthImage: 132,
-                    heightImage: 132,
-                    textSize: 14,
-                    textButton: "Kembali",
-                    errorMessage: "Semua Komik Sudah Ditampilkan",
-                    onTap: () => Navigator.pop(context),
+                      },
+                    ),
+                  ),
+                  firstPageErrorIndicatorBuilder: (context) => Center(
+                    child: ErrorWidgetComponent(
+                      errorMessage: "Gagal Memuat Komik",
+                      onTap: () {
+                        _refresh();
+                      },
+                    ),
+                  ),
+                  newPageErrorIndicatorBuilder: (context) => Center(
+                    child: ErrorWidgetComponent(
+                        widthImage: 132,
+                        heightImage: 132,
+                        textSize: 14,
+                        errorMessage: "Gagal Memuat Lebih Banyak Komik",
+                        onTap: () {
+                          _refresh();
+                        }),
+                  ),
+                  noMoreItemsIndicatorBuilder: (context) => Center(
+                    child: ErrorWidgetComponent(
+                      widthImage: 132,
+                      heightImage: 132,
+                      textSize: 14,
+                      textButton: "Kembali",
+                      errorMessage: "Semua Komik Sudah Ditampilkan",
+                      onTap: () => Navigator.pop(context),
+                    ),
                   ),
                 ),
               ),
