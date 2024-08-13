@@ -6,11 +6,13 @@ import 'package:mangap/core/common/widget/appbar.dart';
 import 'package:mangap/core/common/widget/error.dart';
 import 'package:mangap/core/common/widget/komik_card.dart';
 import 'package:mangap/core/common/widget/loading.dart';
+import 'package:mangap/core/common/widget/rating.dart';
 import 'package:mangap/core/constants/color.dart';
 import 'package:mangap/fetures/detail/presentation/pages/detail_page.dart';
 import 'package:mangap/fetures/main/bloc/navigation_bloc.dart';
 import 'package:mangap/fetures/manga/domain/entities/manga_entity.dart';
 import 'package:mangap/fetures/manga/presentation/bloc/manga_bloc.dart';
+import 'package:mangap/fetures/search/presentation/pages/search_page.dart';
 
 class MangaPage extends StatefulWidget {
   const MangaPage({super.key});
@@ -55,17 +57,28 @@ class _MangaPageState extends State<MangaPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstant.kPrimary,
-      appBar: const AppbarWidget(
+      appBar: AppbarWidget(
         title: "Mangapp",
         actions: [
           Padding(
-            padding: EdgeInsets.only(right: 18.0),
-            child: FaIcon(
-              FontAwesomeIcons.magnifyingGlass,
-              color: ColorConstant.whiteColor,
+            padding: const EdgeInsets.only(right: 18.0),
+            child: GestureDetector(
+              onTap: () async {
+                context.read<NavigationBloc>().add(HideBottomBarEvent());
+                await Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const SearchPage(),
+                  ),
+                );
+                context.read<NavigationBloc>().add(ShowBottomBarEvent());
+              },
+              child: const FaIcon(
+                FontAwesomeIcons.magnifyingGlass,
+                color: ColorConstant.whiteColor,
+              ),
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(right: 18.0),
             child: FaIcon(
               FontAwesomeIcons.circleInfo,
@@ -102,14 +115,13 @@ class _MangaPageState extends State<MangaPage> {
                     _pagingController.appendPage(newKomiks, nextPageKey);
                   }
                 } else if (state.status == MangaStatus.error) {
-                  Center(
-                    child: ErrorWidgetComponent(
-                      errorMessage: state.errorMessage,
-                      onTap: () {
-                        _refresh();
-                      },
-                    ),
+                  ErrorWidgetComponent(
+                    errorMessage: state.errorMessage,
+                    onTap: () {
+                      _refresh();
+                    },
                   );
+
                   _pagingController.error = state.errorMessage;
                 }
               },
@@ -117,10 +129,6 @@ class _MangaPageState extends State<MangaPage> {
                 pagingController: _pagingController,
                 builderDelegate: PagedChildBuilderDelegate<MangaEntity>(
                   itemBuilder: (context, komik, index) {
-                    String formattedRate = komik.rating == "?"
-                        ? "0.00"
-                        : komik.rating.replaceAll(',', '.');
-                    double rating = double.tryParse(formattedRate) ?? 0.00;
                     return GestureDetector(
                       onTap: () async {
                         context
@@ -141,62 +149,57 @@ class _MangaPageState extends State<MangaPage> {
                         title: komik.title,
                         chapter: komik.chapter,
                         href: komik.href,
-                        rate: rating.toString(),
+                        rate: fixedRating(komik.rating),
                         type: komik.type,
                         thumbnail: komik.thumbnail,
                         onTap: () {},
                       ),
                     );
                   },
-                  firstPageProgressIndicatorBuilder: (context) => const Center(
-                    child: LoadingWidget(textColor: ColorConstant.whiteColor),
+                  firstPageProgressIndicatorBuilder: (context) =>
+                      const LoadingWidget(textColor: ColorConstant.whiteColor),
+                  newPageProgressIndicatorBuilder: (context) =>
+                      const LoadingWidget(
+                    widthImage: 132,
+                    heightImage: 132,
+                    textSize: 14,
+                    textColor: ColorConstant.whiteColor,
                   ),
-                  newPageProgressIndicatorBuilder: (context) => const Center(
-                    child: LoadingWidget(
-                      widthImage: 132,
-                      heightImage: 132,
-                      textSize: 14,
-                      textColor: ColorConstant.whiteColor,
-                    ),
+                  noItemsFoundIndicatorBuilder: (context) =>
+                      ErrorWidgetComponent(
+                    widthImage: 132,
+                    heightImage: 132,
+                    textSize: 14,
+                    errorMessage: "Tidak Ada Komik Coba Lagi!",
+                    onTap: () {
+                      _refresh();
+                    },
                   ),
-                  noItemsFoundIndicatorBuilder: (context) => Center(
-                    child: ErrorWidgetComponent(
-                      widthImage: 132,
-                      heightImage: 132,
-                      textSize: 14,
-                      errorMessage: "Tidak Ada Komik Coba Lagi!",
-                      onTap: () {
-                        _refresh();
-                      },
-                    ),
+                  firstPageErrorIndicatorBuilder: (context) =>
+                      ErrorWidgetComponent(
+                    errorMessage: "Gagal Memuat Komik",
+                    onTap: () {
+                      _refresh();
+                    },
                   ),
-                  firstPageErrorIndicatorBuilder: (context) => Center(
-                    child: ErrorWidgetComponent(
-                      errorMessage: "Gagal Memuat Komik",
-                      onTap: () {
-                        _refresh();
-                      },
-                    ),
+                  newPageErrorIndicatorBuilder: (context) =>
+                      ErrorWidgetComponent(
+                    widthImage: 132,
+                    heightImage: 132,
+                    textSize: 14,
+                    errorMessage: "Gagal Memuat Lebih Banyak Komik",
+                    onTap: () {
+                      _refresh();
+                    },
                   ),
-                  newPageErrorIndicatorBuilder: (context) => Center(
-                    child: ErrorWidgetComponent(
-                        widthImage: 132,
-                        heightImage: 132,
-                        textSize: 14,
-                        errorMessage: "Gagal Memuat Lebih Banyak Komik",
-                        onTap: () {
-                          _refresh();
-                        }),
-                  ),
-                  noMoreItemsIndicatorBuilder: (context) => Center(
-                    child: ErrorWidgetComponent(
-                      widthImage: 132,
-                      heightImage: 132,
-                      textSize: 14,
-                      textButton: "Kembali",
-                      errorMessage: "Semua Komik Sudah Ditampilkan",
-                      onTap: () => Navigator.pop(context),
-                    ),
+                  noMoreItemsIndicatorBuilder: (context) =>
+                      ErrorWidgetComponent(
+                    widthImage: 132,
+                    heightImage: 132,
+                    textSize: 14,
+                    textButton: "Kembali",
+                    errorMessage: "Semua Komik Sudah Ditampilkan",
+                    onTap: () => Navigator.pop(context),
                   ),
                 ),
               ),

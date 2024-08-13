@@ -28,5 +28,10 @@ import 'package:mangap/fetures/manga/data/repositories/manga_repository_impl.dar
 import 'package:mangap/fetures/manga/domain/repositories/manga_repository.dart';
 import 'package:mangap/fetures/manga/domain/usecases/get_all_manga.dart';
 import 'package:mangap/fetures/manga/presentation/bloc/manga_bloc.dart';
+import 'package:mangap/fetures/search/data/datasources/search_remote_datasource.dart';
+import 'package:mangap/fetures/search/data/repositories/search_repository_impl.dart';
+import 'package:mangap/fetures/search/domain/repositories/search_repository.dart';
+import 'package:mangap/fetures/search/domain/usecases/get_search.dart';
+import 'package:mangap/fetures/search/presentation/bloc/search_bloc.dart';
 
 part 'depedency_container_main.dart';

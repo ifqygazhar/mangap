@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mangap/core/common/widget/appbar.dart';
@@ -9,6 +10,8 @@ import 'package:mangap/fetures/home/presentation/bloc/home_bloc.dart';
 import 'package:mangap/fetures/home/presentation/widgets/list_genre_widget.dart';
 import 'package:mangap/fetures/home/presentation/widgets/list_popular_widget.dart';
 import 'package:mangap/fetures/home/presentation/widgets/list_recommended_komik_widget.dart';
+import 'package:mangap/fetures/main/bloc/navigation_bloc.dart';
+import 'package:mangap/fetures/search/presentation/pages/search_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -16,21 +19,35 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppbarWidget(
+      appBar: AppbarWidget(
         title: "Mangapp",
         actions: [
           Padding(
-            padding: EdgeInsets.only(right: 18.0),
-            child: FaIcon(
-              FontAwesomeIcons.magnifyingGlass,
-              color: ColorConstant.whiteColor,
+            padding: const EdgeInsets.only(right: 18.0),
+            child: GestureDetector(
+              onTap: () async {
+                context.read<NavigationBloc>().add(HideBottomBarEvent());
+                await Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const SearchPage(),
+                  ),
+                );
+                context.read<NavigationBloc>().add(ShowBottomBarEvent());
+              },
+              child: const FaIcon(
+                FontAwesomeIcons.magnifyingGlass,
+                color: ColorConstant.whiteColor,
+              ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(right: 18.0),
-            child: FaIcon(
-              FontAwesomeIcons.circleInfo,
-              color: ColorConstant.whiteColor,
+            padding: const EdgeInsets.only(right: 18.0),
+            child: GestureDetector(
+              onTap: () {},
+              child: const FaIcon(
+                FontAwesomeIcons.circleInfo,
+                color: ColorConstant.whiteColor,
+              ),
             ),
           ),
         ],

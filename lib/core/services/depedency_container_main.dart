@@ -157,6 +157,34 @@ Future<void> _initHome() async {
       () => MangaRemoteDataSourceImpl(
         client: sl(),
       ),
+    );
+
+  //feature search
+  sl
+    ..registerFactory(
+      () => SearchBloc(
+        getSearch: sl(),
+      ),
+    )
+
+    //usecase
+    ..registerLazySingleton(
+      () => GetSearch(repository: sl()),
+    )
+
+    //repository
+    ..registerLazySingleton<SearchRepository>(
+      () => SearchRepositoryImpl(
+        dataSource: sl(),
+        networkInfo: sl(),
+      ),
+    )
+
+    //data source
+    ..registerLazySingleton<SearchRemoteDataSource>(
+      () => SearchRemoteDatasourceImpl(
+        client: sl(),
+      ),
     )
 
     //other

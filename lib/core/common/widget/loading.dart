@@ -7,12 +7,16 @@ class LoadingWidget extends StatelessWidget {
     this.heightImage = 240,
     this.widthImage = 240,
     this.textSize = 22,
+    this.image = 'assets/images/kuru.gif',
+    this.text = 'Lagi Memuat Komik...',
   });
 
   final Color textColor;
   final double heightImage;
   final double widthImage;
   final double textSize;
+  final String image;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +25,7 @@ class LoadingWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(
-            'assets/images/kuru.gif',
+            image,
             width: widthImage,
             height: heightImage,
           ),
@@ -29,7 +33,7 @@ class LoadingWidget extends StatelessWidget {
             height: 8,
           ),
           Text(
-            'Lagi Memuat Komik...',
+            text,
             style: TextStyle(
               color: textColor,
               fontSize: textSize,
