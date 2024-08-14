@@ -185,6 +185,32 @@ Future<void> _initHome() async {
       () => SearchRemoteDatasourceImpl(
         client: sl(),
       ),
+    );
+
+  //feature read
+  sl
+    ..registerFactory(
+      () => ReadBloc(getReadChapter: sl()),
+    )
+
+    //usecase
+    ..registerLazySingleton(
+      () => GetReadChapter(repository: sl()),
+    )
+
+    //repository
+    ..registerLazySingleton<ReadRepository>(
+      () => ReadRepositoryImpl(
+        dataSource: sl(),
+        networkInfo: sl(),
+      ),
+    )
+
+    //data source
+    ..registerLazySingleton<ReadRemoteDataSource>(
+      () => ReadRempteDataSourceImpl(
+        client: sl(),
+      ),
     )
 
     //other

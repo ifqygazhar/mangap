@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mangap/core/constants/color.dart';
 import 'package:mangap/fetures/detail/domain/entities/komik_detail_entity.dart';
+import 'package:mangap/fetures/main/bloc/navigation_bloc.dart';
+import 'package:mangap/fetures/read/presentation/pages/read_page.dart';
 
 class KomikChapterWidget extends StatelessWidget {
   const KomikChapterWidget({super.key, required this.chapters});
@@ -27,10 +30,19 @@ class KomikChapterWidget extends StatelessWidget {
         SizedBox(
           height: 400,
           child: ListView.builder(
-              itemCount: chapters.length,
-              itemBuilder: (context, index) {
-                final chapter = chapters[index];
-                return Container(
+            itemCount: chapters.length,
+            itemBuilder: (context, index) {
+              final chapter = chapters[index];
+              return GestureDetector(
+                onTap: () async {
+                  context.read<NavigationBloc>().add(HideBottomBarEvent());
+                  await Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => ReadPage(href: chapter.href),
+                    ),
+                  );
+                },
+                child: Container(
                   width: double.infinity,
                   margin: const EdgeInsets.only(bottom: 3, top: 8),
                   decoration: BoxDecoration(
@@ -61,8 +73,10 @@ class KomikChapterWidget extends StatelessWidget {
                       ],
                     ),
                   ),
-                );
-              }),
+                ),
+              );
+            },
+          ),
         )
       ],
     );

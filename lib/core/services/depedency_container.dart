@@ -28,6 +28,11 @@ import 'package:mangap/fetures/manga/data/repositories/manga_repository_impl.dar
 import 'package:mangap/fetures/manga/domain/repositories/manga_repository.dart';
 import 'package:mangap/fetures/manga/domain/usecases/get_all_manga.dart';
 import 'package:mangap/fetures/manga/presentation/bloc/manga_bloc.dart';
+import 'package:mangap/fetures/read/data/datasources/read_remote_datasource.dart';
+import 'package:mangap/fetures/read/data/repositories/read_repository_impl.dart';
+import 'package:mangap/fetures/read/domain/repositories/read_repository.dart';
+import 'package:mangap/fetures/read/domain/usecases/get_read_chapter.dart';
+import 'package:mangap/fetures/read/presentation/bloc/read_bloc.dart';
 import 'package:mangap/fetures/search/data/datasources/search_remote_datasource.dart';
 import 'package:mangap/fetures/search/data/repositories/search_repository_impl.dart';
 import 'package:mangap/fetures/search/domain/repositories/search_repository.dart';

@@ -7,14 +7,17 @@ class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
     super.key,
     required this.title,
     this.actions,
+    this.leading,
   });
 
   final String title;
   final List<Widget>? actions;
+  final Widget? leading;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      leading: leading,
       backgroundColor: ColorConstant.kThird,
       title: Text(
         title,

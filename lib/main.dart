@@ -7,6 +7,7 @@ import 'package:mangap/fetures/home/presentation/bloc/home_bloc.dart';
 import 'package:mangap/fetures/main/bloc/navigation_bloc.dart';
 import 'package:mangap/fetures/manga/presentation/bloc/manga_bloc.dart';
 import 'package:mangap/fetures/onboard/presentation/pages/onboard.dart';
+import 'package:mangap/fetures/read/presentation/bloc/read_bloc.dart';
 import 'package:mangap/fetures/search/presentation/bloc/search_bloc.dart';
 
 Future<void> main() async {
@@ -39,6 +40,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => sl<SearchBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => sl<ReadBloc>(),
         )
       ],
       child: const MaterialApp(

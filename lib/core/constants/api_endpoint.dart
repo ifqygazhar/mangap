@@ -12,4 +12,5 @@ class ApiConstant {
   static const GENRE = "$BASE_URL/genre";
   static const GENRE_DETAIL = "$BASE_URL/genres";
   static const ALL_MANGA = "$BASE_URL/daftar-komik";
+  static const READ = "$BASE_URL/read";
 }
