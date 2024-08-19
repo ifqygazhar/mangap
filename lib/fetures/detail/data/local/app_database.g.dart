@@ -177,24 +177,6 @@ class _$DetailDao extends DetailDao {
   }
 
   @override
-  Future<KomikDetailModel?> getDetailByHref(String href) async {
-    return _queryAdapter.query('SELECT * FROM komik_detail WHERE href = ?1',
-        mapper: (Map<String, Object?> row) => KomikDetailModel(
-            href: row['href'] as String?,
-            title: row['title'] as String,
-            altTitle: row['altTitle'] as String,
-            updatedOn: row['updatedOn'] as String,
-            rating: row['rating'] as String,
-            status: row['status'] as String,
-            type: row['type'] as String,
-            released: row['released'] as String,
-            author: row['author'] as String,
-            description: row['description'] as String,
-            thumbnail: row['thumbnail'] as String),
-        arguments: [href]);
-  }
-
-  @override
   Future<void> saveDetail(KomikDetailModel detail) async {
     await _komikDetailModelInsertionAdapter.insert(
         detail, OnConflictStrategy.abort);

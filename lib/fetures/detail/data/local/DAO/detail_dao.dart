@@ -11,7 +11,4 @@ abstract class DetailDao {
 
   @Query('SELECT * FROM komik_detail')
   Future<List<KomikDetailModel>> getDetails();
-
-  @Query('SELECT * FROM komik_detail WHERE href = :href')
-  Future<KomikDetailModel?> getDetailByHref(String href);
 }
