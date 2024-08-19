@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mangap/core/common/widget/appbar.dart';
@@ -39,6 +41,7 @@ Widget _buildContent(BuildContext context, DetailState state, String href) {
     case DetailStatus.loading:
       return const LoadingWidget(textColor: ColorConstant.whiteColor);
     case DetailStatus.error:
+      log(state.details.href.toString());
       String extractErrorMessage(String errorMessage) {
         final startIndex = errorMessage.indexOf('(');
         final endIndex = errorMessage.indexOf(')');
@@ -68,7 +71,7 @@ Widget _buildContent(BuildContext context, DetailState state, String href) {
             children: [
               ListKomikDetailWidget(
                 details: state.details,
-                genres: state.genres,
+                href: href,
               ),
               const SizedBox(
                 height: 14,

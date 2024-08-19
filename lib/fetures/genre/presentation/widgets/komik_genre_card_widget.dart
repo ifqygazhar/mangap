@@ -8,7 +8,7 @@ class KomikGenreCardWidget extends StatelessWidget {
   const KomikGenreCardWidget({
     super.key,
     required this.title,
-    required this.chapter,
+    required this.status,
     required this.href,
     required this.rate,
     required this.type,
@@ -16,7 +16,7 @@ class KomikGenreCardWidget extends StatelessWidget {
   });
 
   final String title;
-  final String chapter;
+  final String status;
   final String href;
   final String rate;
   final String type;
@@ -38,12 +38,11 @@ class KomikGenreCardWidget extends StatelessWidget {
       },
       child: KomikCardWidget(
         title: title,
-        chapter: chapter,
+        status: status,
         href: href,
         rate: rate,
         type: type,
         thumbnail: thumbnail,
-        onTap: () {},
       ),
     );
   }

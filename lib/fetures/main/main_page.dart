@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mangap/core/constants/color.dart';
+import 'package:mangap/fetures/detail/presentation/pages/bookmark_page.dart';
 import 'package:mangap/fetures/home/presentation/pages/home_page.dart';
 import 'package:mangap/fetures/main/bloc/navigation_bloc.dart';
 import 'package:mangap/fetures/manga/presentation/pages/manga_page.dart';
@@ -18,12 +19,7 @@ class MainPage extends StatelessWidget {
       const HomePage(),
       const MangaPage(),
       const Center(child: Text("Page 1: List of items")),
-      Center(
-        child: ElevatedButton(
-          onPressed: () {},
-          child: const Text('Refresh Page'),
-        ),
-      ),
+      const BookmarkPage(),
     ];
   }
 

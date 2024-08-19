@@ -8,6 +8,7 @@ part of 'komik_detail_model.dart';
 
 KomikDetailModel _$KomikDetailModelFromJson(Map<String, dynamic> json) =>
     KomikDetailModel(
+      href: json['href'] as String?,
       title: json['title'] as String,
       altTitle: json['altTitle'] as String,
       updatedOn: json['updatedOn'] as String,
@@ -22,6 +23,7 @@ KomikDetailModel _$KomikDetailModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$KomikDetailModelToJson(KomikDetailModel instance) =>
     <String, dynamic>{
+      'href': instance.href,
       'title': instance.title,
       'altTitle': instance.altTitle,
       'updatedOn': instance.updatedOn,

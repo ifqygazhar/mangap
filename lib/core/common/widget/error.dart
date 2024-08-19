@@ -59,6 +59,7 @@ class _ErrorWidgetComponentState extends State<ErrorWidgetComponent> {
           ),
           const SizedBox(height: 8),
           ButtonWidget(
+            icon: null,
             onTap: widget.onTap,
             color: ColorConstant.kThird,
             text: widget.textButton,

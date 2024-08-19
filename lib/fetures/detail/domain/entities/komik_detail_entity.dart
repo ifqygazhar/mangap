@@ -1,5 +1,6 @@
 class KomikDetailEntity {
   const KomikDetailEntity({
+    required this.href,
     required this.title,
     required this.altTitle,
     required this.updatedOn,
@@ -11,7 +12,7 @@ class KomikDetailEntity {
     required this.description,
     required this.thumbnail,
   });
-
+  final String? href;
   final String title;
   final String altTitle;
   final String updatedOn;

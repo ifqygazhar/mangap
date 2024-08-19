@@ -51,6 +51,7 @@ class InformationReadWidget extends StatelessWidget {
                     _container("Chapter Awal")
                   else
                     ButtonWidget(
+                      icon: null,
                       onTap: () async {
                         context
                             .read<NavigationBloc>()
@@ -75,6 +76,7 @@ class InformationReadWidget extends StatelessWidget {
                     _container("Chapter Selesai")
                   else
                     ButtonWidget(
+                      icon: null,
                       onTap: () async {
                         context
                             .read<NavigationBloc>()

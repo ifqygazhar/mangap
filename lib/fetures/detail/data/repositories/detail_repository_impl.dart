@@ -4,6 +4,8 @@ import 'package:mangap/core/errors/failures.dart';
 import 'package:mangap/core/services/network_info.dart';
 import 'package:mangap/core/utils/typedef.dart';
 import 'package:mangap/fetures/detail/data/datasources/detail_remote_datasoruce.dart';
+import 'package:mangap/fetures/detail/data/local/app_database.dart';
+import 'package:mangap/fetures/detail/data/models/komik_detail_model.dart';
 import 'package:mangap/fetures/detail/domain/entities/komik_detail_entity.dart';
 import 'package:mangap/fetures/detail/domain/repositories/detail_repository.dart';
 
@@ -11,11 +13,14 @@ class DetailRepositoryImpl implements DetailRepository {
   DetailRepositoryImpl({
     required DetailRemoteDataSource dataSource,
     required NetworkInfo networkInfo,
+    required AppDatabase database,
   })  : _dataSource = dataSource,
-        _networkInfo = networkInfo;
+        _networkInfo = networkInfo,
+        _database = database;
 
   final DetailRemoteDataSource _dataSource;
   final NetworkInfo _networkInfo;
+  final AppDatabase _database;
 
   @override
   ResultFuture<List<ChapterEntity>> getChapter(String href) async {
@@ -53,6 +58,37 @@ class DetailRepositoryImpl implements DetailRepository {
       return Right(result);
     } on ServerException catch (e) {
       return left(ServerFailure.fromException(e));
+    }
+  }
+
+  @override
+  ResultFuture<void> deleteSaveDetail(KomikDetailEntity detail) async {
+    try {
+      final result = await _database.detailDao
+          .deleteSavedDetail(KomikDetailModel.fromEntity(detail));
+      return Right(result);
+    } on CacheException catch (e) {
+      return Left(CacheFailure.fromException(e));
+    }
+  }
+
+  @override
+  ResultFuture<List<KomikDetailEntity>> getSavedDetail(String href) async {
+    try {
+      final result = await _database.detailDao.getDetails();
+      return Right(result);
+    } on CacheException catch (e) {
+      return Left(CacheFailure.fromException(e));
+    }
+  }
+
+  @override
+  ResultFuture<void> saveDetail(KomikDetailEntity detail) async {
+    try {
+      await _database.detailDao.saveDetail(KomikDetailModel.fromEntity(detail));
+      return const Right(null);
+    } on CacheException catch (e) {
+      return Left(CacheFailure.fromException(e));
     }
   }
 }

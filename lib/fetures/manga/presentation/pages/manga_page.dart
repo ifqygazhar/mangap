@@ -147,12 +147,11 @@ class _MangaPageState extends State<MangaPage> {
                       },
                       child: KomikCardWidget(
                         title: komik.title,
-                        chapter: komik.chapter,
+                        status: komik.chapter,
                         href: komik.href,
                         rate: fixedRating(komik.rating),
                         type: komik.type,
                         thumbnail: komik.thumbnail,
-                        onTap: () {},
                       ),
                     );
                   },

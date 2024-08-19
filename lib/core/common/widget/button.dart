@@ -10,6 +10,8 @@ class ButtonWidget extends StatelessWidget {
     required this.circular,
     required this.foregroundColor,
     required this.fontSize,
+    required this.icon,
+    this.isIcon = false,
   });
 
   final Function() onTap;
@@ -18,22 +20,41 @@ class ButtonWidget extends StatelessWidget {
   final double circular;
   final Color foregroundColor;
   final double? fontSize;
+  final Icon? icon;
+  final bool isIcon;
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onTap,
-      style: ElevatedButton.styleFrom(
-          foregroundColor: foregroundColor,
-          backgroundColor: color,
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(circular),
-          )),
-      child: Text(
-        text,
-        style: GoogleFonts.openSans(fontSize: fontSize),
-      ),
-    );
+    return isIcon == false
+        ? ElevatedButton(
+            onPressed: onTap,
+            style: ElevatedButton.styleFrom(
+                foregroundColor: foregroundColor,
+                backgroundColor: color,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(circular),
+                )),
+            child: Text(
+              text,
+              style: GoogleFonts.openSans(fontSize: fontSize),
+            ),
+          )
+        : ElevatedButton.icon(
+            onPressed: onTap,
+            style: ElevatedButton.styleFrom(
+              foregroundColor: foregroundColor,
+              backgroundColor: color,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(circular),
+              ),
+            ),
+            icon: icon,
+            label: Text(
+              text,
+              style: GoogleFonts.openSans(fontSize: fontSize),
+            ),
+          );
   }
 }

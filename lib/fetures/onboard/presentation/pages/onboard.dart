@@ -5,6 +5,7 @@ import 'package:mangap/fetures/main/main_page.dart';
 
 import 'package:mangap/fetures/onboard/presentation/widgets/caraousel_widget.dart';
 import 'package:mangap/core/constants/color.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardScreen extends StatelessWidget {
   const OnboardScreen({super.key});
@@ -65,11 +66,8 @@ class OnboardScreen extends StatelessWidget {
                     right: 16,
                   ),
                   child: ButtonWidget(
-                    onTap: () => Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => MainPage(),
-                      ),
-                    ),
+                    icon: null,
+                    onTap: () => _completeOnboarding(context),
                     color: ColorConstant.kThird,
                     text: "Ayo Mulai",
                     circular: 14,
@@ -84,4 +82,15 @@ class OnboardScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<void> _completeOnboarding(BuildContext context) async {
+  final sharedPreferences = await SharedPreferences.getInstance();
+  await sharedPreferences.setBool('hasSeenOnboarding', true);
+
+  Navigator.of(context).pushReplacement(
+    MaterialPageRoute(
+      builder: (context) => MainPage(),
+    ),
+  );
 }

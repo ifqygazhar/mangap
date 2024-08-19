@@ -5,19 +5,29 @@ import 'package:mangap/fetures/detail/presentation/bloc/detail_bloc.dart';
 import 'package:mangap/fetures/genre/presentation/bloc/genre_detail_bloc.dart';
 import 'package:mangap/fetures/home/presentation/bloc/home_bloc.dart';
 import 'package:mangap/fetures/main/bloc/navigation_bloc.dart';
+import 'package:mangap/fetures/main/main_page.dart';
 import 'package:mangap/fetures/manga/presentation/bloc/manga_bloc.dart';
 import 'package:mangap/fetures/onboard/presentation/pages/onboard.dart';
 import 'package:mangap/fetures/read/presentation/bloc/read_bloc.dart';
 import 'package:mangap/fetures/search/presentation/bloc/search_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await init();
-  runApp(const MyApp());
+
+  final sharedPreferences = await SharedPreferences.getInstance();
+  final bool hasSeenOnboarding =
+      sharedPreferences.getBool('hasSeenOnboarding') ?? false;
+  runApp(MyApp(
+    hasSeenOnboarding: hasSeenOnboarding,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool hasSeenOnboarding;
+
+  const MyApp({super.key, required this.hasSeenOnboarding});
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +55,9 @@ class MyApp extends StatelessWidget {
           create: (_) => sl<ReadBloc>(),
         )
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: OnboardScreen(),
+        home: hasSeenOnboarding ? MainPage() : const OnboardScreen(),
       ),
     );
   }

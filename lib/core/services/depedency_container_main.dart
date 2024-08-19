@@ -7,6 +7,11 @@ Future<void> init() async {
 }
 
 Future<void> _initHome() async {
+  //DB
+  final database =
+      await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+  final sharedPreferences = await SharedPreferences.getInstance();
+
   //feature main page
   sl.registerFactory(
     () => NavigationBloc(),
@@ -60,6 +65,9 @@ Future<void> _initHome() async {
         getDetail: sl(),
         getGenre: sl(),
         getChapter: sl(),
+        saveDetailKomik: sl(),
+        getDetailSavedKomik: sl(),
+        deletedDetailSavedKomik: sl(),
       ),
     )
 
@@ -79,12 +87,28 @@ Future<void> _initHome() async {
         repository: sl(),
       ),
     )
+    ..registerLazySingleton(
+      () => DeletedDetailSavedKomik(
+        repository: sl(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => GetDetailSavedKomik(
+        repository: sl(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => SaveDetailKomik(
+        repository: sl(),
+      ),
+    )
 
     //repository
     ..registerLazySingleton<DetailRepository>(
       () => DetailRepositoryImpl(
         dataSource: sl(),
         networkInfo: sl(),
+        database: sl(),
       ),
     )
 
@@ -217,6 +241,8 @@ Future<void> _initHome() async {
     ..registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImpl(networkInfo: sl()),
     )
+    ..registerSingleton<SharedPreferences>(sharedPreferences)
+    ..registerSingleton<AppDatabase>(database)
     ..registerLazySingleton(InternetConnection.new)
     ..registerLazySingleton(http.Client.new);
 }

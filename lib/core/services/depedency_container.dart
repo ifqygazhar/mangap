@@ -3,11 +3,15 @@ import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:mangap/core/services/network_info.dart';
 import 'package:mangap/fetures/detail/data/datasources/detail_remote_datasoruce.dart';
+import 'package:mangap/fetures/detail/data/local/app_database.dart';
 import 'package:mangap/fetures/detail/data/repositories/detail_repository_impl.dart';
 import 'package:mangap/fetures/detail/domain/repositories/detail_repository.dart';
+import 'package:mangap/fetures/detail/domain/usecases/deleted_detail_saved_komik.dart';
 import 'package:mangap/fetures/detail/domain/usecases/get_detail_chapter_komik.dart';
 import 'package:mangap/fetures/detail/domain/usecases/get_detail_genre_komik.dart';
 import 'package:mangap/fetures/detail/domain/usecases/get_detail_komik.dart';
+import 'package:mangap/fetures/detail/domain/usecases/get_detail_saved_komik.dart';
+import 'package:mangap/fetures/detail/domain/usecases/save_detail_komik.dart';
 import 'package:mangap/fetures/detail/presentation/bloc/detail_bloc.dart';
 import 'package:mangap/fetures/genre/data/datasources/genre_remote_datasource.dart';
 import 'package:mangap/fetures/genre/data/repositories/genre_repository_impl.dart';
@@ -38,5 +42,6 @@ import 'package:mangap/fetures/search/data/repositories/search_repository_impl.d
 import 'package:mangap/fetures/search/domain/repositories/search_repository.dart';
 import 'package:mangap/fetures/search/domain/usecases/get_search.dart';
 import 'package:mangap/fetures/search/presentation/bloc/search_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'depedency_container_main.dart';

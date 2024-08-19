@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mangap/core/common/widget/button.dart';
 import 'package:mangap/core/common/widget/container_custom.dart';
 import 'package:mangap/core/common/widget/image_stack.dart';
 import 'package:mangap/core/common/widget/rating.dart';
@@ -11,21 +10,19 @@ class KomikCardWidget extends StatelessWidget {
   const KomikCardWidget({
     super.key,
     required this.title,
-    required this.chapter,
+    required this.status,
     required this.href,
     required this.rate,
     required this.type,
     required this.thumbnail,
-    required this.onTap,
   });
 
   final String title;
-  final String chapter;
+  final String status;
   final String href;
   final String rate;
   final String type;
   final String thumbnail;
-  final Function() onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +42,7 @@ class KomikCardWidget extends StatelessWidget {
             const SizedBox(
               width: 14,
             ),
-            _buildInformationDetail(title, chapter, rate, onTap),
+            _buildInformationDetail(title, status, rate),
           ],
         ),
       ),
@@ -55,9 +52,8 @@ class KomikCardWidget extends StatelessWidget {
 
 Expanded _buildInformationDetail(
   String title,
-  String chapter,
+  String status,
   String rate,
-  Function() onTap,
 ) {
   return Expanded(
     child: Column(
@@ -94,26 +90,11 @@ Expanded _buildInformationDetail(
           children: [
             ContainerCustomWidget(
               containerColor: Colors.amber,
-              title: chapter,
+              title: status,
               fontColor: ColorConstant.kThird,
               fontSize: 12,
             ),
           ],
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        SizedBox(
-          width: double.infinity,
-          height: 34,
-          child: ButtonWidget(
-            onTap: onTap,
-            color: ColorConstant.whiteColor,
-            text: "Bookmark",
-            circular: 4,
-            foregroundColor: ColorConstant.kThird,
-            fontSize: 14,
-          ),
         ),
       ],
     ),
