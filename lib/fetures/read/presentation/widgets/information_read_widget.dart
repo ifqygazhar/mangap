@@ -47,55 +47,59 @@ class InformationReadWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (prevHref == null)
-                    _container("Chapter Awal")
-                  else
-                    ButtonWidget(
-                      icon: null,
-                      onTap: () async {
-                        context
-                            .read<NavigationBloc>()
-                            .add(HideBottomBarEvent());
-                        await Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => ReadPage(href: prevHref!),
-                          ),
-                        );
-                        context
-                            .read<NavigationBloc>()
-                            .add(ShowBottomBarEvent());
-                      },
-                      color: ColorConstant.whiteColor,
-                      text: "Prev Chapter",
-                      circular: 4,
-                      foregroundColor: ColorConstant.lightText,
-                      fontSize: 10,
-                    ),
+                  ButtonWidget(
+                    icon: null,
+                    onTap: prevHref == null
+                        ? () {}
+                        : () async {
+                            context
+                                .read<NavigationBloc>()
+                                .add(HideBottomBarEvent());
+                            await Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => ReadPage(href: prevHref!),
+                              ),
+                            );
+                            context
+                                .read<NavigationBloc>()
+                                .add(ShowBottomBarEvent());
+                          },
+                    color: prevHref == null
+                        ? ColorConstant.kPrimary
+                        : ColorConstant.whiteColor,
+                    text: prevHref == null ? "Chapter Awal" : "Prev Chapter",
+                    circular: 4,
+                    foregroundColor: ColorConstant.lightText,
+                    fontSize: 10,
+                  ),
                   const SizedBox(width: 8),
-                  if (nextHref == null)
-                    _container("Chapter Selesai")
-                  else
-                    ButtonWidget(
-                      icon: null,
-                      onTap: () async {
-                        context
-                            .read<NavigationBloc>()
-                            .add(HideBottomBarEvent());
-                        await Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => ReadPage(href: nextHref!),
-                          ),
-                        );
-                        context
-                            .read<NavigationBloc>()
-                            .add(ShowBottomBarEvent());
-                      },
-                      color: ColorConstant.whiteColor,
-                      text: "Next Chapter",
-                      circular: 4,
-                      foregroundColor: ColorConstant.lightText,
-                      fontSize: 10,
-                    ),
+                  ButtonWidget(
+                    icon: null,
+                    onTap: nextHref == null
+                        ? () {}
+                        : () async {
+                            context
+                                .read<NavigationBloc>()
+                                .add(HideBottomBarEvent());
+                            await Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => ReadPage(href: nextHref!),
+                              ),
+                            );
+                            context
+                                .read<NavigationBloc>()
+                                .add(ShowBottomBarEvent());
+                          },
+                    color: nextHref == null
+                        ? ColorConstant.kPrimary
+                        : ColorConstant.whiteColor,
+                    text: nextHref == null
+                        ? "Berada di chapter akhir"
+                        : "Next Chapter",
+                    circular: 4,
+                    foregroundColor: ColorConstant.lightText,
+                    fontSize: 10,
+                  ),
                 ],
               )
             ],
@@ -104,17 +108,4 @@ class InformationReadWidget extends StatelessWidget {
       ),
     );
   }
-}
-
-Container _container(String message) {
-  return Container(
-    decoration: BoxDecoration(
-      color: ColorConstant.lightText,
-      borderRadius: BorderRadius.circular(8),
-    ),
-    child: Text(
-      message,
-      style: const TextStyle(color: ColorConstant.whiteColor),
-    ),
-  );
 }

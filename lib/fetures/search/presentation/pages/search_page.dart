@@ -106,7 +106,6 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                 ),
               );
-              context.read<NavigationBloc>().add(ShowBottomBarEvent());
             },
             child: KomikCardWidget(
               title: komik.title,

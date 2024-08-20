@@ -34,7 +34,6 @@ class KomikGenreCardWidget extends StatelessWidget {
             ),
           ),
         );
-        context.read<NavigationBloc>().add(ShowBottomBarEvent());
       },
       child: KomikCardWidget(
         title: title,

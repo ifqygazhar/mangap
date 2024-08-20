@@ -7,6 +7,8 @@ import 'package:mangap/core/common/widget/loading.dart';
 import 'package:mangap/core/common/widget/rating.dart';
 import 'package:mangap/core/constants/color.dart';
 import 'package:mangap/fetures/detail/presentation/bloc/detail_bloc.dart';
+import 'package:mangap/fetures/detail/presentation/pages/detail_page.dart';
+import 'package:mangap/fetures/main/bloc/navigation_bloc.dart';
 
 class BookmarkPage extends StatelessWidget {
   const BookmarkPage({super.key});
@@ -90,13 +92,25 @@ Widget _buildContent(BuildContext context, DetailState state) {
                   size: 48,
                 ),
               ),
-              child: KomikCardWidget(
-                title: item.title,
-                status: item.status,
-                href: item.href!,
-                rate: fixedRating(item.rating),
-                type: item.type,
-                thumbnail: item.thumbnail,
+              child: GestureDetector(
+                onTap: () async {
+                  context.read<NavigationBloc>().add(HideBottomBarEvent());
+                  await Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => DetailPage(
+                        href: item.href!,
+                      ),
+                    ),
+                  );
+                },
+                child: KomikCardWidget(
+                  title: item.title,
+                  status: item.status,
+                  href: item.href!,
+                  rate: fixedRating(item.rating),
+                  type: item.type,
+                  thumbnail: item.thumbnail,
+                ),
               ),
             );
           },

@@ -13,6 +13,9 @@ class KomikImageChapterWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0, right: 8.0),
       child: CachedNetworkImage(
+        placeholder: (context, url) => const CircularProgressIndicator(
+          color: ColorConstant.whiteColor,
+        ),
         errorWidget: (context, url, error) => const Icon(
           Icons.image,
           size: 78,

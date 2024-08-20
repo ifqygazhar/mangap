@@ -1,4 +1,4 @@
-import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +11,7 @@ import 'package:mangap/fetures/detail/presentation/widgets/komik_chapter_widget.
 import 'package:mangap/fetures/detail/presentation/widgets/komik_description_widget.dart';
 import 'package:mangap/fetures/detail/presentation/widgets/komik_genre_widget.dart';
 import 'package:mangap/fetures/detail/presentation/widgets/list_komik_detail_widget.dart';
+import 'package:mangap/fetures/main/bloc/navigation_bloc.dart';
 
 class DetailPage extends StatelessWidget {
   const DetailPage({super.key, required this.href});
@@ -22,8 +23,19 @@ class DetailPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: ColorConstant.kPrimary,
-      appBar: const AppbarWidget(
+      appBar: AppbarWidget(
         title: "Detail",
+        leading: IconButton(
+          onPressed: () {
+            context.read<NavigationBloc>().add(ShowBottomBarEvent());
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Platform.isIOS || Platform.isMacOS
+                ? Icons.arrow_back_ios
+                : Icons.arrow_back,
+          ),
+        ),
       ),
       body: SafeArea(
         child: BlocBuilder<DetailBloc, DetailState>(
@@ -41,7 +53,6 @@ Widget _buildContent(BuildContext context, DetailState state, String href) {
     case DetailStatus.loading:
       return const LoadingWidget(textColor: ColorConstant.whiteColor);
     case DetailStatus.error:
-      log(state.details.href.toString());
       String extractErrorMessage(String errorMessage) {
         final startIndex = errorMessage.indexOf('(');
         final endIndex = errorMessage.indexOf(')');

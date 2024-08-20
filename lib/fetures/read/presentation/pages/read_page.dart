@@ -20,8 +20,15 @@ class ReadPage extends StatelessWidget {
         );
     return Scaffold(
         backgroundColor: ColorConstant.kPrimary,
-        appBar: const AppbarWidget(
+        appBar: AppbarWidget(
           title: 'Read',
+          actions: [
+            IconButton(
+                onPressed: () => context.read<ReadBloc>().add(
+                      ReadGetChapter(href),
+                    ),
+                icon: const Icon(Icons.restart_alt))
+          ],
         ),
         body: BlocBuilder<ReadBloc, ReadState>(
           builder: (context, state) {

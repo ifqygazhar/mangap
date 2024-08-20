@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -85,7 +83,6 @@ class _GenrePageState extends State<GenrePage> {
                     .toList();
 
                 if (state.hasReachedMax) {
-                  log(state.hasReachedMax.toString());
                   _pagingController.appendLastPage(newKomiks);
                 } else {
                   final nextPageKey = state.pageKomiks.current_page + 1;

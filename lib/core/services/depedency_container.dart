@@ -4,6 +4,7 @@ import 'package:internet_connection_checker_plus/internet_connection_checker_plu
 import 'package:mangap/core/services/network_info.dart';
 import 'package:mangap/fetures/detail/data/datasources/detail_remote_datasoruce.dart';
 import 'package:mangap/fetures/detail/data/local/app_database.dart';
+import 'package:mangap/fetures/read/data/local/app_database.dart' as Read;
 import 'package:mangap/fetures/detail/data/repositories/detail_repository_impl.dart';
 import 'package:mangap/fetures/detail/domain/repositories/detail_repository.dart';
 import 'package:mangap/fetures/detail/domain/usecases/deleted_detail_saved_komik.dart';
@@ -35,7 +36,10 @@ import 'package:mangap/fetures/manga/presentation/bloc/manga_bloc.dart';
 import 'package:mangap/fetures/read/data/datasources/read_remote_datasource.dart';
 import 'package:mangap/fetures/read/data/repositories/read_repository_impl.dart';
 import 'package:mangap/fetures/read/domain/repositories/read_repository.dart';
+import 'package:mangap/fetures/read/domain/usecases/delete_chapter.dart';
 import 'package:mangap/fetures/read/domain/usecases/get_read_chapter.dart';
+import 'package:mangap/fetures/read/domain/usecases/get_save_chapter.dart';
+import 'package:mangap/fetures/read/domain/usecases/save_chapter.dart';
 import 'package:mangap/fetures/read/presentation/bloc/read_bloc.dart';
 import 'package:mangap/fetures/search/data/datasources/search_remote_datasource.dart';
 import 'package:mangap/fetures/search/data/repositories/search_repository_impl.dart';

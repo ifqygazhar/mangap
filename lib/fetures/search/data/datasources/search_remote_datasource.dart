@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:mangap/core/constants/api_endpoint.dart';
 import 'package:mangap/core/constants/app_constant.dart';
@@ -22,7 +21,6 @@ class SearchRemoteDatasourceImpl implements SearchRemoteDataSource {
   @override
   Future<List<SearchEntity>> search(String keyword) async {
     final url = Uri.parse("${ApiConstant.SEARCH}$keyword");
-    log(url.toString());
 
     final response = await _client.get(url);
 

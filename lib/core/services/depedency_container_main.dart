@@ -10,6 +10,8 @@ Future<void> _initHome() async {
   //DB
   final database =
       await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+  final database2 =
+      await Read.$FloorAppDatabase.databaseBuilder('app_database.db').build();
   final sharedPreferences = await SharedPreferences.getInstance();
 
   //feature main page
@@ -221,12 +223,22 @@ Future<void> _initHome() async {
     ..registerLazySingleton(
       () => GetReadChapter(repository: sl()),
     )
+    ..registerLazySingleton(
+      () => SaveChapter(repository: sl()),
+    )
+    ..registerLazySingleton(
+      () => GetSaveChapter(repository: sl()),
+    )
+    ..registerLazySingleton(
+      () => DeleteChapter(repository: sl()),
+    )
 
     //repository
     ..registerLazySingleton<ReadRepository>(
       () => ReadRepositoryImpl(
         dataSource: sl(),
         networkInfo: sl(),
+        database: sl(),
       ),
     )
 
@@ -243,6 +255,7 @@ Future<void> _initHome() async {
     )
     ..registerSingleton<SharedPreferences>(sharedPreferences)
     ..registerSingleton<AppDatabase>(database)
+    ..registerSingleton<Read.AppDatabase>(database2)
     ..registerLazySingleton(InternetConnection.new)
     ..registerLazySingleton(http.Client.new);
 }

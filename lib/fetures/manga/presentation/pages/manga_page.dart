@@ -141,9 +141,6 @@ class _MangaPageState extends State<MangaPage> {
                             ),
                           ),
                         );
-                        context
-                            .read<NavigationBloc>()
-                            .add(ShowBottomBarEvent());
                       },
                       child: KomikCardWidget(
                         title: komik.title,

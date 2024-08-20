@@ -39,7 +39,6 @@ class RecommendedKomikCardWidget extends StatelessWidget {
             builder: (context) => DetailPage(href: href),
           ),
         );
-        context.read<NavigationBloc>().add(ShowBottomBarEvent());
       },
       child: Container(
         width: 240,
