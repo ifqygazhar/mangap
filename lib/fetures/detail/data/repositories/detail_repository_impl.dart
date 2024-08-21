@@ -4,7 +4,7 @@ import 'package:mangap/core/errors/failures.dart';
 import 'package:mangap/core/services/network_info.dart';
 import 'package:mangap/core/utils/typedef.dart';
 import 'package:mangap/fetures/detail/data/datasources/detail_remote_datasoruce.dart';
-import 'package:mangap/fetures/detail/data/local/app_database.dart';
+import 'package:mangap/core/local/app_database.dart';
 import 'package:mangap/fetures/detail/data/models/komik_detail_model.dart';
 import 'package:mangap/fetures/detail/domain/entities/komik_detail_entity.dart';
 import 'package:mangap/fetures/detail/domain/repositories/detail_repository.dart';

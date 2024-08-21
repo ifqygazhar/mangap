@@ -72,6 +72,8 @@ class _$AppDatabase extends AppDatabase {
     changeListener = listener ?? StreamController<String>.broadcast();
   }
 
+  DetailDao? _detailDaoInstance;
+
   ChapterDao? _chapterDaoInstance;
 
   Future<sqflite.Database> open(
@@ -96,6 +98,8 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
+            'CREATE TABLE IF NOT EXISTS `komik_detail` (`href` TEXT, `title` TEXT NOT NULL, `altTitle` TEXT NOT NULL, `updatedOn` TEXT NOT NULL, `rating` TEXT NOT NULL, `status` TEXT NOT NULL, `type` TEXT NOT NULL, `released` TEXT NOT NULL, `author` TEXT NOT NULL, `description` TEXT NOT NULL, `thumbnail` TEXT NOT NULL, PRIMARY KEY (`href`))');
+        await database.execute(
             'CREATE TABLE IF NOT EXISTS `chapter` (`title` TEXT NOT NULL, `prev` TEXT, `next` TEXT, `panel` TEXT NOT NULL, PRIMARY KEY (`title`))');
 
         await callback?.onCreate?.call(database, version);
@@ -105,8 +109,91 @@ class _$AppDatabase extends AppDatabase {
   }
 
   @override
+  DetailDao get detailDao {
+    return _detailDaoInstance ??= _$DetailDao(database, changeListener);
+  }
+
+  @override
   ChapterDao get chapterDao {
     return _chapterDaoInstance ??= _$ChapterDao(database, changeListener);
+  }
+}
+
+class _$DetailDao extends DetailDao {
+  _$DetailDao(
+    this.database,
+    this.changeListener,
+  )   : _queryAdapter = QueryAdapter(database),
+        _komikDetailModelInsertionAdapter = InsertionAdapter(
+            database,
+            'komik_detail',
+            (KomikDetailModel item) => <String, Object?>{
+                  'href': item.href,
+                  'title': item.title,
+                  'altTitle': item.altTitle,
+                  'updatedOn': item.updatedOn,
+                  'rating': item.rating,
+                  'status': item.status,
+                  'type': item.type,
+                  'released': item.released,
+                  'author': item.author,
+                  'description': item.description,
+                  'thumbnail': item.thumbnail
+                }),
+        _komikDetailModelDeletionAdapter = DeletionAdapter(
+            database,
+            'komik_detail',
+            ['href'],
+            (KomikDetailModel item) => <String, Object?>{
+                  'href': item.href,
+                  'title': item.title,
+                  'altTitle': item.altTitle,
+                  'updatedOn': item.updatedOn,
+                  'rating': item.rating,
+                  'status': item.status,
+                  'type': item.type,
+                  'released': item.released,
+                  'author': item.author,
+                  'description': item.description,
+                  'thumbnail': item.thumbnail
+                });
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<KomikDetailModel> _komikDetailModelInsertionAdapter;
+
+  final DeletionAdapter<KomikDetailModel> _komikDetailModelDeletionAdapter;
+
+  @override
+  Future<List<KomikDetailModel>> getDetails() async {
+    return _queryAdapter.queryList('SELECT * FROM komik_detail',
+        mapper: (Map<String, Object?> row) => KomikDetailModel(
+            href: row['href'] as String?,
+            title: row['title'] as String,
+            altTitle: row['altTitle'] as String,
+            updatedOn: row['updatedOn'] as String,
+            rating: row['rating'] as String,
+            status: row['status'] as String,
+            type: row['type'] as String,
+            released: row['released'] as String,
+            author: row['author'] as String,
+            description: row['description'] as String,
+            thumbnail: row['thumbnail'] as String));
+  }
+
+  @override
+  Future<void> saveDetail(KomikDetailModel detail) async {
+    await _komikDetailModelInsertionAdapter.insert(
+        detail, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> deleteSavedDetail(KomikDetailModel detail) async {
+    await _komikDetailModelDeletionAdapter.delete(detail);
   }
 }
 

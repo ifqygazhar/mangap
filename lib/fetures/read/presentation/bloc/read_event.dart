@@ -15,3 +15,21 @@ class ReadGetChapter extends ReadEvent {
   @override
   List<Object> get props => [href];
 }
+
+class ReadGetSaveChapter extends ReadEvent {}
+
+class ReadSaveChapter extends ReadEvent {
+  final ReadEntity chapter;
+  const ReadSaveChapter(this.chapter);
+
+  @override
+  List<Object> get props => [chapter];
+}
+
+class ReadRemoveChapter extends ReadEvent {
+  final ReadEntity chapter;
+  const ReadRemoveChapter(this.chapter);
+
+  @override
+  List<Object> get props => [chapter];
+}

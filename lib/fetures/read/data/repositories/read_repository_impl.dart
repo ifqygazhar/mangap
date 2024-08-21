@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:mangap/core/errors/exception.dart';
 import 'package:mangap/core/errors/failures.dart';
+import 'package:mangap/core/local/app_database.dart';
 import 'package:mangap/core/services/network_info.dart';
 import 'package:mangap/core/utils/typedef.dart';
 import 'package:mangap/fetures/read/data/datasources/read_remote_datasource.dart';
-import 'package:mangap/fetures/read/data/local/app_database.dart';
 import 'package:mangap/fetures/read/data/models/read_model.dart';
 import 'package:mangap/fetures/read/domain/entities/read_entity.dart';
 import 'package:mangap/fetures/read/domain/repositories/read_repository.dart';

@@ -6,6 +6,7 @@ import 'package:mangap/fetures/detail/presentation/pages/bookmark_page.dart';
 import 'package:mangap/fetures/home/presentation/pages/home_page.dart';
 import 'package:mangap/fetures/main/bloc/navigation_bloc.dart';
 import 'package:mangap/fetures/manga/presentation/pages/manga_page.dart';
+import 'package:mangap/fetures/read/presentation/pages/read_history_page.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
 class MainPage extends StatelessWidget {
@@ -18,7 +19,7 @@ class MainPage extends StatelessWidget {
     return [
       const HomePage(),
       const MangaPage(),
-      const Center(child: Text("Page 1: List of items")),
+      const ReadHistoryPage(),
       const BookmarkPage(),
     ];
   }

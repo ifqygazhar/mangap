@@ -54,11 +54,10 @@ Widget _buildContent(BuildContext context, DetailState state) {
       );
     case DetailStatus.success:
       if (state.bookmarks.isEmpty) {
-        return const Center(
-          child: Text(
-            'Bookmark Belum Ditambahkan',
-            style: TextStyle(color: ColorConstant.whiteColor),
-          ),
+        return const LoadingWidget(
+          textColor: ColorConstant.whiteColor,
+          image: 'assets/images/keyword.gif',
+          text: 'Belum ada bookmark...',
         );
       }
       return RefreshIndicator(

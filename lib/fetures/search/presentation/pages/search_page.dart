@@ -51,34 +51,38 @@ class _SearchPageState extends State<SearchPage> {
               Expanded(
                 child: BlocBuilder<SearchBloc, SearchState>(
                   builder: (context, state) {
-                    if (state.status == SearchStatus.success) {
-                      if (state.searchKomik.isNotEmpty) {
-                        return _buildSearchResult(state);
-                      } else {
+                    switch (state.status) {
+                      case SearchStatus.success:
+                        if (state.searchKomik.isNotEmpty) {
+                          return _buildSearchResult(state);
+                        } else {
+                          return ErrorWidgetComponent(
+                            errorMessage: "Tidak Ada Hasil Tersebut",
+                            onTap: () {
+                              context.read<SearchBloc>().add(
+                                    SearchGetKomik(searchController.text),
+                                  );
+                            },
+                          );
+                        }
+
+                      case SearchStatus.error:
                         return ErrorWidgetComponent(
-                          errorMessage: "Tidak Ada Hasil Tersebut",
+                          errorMessage: state.errorMessage,
                           onTap: () {
                             context.read<SearchBloc>().add(
                                   SearchGetKomik(searchController.text),
                                 );
                           },
                         );
-                      }
-                    } else if (state.status == SearchStatus.error) {
-                      return ErrorWidgetComponent(
-                        errorMessage: state.errorMessage,
-                        onTap: () {
-                          context.read<SearchBloc>().add(
-                                SearchGetKomik(searchController.text),
-                              );
-                        },
-                      );
+
+                      case SearchStatus.loading:
+                        return const LoadingWidget(
+                          textColor: ColorConstant.whiteColor,
+                          image: 'assets/images/keyword.gif',
+                          text: 'Cari Komik Dulu...',
+                        );
                     }
-                    return const LoadingWidget(
-                      textColor: ColorConstant.whiteColor,
-                      image: 'assets/images/keyword.gif',
-                      text: 'Cari Komik Dulu...',
-                    );
                   },
                 ),
               ),

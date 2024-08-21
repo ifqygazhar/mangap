@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:json_annotation/json_annotation.dart';
 import 'package:floor/floor.dart';
 import 'package:mangap/fetures/read/domain/entities/read_entity.dart';
@@ -27,6 +26,8 @@ class ReadModel extends ReadEntity {
       panel: read.panel,
     );
   }
+
+  Map<String, dynamic> toJson() => _$ReadModelToJson(this);
 }
 
 class PanelTypeConverter extends TypeConverter<List<dynamic>, String> {

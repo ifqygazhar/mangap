@@ -10,8 +10,7 @@ Future<void> _initHome() async {
   //DB
   final database =
       await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-  final database2 =
-      await Read.$FloorAppDatabase.databaseBuilder('app_database.db').build();
+
   final sharedPreferences = await SharedPreferences.getInstance();
 
   //feature main page
@@ -216,7 +215,12 @@ Future<void> _initHome() async {
   //feature read
   sl
     ..registerFactory(
-      () => ReadBloc(getReadChapter: sl()),
+      () => ReadBloc(
+        getReadChapter: sl(),
+        saveChapter: sl(),
+        getSaveChapter: sl(),
+        deleteChapter: sl(),
+      ),
     )
 
     //usecase
@@ -255,7 +259,6 @@ Future<void> _initHome() async {
     )
     ..registerSingleton<SharedPreferences>(sharedPreferences)
     ..registerSingleton<AppDatabase>(database)
-    ..registerSingleton<Read.AppDatabase>(database2)
     ..registerLazySingleton(InternetConnection.new)
     ..registerLazySingleton(http.Client.new);
 }
