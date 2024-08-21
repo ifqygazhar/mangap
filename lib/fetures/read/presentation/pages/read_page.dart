@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mangap/core/common/widget/appbar.dart';
 import 'package:mangap/core/common/widget/error.dart';
 import 'package:mangap/core/common/widget/loading.dart';
 import 'package:mangap/core/constants/color.dart';
+import 'package:mangap/fetures/main/bloc/navigation_bloc.dart';
 import 'package:mangap/fetures/read/domain/entities/read_entity.dart';
 import 'package:mangap/fetures/read/presentation/bloc/read_bloc.dart';
 import 'package:mangap/fetures/read/presentation/widgets/list_image_widget.dart';
@@ -16,13 +19,6 @@ class ReadPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final chapterEntity = ReadEntity(
-      title: href,
-      prev: 'prev',
-      next: 'next',
-      panel: [],
-    );
-    context.read<ReadBloc>().add(ReadSaveChapter(chapterEntity));
     context.read<ReadBloc>().add(
           ReadGetChapter(href),
         );
@@ -31,6 +27,17 @@ class ReadPage extends StatelessWidget {
       backgroundColor: ColorConstant.kPrimary,
       appBar: AppbarWidget(
         title: 'Read',
+        leading: IconButton(
+          onPressed: () {
+            context.read<NavigationBloc>().add(ShowBottomBarEvent());
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Platform.isIOS || Platform.isMacOS
+                ? Icons.arrow_back_ios
+                : Icons.arrow_back,
+          ),
+        ),
         actions: [
           IconButton(
               onPressed: () => context.read<ReadBloc>().add(
@@ -55,6 +62,13 @@ class ReadPage extends StatelessWidget {
                 },
               );
             case ReadStatus.success:
+              final chapterEntity = ReadEntity(
+                title: href,
+                prev: 'prev',
+                next: 'next',
+                panel: [],
+              );
+              context.read<ReadBloc>().add(ReadSaveChapter(chapterEntity));
               return ListView(
                 children: [
                   ListInformationWidget(read: state.read),

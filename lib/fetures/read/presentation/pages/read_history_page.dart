@@ -4,7 +4,10 @@ import 'package:mangap/core/common/widget/appbar.dart';
 import 'package:mangap/core/common/widget/error.dart';
 import 'package:mangap/core/common/widget/loading.dart';
 import 'package:mangap/core/constants/color.dart';
+import 'package:mangap/core/utils/format_title.dart';
+import 'package:mangap/fetures/main/bloc/navigation_bloc.dart';
 import 'package:mangap/fetures/read/presentation/bloc/read_bloc.dart';
+import 'package:mangap/fetures/read/presentation/pages/read_page.dart';
 import 'package:mangap/fetures/read/presentation/widgets/list_history_read_widget.dart';
 
 class ReadHistoryPage extends StatelessWidget {
@@ -46,6 +49,7 @@ class ReadHistoryPage extends StatelessWidget {
                   itemCount: state.saveRead.length,
                   itemBuilder: (context, index) {
                     final chapter = state.saveRead[index];
+                    final formatted = formatTitle(chapter.title);
                     return Dismissible(
                       key: UniqueKey(), // Gunakan identifier unik
                       direction: DismissDirection.endToStart,
@@ -65,8 +69,28 @@ class ReadHistoryPage extends StatelessWidget {
                           color: Colors.white,
                         ),
                       ),
-                      child: ListHistoryReadWidget(
-                        title: chapter.title,
+                      child: GestureDetector(
+                        onTap: () async {
+                          context
+                              .read<NavigationBloc>()
+                              .add(HideBottomBarEvent());
+                          await Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  ReadPage(href: chapter.title),
+                            ),
+                          );
+                          context
+                              .read<NavigationBloc>()
+                              .add(ShowBottomBarEvent());
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                          child: ListHistoryReadWidget(
+                            title: formatted['text'] ?? '',
+                            chapter: formatted['number'] ?? '',
+                          ),
+                        ),
                       ),
                     );
                   },

@@ -5,10 +5,12 @@ import 'package:mangap/core/constants/color.dart';
 
 class ListHistoryReadWidget extends StatelessWidget {
   final String title;
+  final String chapter;
 
   const ListHistoryReadWidget({
     super.key,
     required this.title,
+    required this.chapter,
   });
 
   @override
@@ -35,9 +37,9 @@ class ListHistoryReadWidget extends StatelessWidget {
                 ),
               ),
             ),
-            const ContainerCustomWidget(
+            ContainerCustomWidget(
               containerColor: Colors.amber,
-              title: 'chapter',
+              title: 'chapter $chapter',
               fontColor: ColorConstant.kThird,
               fontSize: 12,
             ),

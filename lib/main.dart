@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mangap/core/services/depedency_container.dart';
 import 'package:mangap/fetures/detail/presentation/bloc/detail_bloc.dart';
@@ -15,7 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await init();
-
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   final sharedPreferences = await SharedPreferences.getInstance();
   final bool hasSeenOnboarding =
       sharedPreferences.getBool('hasSeenOnboarding') ?? false;

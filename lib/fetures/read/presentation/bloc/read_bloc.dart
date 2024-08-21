@@ -54,7 +54,16 @@ class ReadBloc extends Bloc<ReadEvent, ReadState> {
 
   Future<void> _saveChapterHandler(
       ReadSaveChapter event, Emitter<ReadState> emit) async {
+    final existingChapter = state.saveRead
+        .where((ch) => ch.title == event.chapter.title)
+        .isNotEmpty;
+
+    if (existingChapter) {
+      return;
+    }
+
     final result = await _saveChapter.call(event.chapter);
+
     result.fold(
       (failure) => emit(
         state.copyWith(
