@@ -1,20 +1,20 @@
 Map<String, String> formatTitle(String title) {
-  // Menyimpan angka yang ditemukan
-  final numberMatch = RegExp(r'\d+').firstMatch(title);
-  final number = numberMatch?.group(0) ?? '';
+  // Deteksi angka yang muncul setelah kata "chapter" (case-insensitive)
+  final chapterMatch =
+      RegExp(r'chapter[-\s]*(\d+)', caseSensitive: false).firstMatch(title);
+  final chapterNumber = chapterMatch?.group(1) ?? '';
 
-  // Menghapus karakter '/', '-', kata 'chapter', dan angka dari string
-  final formattedText = title
+  // Menghapus kata "chapter" beserta angka yang mengikutinya dari judul
+  String formattedText = title
+      .replaceAll(RegExp(r'chapter[-\s]*\d+', caseSensitive: false),
+          '') // Menghapus "chapter" dan angka setelahnya
       .replaceAll(RegExp(r'[-/]'), ' ') // Mengganti '/' dan '-' dengan spasi
-      .replaceAll(RegExp(r'\d+'), '') // Menghapus angka
-      .replaceAll(RegExp(r'\bchapter\b', caseSensitive: false),
-          '') // Menghapus kata 'chapter' (tidak case-sensitive)
       .replaceAll(RegExp(r'\s+'),
           ' ') // Mengganti spasi ekstra dengan satu spasi jika ada
       .trim(); // Menghapus spasi di awal dan akhir
 
   return {
     'text': formattedText,
-    'number': number,
+    'number': chapterNumber,
   };
 }
