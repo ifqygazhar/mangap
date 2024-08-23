@@ -33,3 +33,5 @@ class ReadRemoveChapter extends ReadEvent {
   @override
   List<Object> get props => [chapter];
 }
+
+class ReadLoadingEvent extends ReadEvent {}

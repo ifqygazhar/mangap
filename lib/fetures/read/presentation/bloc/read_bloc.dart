@@ -28,6 +28,9 @@ class ReadBloc extends Bloc<ReadEvent, ReadState> {
     on<ReadSaveChapter>(_saveChapterHandler);
     on<ReadRemoveChapter>(_deleteChapterHandler);
     on<ReadGetSaveChapter>(_getSaveChapterHandler);
+    on<ReadLoadingEvent>((event, emit) {
+      emit(state.copyWith(status: ReadStatus.loading));
+    });
   }
 
   Future<void> _getReadChapterHandler(

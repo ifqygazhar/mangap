@@ -119,7 +119,9 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
     DetailRefresh event,
     Emitter<DetailState> emit,
   ) async {
-    emit(state.copyWith(status: DetailStatus.loading)); // Set state to loading
+    emit(const DetailState());
+
+    emit(state.copyWith(status: DetailStatus.loading));
 
     try {
       // Fetch the manga details again
@@ -146,8 +148,9 @@ class DetailBloc extends Bloc<DetailEvent, DetailState> {
               );
             },
             (bookmarks) async {
-              final isBookmarked =
-                  bookmarks.any((komik) => komik.href == event.href);
+              final isBookmarked = bookmarks
+                  .where((komik) => komik.href == event.href)
+                  .isNotEmpty;
 
               final genreResult = await _getGenre.call(event.href);
               await genreResult.fold(

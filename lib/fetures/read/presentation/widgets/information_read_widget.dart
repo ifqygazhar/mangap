@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mangap/core/common/widget/button.dart';
 import 'package:mangap/core/constants/color.dart';
 import 'package:mangap/fetures/main/bloc/navigation_bloc.dart';
+import 'package:mangap/fetures/read/presentation/bloc/read_bloc.dart';
 import 'package:mangap/fetures/read/presentation/pages/read_page.dart';
 
 class InformationReadWidget extends StatelessWidget {
@@ -53,10 +54,11 @@ class InformationReadWidget extends StatelessWidget {
                     onTap: prevHref == null
                         ? () {}
                         : () async {
+                            context.read<ReadBloc>().add(ReadLoadingEvent());
                             context
                                 .read<NavigationBloc>()
                                 .add(HideBottomBarEvent());
-                            await Navigator.of(context).push(
+                            await Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
                                 builder: (context) => ReadPage(
                                   href: prevHref!,
@@ -82,10 +84,11 @@ class InformationReadWidget extends StatelessWidget {
                     onTap: nextHref == null
                         ? () {}
                         : () async {
+                            context.read<ReadBloc>().add(ReadLoadingEvent());
                             context
                                 .read<NavigationBloc>()
                                 .add(HideBottomBarEvent());
-                            await Navigator.of(context).push(
+                            await Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
                                 builder: (context) =>
                                     ReadPage(href: nextHref!, route: route),

@@ -9,6 +9,7 @@ import 'package:mangap/core/common/widget/loading.dart';
 import 'package:mangap/core/common/widget/rating.dart';
 import 'package:mangap/core/constants/color.dart';
 import 'package:mangap/fetures/detail/presentation/pages/detail_page.dart';
+import 'package:mangap/fetures/info/page/info_page.dart';
 import 'package:mangap/fetures/main/bloc/navigation_bloc.dart';
 import 'package:mangap/fetures/manga/domain/entities/manga_entity.dart';
 import 'package:mangap/fetures/manga/presentation/bloc/manga_bloc.dart';
@@ -78,11 +79,22 @@ class _MangaPageState extends State<MangaPage> {
               ),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(right: 18.0),
-            child: FaIcon(
-              FontAwesomeIcons.circleInfo,
-              color: ColorConstant.whiteColor,
+          Padding(
+            padding: const EdgeInsets.only(right: 18.0),
+            child: GestureDetector(
+              onTap: () async {
+                context.read<NavigationBloc>().add(HideBottomBarEvent());
+                await Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const InfoPage(),
+                  ),
+                );
+                context.read<NavigationBloc>().add(ShowBottomBarEvent());
+              },
+              child: const FaIcon(
+                FontAwesomeIcons.circleInfo,
+                color: ColorConstant.whiteColor,
+              ),
             ),
           ),
         ],

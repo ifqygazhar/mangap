@@ -9,6 +9,7 @@ import 'package:mangap/fetures/home/presentation/bloc/home_bloc.dart';
 import 'package:mangap/fetures/home/presentation/widgets/list_genre_widget.dart';
 import 'package:mangap/fetures/home/presentation/widgets/list_popular_widget.dart';
 import 'package:mangap/fetures/home/presentation/widgets/list_recommended_komik_widget.dart';
+import 'package:mangap/fetures/info/page/info_page.dart';
 import 'package:mangap/fetures/main/bloc/navigation_bloc.dart';
 import 'package:mangap/fetures/search/presentation/pages/search_page.dart';
 
@@ -42,7 +43,15 @@ class HomePage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 18.0),
             child: GestureDetector(
-              onTap: () {},
+              onTap: () async {
+                context.read<NavigationBloc>().add(HideBottomBarEvent());
+                await Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const InfoPage(),
+                  ),
+                );
+                context.read<NavigationBloc>().add(ShowBottomBarEvent());
+              },
               child: const FaIcon(
                 FontAwesomeIcons.circleInfo,
                 color: ColorConstant.whiteColor,
