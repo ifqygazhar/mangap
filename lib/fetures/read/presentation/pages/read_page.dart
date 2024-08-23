@@ -13,9 +13,9 @@ import 'package:mangap/fetures/read/presentation/widgets/list_image_widget.dart'
 import 'package:mangap/fetures/read/presentation/widgets/list_information_widget.dart';
 
 class ReadPage extends StatelessWidget {
-  const ReadPage({super.key, required this.href});
+  const ReadPage({super.key, required this.href, required this.route});
 
-  final String href;
+  final String href, route;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,12 @@ class ReadPage extends StatelessWidget {
         title: 'Read',
         leading: IconButton(
           onPressed: () {
-            context.read<NavigationBloc>().add(ShowBottomBarEvent());
+            if (route == "history") {
+              context.read<NavigationBloc>().add(ShowBottomBarEvent());
+            } else {
+              context.read<NavigationBloc>().add(HideBottomBarEvent());
+            }
+
             Navigator.pop(context);
           },
           icon: Icon(
@@ -71,9 +76,12 @@ class ReadPage extends StatelessWidget {
               context.read<ReadBloc>().add(ReadSaveChapter(chapterEntity));
               return ListView(
                 children: [
-                  ListInformationWidget(read: state.read),
+                  ListInformationWidget(
+                    read: state.read,
+                    route: route,
+                  ),
                   ListImageWidget(read: state.read),
-                  ListInformationWidget(read: state.read),
+                  ListInformationWidget(read: state.read, route: route),
                 ],
               );
           }

@@ -76,8 +76,10 @@ class ReadHistoryPage extends StatelessWidget {
                               .add(HideBottomBarEvent());
                           await Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  ReadPage(href: chapter.title),
+                              builder: (context) => ReadPage(
+                                href: chapter.title,
+                                route: 'history',
+                              ),
                             ),
                           );
                           context

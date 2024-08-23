@@ -12,9 +12,10 @@ class InformationReadWidget extends StatelessWidget {
     required this.title,
     required this.prevHref,
     required this.nextHref,
+    required this.route,
   });
 
-  final String title;
+  final String title, route;
   final String? prevHref, nextHref;
 
   @override
@@ -55,9 +56,12 @@ class InformationReadWidget extends StatelessWidget {
                             context
                                 .read<NavigationBloc>()
                                 .add(HideBottomBarEvent());
-                            await Navigator.of(context).pushReplacement(
+                            await Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => ReadPage(href: prevHref!),
+                                builder: (context) => ReadPage(
+                                  href: prevHref!,
+                                  route: route,
+                                ),
                               ),
                             );
                             context
@@ -81,9 +85,10 @@ class InformationReadWidget extends StatelessWidget {
                             context
                                 .read<NavigationBloc>()
                                 .add(HideBottomBarEvent());
-                            await Navigator.of(context).pushReplacement(
+                            await Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => ReadPage(href: nextHref!),
+                                builder: (context) =>
+                                    ReadPage(href: nextHref!, route: route),
                               ),
                             );
                             context

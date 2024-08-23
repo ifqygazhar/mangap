@@ -38,7 +38,10 @@ class KomikChapterWidget extends StatelessWidget {
                   context.read<NavigationBloc>().add(HideBottomBarEvent());
                   await Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => ReadPage(href: chapter.href),
+                      builder: (context) => ReadPage(
+                        href: chapter.href,
+                        route: 'detail',
+                      ),
                     ),
                   );
                 },
