@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mangap/core/common/widget/appbar.dart';
 import 'package:mangap/core/common/widget/error.dart';
+import 'package:mangap/core/common/widget/information_card.dart';
 import 'package:mangap/core/common/widget/komik_card.dart';
 import 'package:mangap/core/common/widget/loading.dart';
 import 'package:mangap/core/common/widget/rating.dart';
@@ -66,53 +67,66 @@ Widget _buildContent(BuildContext context, DetailState state) {
         onRefresh: () async {
           context.read<DetailBloc>().add(const DetailGetBookmarks());
         },
-        child: ListView.builder(
-          padding: const EdgeInsets.all(16),
-          itemCount: state.bookmarks.length,
-          itemBuilder: (context, index) {
-            final item = state.bookmarks[index];
-            return Dismissible(
-              key: Key(item.href!), // Menggunakan href sebagai kunci unik
-              direction: DismissDirection.endToStart, // Hanya swipe ke kiri
-              onDismissed: (direction) {
-                context.read<DetailBloc>().add(DetailRemoveBookmark(item));
-              },
-              background: Container(
-                margin: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 155, 46, 38),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                alignment: Alignment.centerRight,
-                padding: const EdgeInsets.all(16),
-                child: const Icon(
-                  Icons.delete,
-                  color: Color.fromARGB(255, 185, 185, 185),
-                  size: 48,
-                ),
-              ),
-              child: GestureDetector(
-                onTap: () async {
-                  context.read<NavigationBloc>().add(HideBottomBarEvent());
-                  await Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => DetailPage(
+        child: Column(
+          children: [
+            const InformationCard(konteks: 'bookmark'),
+            SizedBox(
+              height: 400,
+              child: ListView.builder(
+                padding: const EdgeInsets.all(8),
+                itemCount: state.bookmarks.length,
+                itemBuilder: (context, index) {
+                  final item = state.bookmarks[index];
+                  return Dismissible(
+                    key: Key(item.href!), // Menggunakan href sebagai kunci unik
+                    direction:
+                        DismissDirection.endToStart, // Hanya swipe ke kiri
+                    onDismissed: (direction) {
+                      context
+                          .read<DetailBloc>()
+                          .add(DetailRemoveBookmark(item));
+                    },
+                    background: Container(
+                      margin: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 155, 46, 38),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      alignment: Alignment.centerRight,
+                      padding: const EdgeInsets.all(16),
+                      child: const Icon(
+                        Icons.delete,
+                        color: Color.fromARGB(255, 185, 185, 185),
+                        size: 48,
+                      ),
+                    ),
+                    child: GestureDetector(
+                      onTap: () async {
+                        context
+                            .read<NavigationBloc>()
+                            .add(HideBottomBarEvent());
+                        await Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => DetailPage(
+                              href: item.href!,
+                            ),
+                          ),
+                        );
+                      },
+                      child: KomikCardWidget(
+                        title: item.title,
+                        status: item.status,
                         href: item.href!,
+                        rate: fixedRating(item.rating),
+                        type: item.type,
+                        thumbnail: item.thumbnail,
                       ),
                     ),
                   );
                 },
-                child: KomikCardWidget(
-                  title: item.title,
-                  status: item.status,
-                  href: item.href!,
-                  rate: fixedRating(item.rating),
-                  type: item.type,
-                  thumbnail: item.thumbnail,
-                ),
               ),
-            );
-          },
+            ),
+          ],
         ),
       );
   }
