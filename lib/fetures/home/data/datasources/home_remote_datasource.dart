@@ -1,13 +1,13 @@
 import 'dart:convert';
-
+import 'package:http/http.dart' as http;
 import 'package:mangap/core/constants/api_endpoint.dart';
 import 'package:mangap/core/constants/app_constant.dart';
 import 'package:mangap/core/errors/exception.dart';
+import 'package:mangap/core/utils/manage_server.dart';
 import 'package:mangap/core/utils/typedef.dart';
 import 'package:mangap/fetures/home/data/models/komik_genre_model.dart';
 import 'package:mangap/fetures/home/data/models/komik_popular_model.dart';
 import 'package:mangap/fetures/home/data/models/komik_recommended_model.dart';
-import 'package:http/http.dart' as http;
 import 'package:mangap/fetures/home/domain/entities/komik_genre.dart';
 
 abstract class HomeRemoteDataSource {
@@ -27,15 +27,18 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
 
   @override
   Future<List<KomikPopularModel>> getPopular() async {
-    final url = Uri.parse(ApiConstant.KOMIK_POPULAR);
-
-    final response = await _client.get(url);
+    final response = await NetworkHelper.fetchWithFallback(
+      ApiConstant.KOMIK_POPULAR,
+      ApiConstant.BACKUP_KOMIK_POPULAR,
+      _client,
+    );
 
     final decode = jsonDecode(response.body) as ResultMap;
 
     if (response.statusCode != AppConstant.successfulHttpGetStatusCode) {
       throw ServerException(message: decode['status'] as String);
     }
+
     final listPopularKomik = decode['data'] as List<dynamic>;
     return listPopularKomik
         .map((komik) => KomikPopularModel.fromJson(komik as ResultMap))
@@ -44,9 +47,11 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
 
   @override
   Future<List<KomikRecommendedModel>> getRecommended() async {
-    final url = Uri.parse(ApiConstant.KOMIK_RECOMENDED);
-
-    final response = await _client.get(url);
+    final response = await NetworkHelper.fetchWithFallback(
+      ApiConstant.KOMIK_RECOMENDED,
+      ApiConstant.BACKUP_KOMIK_RECOMENDED,
+      _client,
+    );
 
     final decode = jsonDecode(response.body) as ResultMap;
 
@@ -63,9 +68,11 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
 
   @override
   Future<List<KomikGenreModel>> getGenre() async {
-    final url = Uri.parse(ApiConstant.GENRE);
-
-    final response = await _client.get(url);
+    final response = await NetworkHelper.fetchWithFallback(
+      ApiConstant.GENRE,
+      ApiConstant.BACKUP_GENRE,
+      _client,
+    );
 
     final decode = jsonDecode(response.body) as ResultMap;
 

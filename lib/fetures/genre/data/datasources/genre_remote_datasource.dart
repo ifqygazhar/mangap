@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:mangap/core/constants/api_endpoint.dart';
 import 'package:mangap/core/constants/app_constant.dart';
 import 'package:mangap/core/errors/exception.dart';
+import 'package:mangap/core/utils/manage_server.dart';
 import 'package:mangap/core/utils/typedef.dart';
 import 'package:mangap/fetures/genre/data/models/komik_genre_detail_model.dart';
 import 'package:mangap/fetures/genre/domain/entities/genre_detail_entity.dart';
@@ -26,9 +27,11 @@ class GenreRemoteDataSourceImpl implements GenreRemoteDatasource {
     String href,
     int page,
   ) async {
-    final url = Uri.parse("${ApiConstant.GENRE_DETAIL}$href$page");
-
-    final response = await _client.get(url);
+    final response = await NetworkHelper.fetchWithFallback(
+      "${ApiConstant.GENRE_DETAIL}$href$page",
+      "${ApiConstant.BACKUP_GENRE_DETAIL}$href$page",
+      _client,
+    );
 
     final decode = jsonDecode(response.body) as ResultMap;
 
@@ -44,9 +47,11 @@ class GenreRemoteDataSourceImpl implements GenreRemoteDatasource {
 
   @override
   Future<KomikGenreDetailEntity> getPage(String href, int page) async {
-    final url = Uri.parse("${ApiConstant.GENRE_DETAIL}$href$page");
-
-    final response = await _client.get(url);
+    final response = await NetworkHelper.fetchWithFallback(
+      "${ApiConstant.GENRE_DETAIL}$href$page",
+      "${ApiConstant.BACKUP_GENRE_DETAIL}$href$page",
+      _client,
+    );
 
     final decode = jsonDecode(response.body) as ResultMap;
 

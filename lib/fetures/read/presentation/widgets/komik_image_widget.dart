@@ -12,25 +12,27 @@ class KomikImageChapterWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-      child: CachedNetworkImage(
-        placeholder: (context, url) => const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: CircularProgressIndicator(
+      child: InteractiveViewer(
+        child: CachedNetworkImage(
+          placeholder: (context, url) => const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: CircularProgressIndicator(
+              color: ColorConstant.whiteColor,
+            ),
+          ),
+          errorWidget: (context, url, error) => const Icon(
+            Icons.image,
+            size: 78,
             color: ColorConstant.whiteColor,
           ),
-        ),
-        errorWidget: (context, url, error) => const Icon(
-          Icons.image,
-          size: 78,
-          color: ColorConstant.whiteColor,
-        ),
-        key: UniqueKey(),
-        imageUrl: image,
-        fit: BoxFit.cover,
-        cacheManager: CacheManager(
-          Config(
-            'komik',
-            stalePeriod: const Duration(minutes: 10),
+          key: UniqueKey(),
+          imageUrl: image,
+          fit: BoxFit.cover,
+          cacheManager: CacheManager(
+            Config(
+              'komik',
+              stalePeriod: const Duration(minutes: 10),
+            ),
           ),
         ),
       ),

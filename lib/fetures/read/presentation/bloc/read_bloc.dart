@@ -31,6 +31,12 @@ class ReadBloc extends Bloc<ReadEvent, ReadState> {
     on<ReadLoadingEvent>((event, emit) {
       emit(state.copyWith(status: ReadStatus.loading));
     });
+    on<ShowReadFullscreen>((event, emit) {
+      emit(state.copyWith(isFullscreen: true));
+    });
+    on<ShowReadNoFullscreen>((event, emit) {
+      emit(state.copyWith(isFullscreen: false));
+    });
   }
 
   Future<void> _getReadChapterHandler(

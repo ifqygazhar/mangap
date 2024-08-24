@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:mangap/core/constants/api_endpoint.dart';
 import 'package:mangap/core/constants/app_constant.dart';
 import 'package:mangap/core/errors/exception.dart';
+import 'package:mangap/core/utils/manage_server.dart';
 import 'package:mangap/core/utils/typedef.dart';
 import 'package:mangap/fetures/read/data/models/read_model.dart';
 import 'package:mangap/fetures/read/domain/entities/read_entity.dart';
@@ -20,9 +21,10 @@ class ReadRempteDataSourceImpl implements ReadRemoteDataSource {
 
   @override
   Future<List<ReadEntity>> read(String href) async {
-    final url = Uri.parse("${ApiConstant.READ}/$href");
-
-    final response = await _client.get(url);
+    final response = await NetworkHelper.fetchWithFallback(
+        "${ApiConstant.READ}/$href",
+        "${ApiConstant.BACKUP_READ}/$href",
+        _client);
 
     final decode = jsonDecode(response.body) as ResultMap;
 

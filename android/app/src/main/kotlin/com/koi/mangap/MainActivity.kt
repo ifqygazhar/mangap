@@ -1,4 +1,4 @@
-package com.example.mangap
+package com.koi.mangap
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -35,3 +35,7 @@ class ReadRemoveChapter extends ReadEvent {
 }
 
 class ReadLoadingEvent extends ReadEvent {}
+
+class ShowReadFullscreen extends ReadEvent {}
+
+class ShowReadNoFullscreen extends ReadEvent {}
