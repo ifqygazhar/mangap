@@ -31,7 +31,10 @@ class PopularKomikWidget extends StatelessWidget {
         context.read<NavigationBloc>().add(HideBottomBarEvent());
         await Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => DetailPage(href: href),
+            builder: (context) => DetailPage(
+              href: href,
+              route: 'home',
+            ),
           ),
         );
       },

@@ -36,7 +36,10 @@ class RecommendedKomikCardWidget extends StatelessWidget {
         context.read<NavigationBloc>().add(HideBottomBarEvent());
         await Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => DetailPage(href: href),
+            builder: (context) => DetailPage(
+              href: href,
+              route: 'home',
+            ),
           ),
         );
       },
@@ -157,7 +160,7 @@ class RecommendedKomikCardWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  type.toUpperCase(),
+                  type == '' ? 'Unknown' : type.toUpperCase(),
                   style: GoogleFonts.openSans(
                     color: ColorConstant.whiteColor,
                     fontWeight: FontWeight.normal,

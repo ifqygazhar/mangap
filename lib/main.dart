@@ -16,8 +16,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await init();
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   final sharedPreferences = await SharedPreferences.getInstance();
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   final bool hasSeenOnboarding =
       sharedPreferences.getBool('hasSeenOnboarding') ?? false;
   runApp(MyApp(
@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => sl<ReadBloc>(),
-        )
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

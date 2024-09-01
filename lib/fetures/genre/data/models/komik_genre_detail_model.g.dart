@@ -9,8 +9,8 @@ part of 'komik_genre_detail_model.dart';
 KomikGenreDetailModel _$KomikGenreDetailModelFromJson(
         Map<String, dynamic> json) =>
     KomikGenreDetailModel(
-      current_page: json['current_page'] as int,
-      length_page: json['length_page'] as int,
+      current_page: (json['current_page'] as num).toInt(),
+      length_page: (json['length_page'] as num).toInt(),
     );
 
 Map<String, dynamic> _$KomikGenreDetailModelToJson(

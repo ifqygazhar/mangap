@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:mangap/core/constants/api_endpoint.dart';
+import 'package:mangap/core/constants/api_constant.dart';
 import 'package:mangap/core/constants/app_constant.dart';
 import 'package:mangap/core/errors/exception.dart';
 import 'package:mangap/core/utils/manage_server.dart';
@@ -17,10 +17,13 @@ abstract class GenreRemoteDatasource {
 }
 
 class GenreRemoteDataSourceImpl implements GenreRemoteDatasource {
-  const GenreRemoteDataSourceImpl({required http.Client client})
-      : _client = client;
+  const GenreRemoteDataSourceImpl(
+      {required http.Client client, required ApiConstant constant})
+      : _client = client,
+        _constant = constant;
 
   final http.Client _client;
+  final ApiConstant _constant;
 
   @override
   Future<List<KomikGenreDetailDataEntity>> getGenre(
@@ -28,8 +31,8 @@ class GenreRemoteDataSourceImpl implements GenreRemoteDatasource {
     int page,
   ) async {
     final response = await NetworkHelper.fetchWithFallback(
-      "${ApiConstant.GENRE_DETAIL}$href$page",
-      "${ApiConstant.BACKUP_GENRE_DETAIL}$href$page",
+      "${_constant.genreDetail}$href$page",
+      "${_constant.backupGenreDetail}$href$page",
       _client,
     );
 
@@ -48,8 +51,8 @@ class GenreRemoteDataSourceImpl implements GenreRemoteDatasource {
   @override
   Future<KomikGenreDetailEntity> getPage(String href, int page) async {
     final response = await NetworkHelper.fetchWithFallback(
-      "${ApiConstant.GENRE_DETAIL}$href$page",
-      "${ApiConstant.BACKUP_GENRE_DETAIL}$href$page",
+      "${_constant.genreDetail}$href$page",
+      "${_constant.backupGenreDetail}$href$page",
       _client,
     );
 

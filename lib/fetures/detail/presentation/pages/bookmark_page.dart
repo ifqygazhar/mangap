@@ -109,6 +109,7 @@ Widget _buildContent(BuildContext context, DetailState state) {
                           MaterialPageRoute(
                             builder: (context) => DetailPage(
                               href: item.href!,
+                              route: 'bookmark',
                             ),
                           ),
                         );

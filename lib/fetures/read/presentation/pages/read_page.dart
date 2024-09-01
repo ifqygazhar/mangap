@@ -26,99 +26,116 @@ class ReadPage extends StatelessWidget {
 
     return BlocBuilder<ReadBloc, ReadState>(
       builder: (context, state) {
-        return Scaffold(
-          backgroundColor: ColorConstant.kPrimary,
-          appBar: state.isFullscreen
-              ? null
-              : AppbarWidget(
-                  title: 'Read',
-                  leading: IconButton(
-                    onPressed: () {
-                      if (route == "history") {
-                        context
-                            .read<NavigationBloc>()
-                            .add(ShowBottomBarEvent());
-                      } else {
-                        context
-                            .read<NavigationBloc>()
-                            .add(HideBottomBarEvent());
-                      }
+        return PopScope(
+          onPopInvoked: (popDisposition) async {
+            if (popDisposition) {
+              if (route == "history") {
+                context.read<NavigationBloc>().add(ShowBottomBarEvent());
+              } else {
+                context.read<NavigationBloc>().add(HideBottomBarEvent());
+              }
+              return;
+            }
 
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(
-                      Platform.isIOS || Platform.isMacOS
-                          ? Icons.arrow_back_ios
-                          : Icons.arrow_back,
-                    ),
-                  ),
-                  actions: [
-                    IconButton(
-                      onPressed: () => context.read<ReadBloc>().add(
-                            ReadGetChapter(href),
-                          ),
-                      icon: const Icon(Icons.restart_alt),
-                    ),
-                    IconButton(
+            final NavigatorState navigator = Navigator.of(context);
+            navigator.pop();
+          },
+          child: Scaffold(
+            backgroundColor: ColorConstant.kPrimary,
+            appBar: state.isFullscreen
+                ? null
+                : AppbarWidget(
+                    title: 'Read',
+                    leading: IconButton(
                       onPressed: () {
-                        if (state.isFullscreen) {
-                          context.read<ReadBloc>().add(ShowReadNoFullscreen());
+                        if (route == "history") {
+                          context
+                              .read<NavigationBloc>()
+                              .add(ShowBottomBarEvent());
                         } else {
-                          context.read<ReadBloc>().add(ShowReadFullscreen());
+                          context
+                              .read<NavigationBloc>()
+                              .add(HideBottomBarEvent());
                         }
+
+                        Navigator.pop(context);
                       },
                       icon: Icon(
-                        state.isFullscreen
-                            ? Icons.fullscreen_exit
-                            : Icons.fullscreen,
+                        Platform.isIOS || Platform.isMacOS
+                            ? Icons.arrow_back_ios
+                            : Icons.arrow_back,
                       ),
                     ),
-                  ],
-                ),
-          body: GestureDetector(
-            onDoubleTap: () {
-              context.read<ReadBloc>().add(ShowReadNoFullscreen());
-            },
-            child: Builder(
-              builder: (context) {
-                switch (state.status) {
-                  case ReadStatus.loading:
-                    return const LoadingWidget(
-                        textColor: ColorConstant.whiteColor);
-                  case ReadStatus.error:
-                    return ErrorWidgetComponent(
-                      errorMessage: state.errorMessage,
-                      onTap: () {
-                        context.read<ReadBloc>().add(
+                    actions: [
+                      IconButton(
+                        onPressed: () => context.read<ReadBloc>().add(
                               ReadGetChapter(href),
-                            );
-                      },
-                    );
-                  case ReadStatus.success:
-                    final chapterEntity = ReadEntity(
-                      title: href,
-                      prev: 'prev',
-                      next: 'next',
-                      panel: [],
-                    );
-                    context
-                        .read<ReadBloc>()
-                        .add(ReadSaveChapter(chapterEntity));
-                    return ListView(
-                      children: [
-                        const InformationFullscreen(),
-                        ListInformationWidget(
-                          read: state.read,
-                          route: route,
+                            ),
+                        icon: const Icon(Icons.restart_alt),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          if (state.isFullscreen) {
+                            context
+                                .read<ReadBloc>()
+                                .add(ShowReadNoFullscreen());
+                          } else {
+                            context.read<ReadBloc>().add(ShowReadFullscreen());
+                          }
+                        },
+                        icon: Icon(
+                          state.isFullscreen
+                              ? Icons.fullscreen_exit
+                              : Icons.fullscreen,
                         ),
-                        ListImageWidget(read: state.read),
-                        ListInformationWidget(read: state.read, route: route),
-                      ],
-                    );
-                  default:
-                    return const SizedBox.shrink();
-                }
+                      ),
+                    ],
+                  ),
+            body: GestureDetector(
+              onDoubleTap: () {
+                context.read<ReadBloc>().add(ShowReadNoFullscreen());
               },
+              child: Builder(
+                builder: (context) {
+                  switch (state.status) {
+                    case ReadStatus.loading:
+                      return const LoadingWidget(
+                          textColor: ColorConstant.whiteColor);
+                    case ReadStatus.error:
+                      return ErrorWidgetComponent(
+                        errorMessage: state.errorMessage,
+                        onTap: () {
+                          context.read<ReadBloc>().add(
+                                ReadGetChapter(href),
+                              );
+                        },
+                      );
+                    case ReadStatus.success:
+                      final chapterEntity = ReadEntity(
+                        title: href,
+                        prev: 'prev',
+                        next: 'next',
+                        panel: [],
+                      );
+                      context
+                          .read<ReadBloc>()
+                          .add(ReadSaveChapter(chapterEntity));
+                      return ListView(
+                        children: [
+                          const InformationFullscreen(),
+                          ListInformationWidget(
+                            read: state.read,
+                            route: route,
+                          ),
+                          ListImageWidget(read: state.read),
+                          ListInformationWidget(read: state.read, route: route),
+                        ],
+                      );
+                    default:
+                      return const SizedBox.shrink();
+                  }
+                },
+              ),
             ),
           ),
         );

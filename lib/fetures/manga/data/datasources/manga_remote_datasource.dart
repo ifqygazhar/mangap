@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:mangap/core/constants/api_endpoint.dart';
+import 'package:mangap/core/constants/api_constant.dart';
 import 'package:mangap/core/constants/app_constant.dart';
 import 'package:mangap/core/errors/exception.dart';
 import 'package:mangap/core/utils/manage_server.dart';
@@ -14,16 +14,19 @@ abstract class MangaRemoteDataSource {
 }
 
 class MangaRemoteDataSourceImpl implements MangaRemoteDataSource {
-  const MangaRemoteDataSourceImpl({required http.Client client})
-      : _client = client;
+  const MangaRemoteDataSourceImpl(
+      {required http.Client client, required ApiConstant constant})
+      : _client = client,
+        _constant = constant;
 
   final http.Client _client;
+  final ApiConstant _constant;
 
   @override
   Future<List<MangaEntity>> getAllManga(int page) async {
     final response = await NetworkHelper.fetchWithFallback(
-        "${ApiConstant.ALL_MANGA}/$page",
-        "${ApiConstant.BACKUP_ALL_MANGA}/$page",
+        "${_constant.allManga}/$page",
+        "${_constant.backupAllManga}/$page",
         _client);
 
     final decode = jsonDecode(response.body) as ResultMap;

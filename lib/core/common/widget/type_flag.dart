@@ -14,7 +14,8 @@ class TypeFlagWidget {
         flag = FlagConstant.chinaFlag; // Bendera China
 
       default:
-        flag = ''; // Tidak ada bendera untuk jenis komik lainnya
+        flag = FlagConstant
+            .unknownFlag; // Tidak ada bendera untuk jenis komik lainnya
     }
     return flag;
   }

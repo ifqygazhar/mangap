@@ -107,7 +107,7 @@ class InfoPage extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  "V 1.1.2",
+                  "V 1.2.2",
                   style: GoogleFonts.openSans(
                     color: ColorConstant.whiteColor,
                     fontSize: 18,

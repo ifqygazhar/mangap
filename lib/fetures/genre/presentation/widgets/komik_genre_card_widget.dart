@@ -31,6 +31,7 @@ class KomikGenreCardWidget extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => DetailPage(
               href: href,
+              route: 'genre',
             ),
           ),
         );

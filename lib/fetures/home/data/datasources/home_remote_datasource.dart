@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:mangap/core/constants/api_endpoint.dart';
+import 'package:mangap/core/constants/api_constant.dart';
 import 'package:mangap/core/constants/app_constant.dart';
 import 'package:mangap/core/errors/exception.dart';
 import 'package:mangap/core/utils/manage_server.dart';
@@ -19,17 +19,19 @@ abstract class HomeRemoteDataSource {
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
-  HomeRemoteDataSourceImpl({
-    required http.Client client,
-  }) : _client = client;
+  HomeRemoteDataSourceImpl(
+      {required http.Client client, required ApiConstant constant})
+      : _client = client,
+        _constant = constant;
 
   final http.Client _client;
+  final ApiConstant _constant;
 
   @override
   Future<List<KomikPopularModel>> getPopular() async {
     final response = await NetworkHelper.fetchWithFallback(
-      ApiConstant.KOMIK_POPULAR,
-      ApiConstant.BACKUP_KOMIK_POPULAR,
+      _constant.komikPopular,
+      _constant.backupKomikPopular,
       _client,
     );
 
@@ -48,8 +50,8 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   @override
   Future<List<KomikRecommendedModel>> getRecommended() async {
     final response = await NetworkHelper.fetchWithFallback(
-      ApiConstant.KOMIK_RECOMENDED,
-      ApiConstant.BACKUP_KOMIK_RECOMENDED,
+      _constant.komikRecomended,
+      _constant.backupKomikRecomended,
       _client,
     );
 
@@ -69,8 +71,8 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   @override
   Future<List<KomikGenreModel>> getGenre() async {
     final response = await NetworkHelper.fetchWithFallback(
-      ApiConstant.GENRE,
-      ApiConstant.BACKUP_GENRE,
+      _constant.genre,
+      _constant.backupGenre,
       _client,
     );
 

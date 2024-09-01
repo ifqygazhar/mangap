@@ -86,13 +86,12 @@ class MainPage extends StatelessWidget {
                   },
                   backgroundColor: ColorConstant.kThird,
                   decoration: NavBarDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(14),
                   ),
                   handleAndroidBackButtonPress: true,
                   resizeToAvoidBottomInset: true,
                   hideNavigationBarWhenKeyboardAppears: true,
-                  navBarHeight:
-                      state.showBottomBar ? kBottomNavigationBarHeight : 0,
+                  navBarHeight: state.showBottomBar ? 70 : 0,
                 ),
               ],
             );

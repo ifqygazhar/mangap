@@ -4,4 +4,5 @@ class FlagConstant {
   static const String japanFlag = "assets/svg/japan.svg";
   static const String koreaFlag = "assets/svg/korea.svg";
   static const String chinaFlag = "assets/svg/china.svg";
+  static const String unknownFlag = "assets/svg/unknown.svg";
 }

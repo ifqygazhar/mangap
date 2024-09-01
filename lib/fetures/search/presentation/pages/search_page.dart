@@ -58,6 +58,9 @@ class _SearchPageState extends State<SearchPage> {
                         } else {
                           return ErrorWidgetComponent(
                             errorMessage: "Tidak Ada Hasil Tersebut",
+                            heightImage: 180,
+                            widthImage: 180,
+                            textSize: 14,
                             onTap: () {
                               context.read<SearchBloc>().add(
                                     SearchGetKomik(searchController.text),
@@ -69,6 +72,9 @@ class _SearchPageState extends State<SearchPage> {
                       case SearchStatus.error:
                         return ErrorWidgetComponent(
                           errorMessage: state.errorMessage,
+                          heightImage: 180,
+                          widthImage: 180,
+                          textSize: 14,
                           onTap: () {
                             context.read<SearchBloc>().add(
                                   SearchGetKomik(searchController.text),
@@ -107,6 +113,7 @@ class _SearchPageState extends State<SearchPage> {
                 MaterialPageRoute(
                   builder: (context) => DetailPage(
                     href: komik.href,
+                    route: 'search',
                   ),
                 ),
               );

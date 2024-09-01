@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:mangap/core/constants/api_endpoint.dart';
+import 'package:mangap/core/constants/api_constant.dart';
 import 'package:mangap/core/constants/app_constant.dart';
 import 'package:mangap/core/errors/exception.dart';
 import 'package:mangap/core/utils/manage_server.dart';
@@ -14,17 +14,18 @@ abstract class ReadRemoteDataSource {
 }
 
 class ReadRempteDataSourceImpl implements ReadRemoteDataSource {
-  const ReadRempteDataSourceImpl({required http.Client client})
-      : _client = client;
+  const ReadRempteDataSourceImpl(
+      {required http.Client client, required ApiConstant constant})
+      : _client = client,
+        _constant = constant;
 
   final http.Client _client;
+  final ApiConstant _constant;
 
   @override
   Future<List<ReadEntity>> read(String href) async {
     final response = await NetworkHelper.fetchWithFallback(
-        "${ApiConstant.READ}/$href",
-        "${ApiConstant.BACKUP_READ}/$href",
-        _client);
+        "${_constant.read}/$href", "${_constant.backupRead}/$href", _client);
 
     final decode = jsonDecode(response.body) as ResultMap;
 

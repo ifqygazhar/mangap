@@ -150,6 +150,7 @@ class _MangaPageState extends State<MangaPage> {
                           MaterialPageRoute(
                             builder: (context) => DetailPage(
                               href: komik.href,
+                              route: 'komik-list',
                             ),
                           ),
                         );

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:mangap/core/constants/api_endpoint.dart';
+import 'package:mangap/core/constants/api_constant.dart';
 import 'package:mangap/core/constants/app_constant.dart';
 import 'package:mangap/core/errors/exception.dart';
 import 'package:mangap/core/utils/manage_server.dart';
@@ -20,15 +20,18 @@ abstract class DetailRemoteDataSource {
 class DetailRemoteDataSourceImpl implements DetailRemoteDataSource {
   DetailRemoteDataSourceImpl({
     required http.Client client,
-  }) : _client = client;
+    required ApiConstant constant,
+  })  : _client = client,
+        _constant = constant;
 
   final http.Client _client;
+  final ApiConstant _constant;
 
   @override
   Future<KomikDetailEntity> getDetail(String href) async {
     final response = await NetworkHelper.fetchWithFallback(
-      "${ApiConstant.KOMIK_DETAIL}/$href",
-      "${ApiConstant.BACKUP_KOMIK_DETAIL}/$href",
+      "${_constant.komikDetail}/$href",
+      "${_constant.backupKomikDetail}/$href",
       _client,
     );
 
@@ -45,8 +48,8 @@ class DetailRemoteDataSourceImpl implements DetailRemoteDataSource {
   @override
   Future<List<ChapterEntity>> getChapter(String href) async {
     final response = await NetworkHelper.fetchWithFallback(
-      "${ApiConstant.KOMIK_DETAIL}/$href",
-      "${ApiConstant.BACKUP_KOMIK_DETAIL}/$href",
+      "${_constant.komikDetail}/$href",
+      "${_constant.backupKomikDetail}/$href",
       _client,
     );
 
@@ -65,8 +68,8 @@ class DetailRemoteDataSourceImpl implements DetailRemoteDataSource {
   @override
   Future<List<GenreEntity>> getGenre(String href) async {
     final response = await NetworkHelper.fetchWithFallback(
-      "${ApiConstant.KOMIK_DETAIL}/$href",
-      "${ApiConstant.BACKUP_KOMIK_DETAIL}/$href",
+      "${_constant.komikDetail}/$href",
+      "${_constant.backupKomikDetail}/$href",
       _client,
     );
 

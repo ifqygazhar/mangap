@@ -14,34 +14,54 @@ import 'package:mangap/fetures/detail/presentation/widgets/list_komik_detail_wid
 import 'package:mangap/fetures/main/bloc/navigation_bloc.dart';
 
 class DetailPage extends StatelessWidget {
-  const DetailPage({super.key, required this.href});
-  final String href;
+  const DetailPage({super.key, required this.href, required this.route});
+  final String href, route;
 
   @override
   Widget build(BuildContext context) {
     context.read<DetailBloc>().add(DetailRefresh(href));
 
-    return Scaffold(
-      backgroundColor: ColorConstant.kPrimary,
-      appBar: AppbarWidget(
-        title: "Detail",
-        leading: IconButton(
-          onPressed: () {
+    return PopScope(
+      onPopInvoked: (popDisposition) async {
+        if (popDisposition) {
+          if (route == 'search') {
+            context.read<NavigationBloc>().add(HideBottomBarEvent());
+          } else {
             context.read<NavigationBloc>().add(ShowBottomBarEvent());
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Platform.isIOS || Platform.isMacOS
-                ? Icons.arrow_back_ios
-                : Icons.arrow_back,
+          }
+          return;
+        }
+
+        final NavigatorState navigator = Navigator.of(context);
+        navigator.pop();
+      },
+      child: Scaffold(
+        backgroundColor: ColorConstant.kPrimary,
+        appBar: AppbarWidget(
+          title: "Detail",
+          leading: IconButton(
+            onPressed: () {
+              if (route == 'search') {
+                context.read<NavigationBloc>().add(HideBottomBarEvent());
+              } else {
+                context.read<NavigationBloc>().add(ShowBottomBarEvent());
+              }
+              context.read<NavigationBloc>().add(ShowBottomBarEvent());
+              Navigator.pop(context);
+            },
+            icon: Icon(
+              Platform.isIOS || Platform.isMacOS
+                  ? Icons.arrow_back_ios
+                  : Icons.arrow_back,
+            ),
           ),
         ),
-      ),
-      body: SafeArea(
-        child: BlocBuilder<DetailBloc, DetailState>(
-          builder: (context, state) {
-            return _buildContent(context, state, href);
-          },
+        body: SafeArea(
+          child: BlocBuilder<DetailBloc, DetailState>(
+            builder: (context, state) {
+              return _buildContent(context, state, href);
+            },
+          ),
         ),
       ),
     );
