@@ -1,7 +1,7 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:mangap/core/common/widget/appbar.dart';
 import 'package:mangap/core/common/widget/error.dart';
 import 'package:mangap/core/common/widget/loading.dart';
@@ -89,6 +89,46 @@ class ReadPage extends StatelessWidget {
                               : Icons.fullscreen,
                         ),
                       ),
+                      // IconButton(
+                      //   onPressed: () async {
+                      //     showDialog(
+                      //       context: context,
+                      //       barrierDismissible: false,
+                      //       builder: (BuildContext context) {
+                      //         return const Dialog(
+                      //           child: Padding(
+                      //             padding: EdgeInsets.all(16.0),
+                      //             child: Row(
+                      //               mainAxisSize: MainAxisSize.min,
+                      //               children: [
+                      //                 CircularProgressIndicator(),
+                      //                 SizedBox(width: 16),
+                      //                 Text(
+                      //                     "Downloading mohon tunggu, jangan di close..."),
+                      //               ],
+                      //             ),
+                      //           ),
+                      //         );
+                      //       },
+                      //     );
+
+                      //     try {
+                      //       final List<String> imageUrls = state.read
+                      //           .expand((readEntity) =>
+                      //               readEntity.panel.cast<String>())
+                      //           .toList();
+
+                      //       await createPdfFromImages(imageUrls, href);
+                      //     } catch (e) {
+                      //       // Tangani error jika terjadi selama download
+                      //       print("Error during download: $e");
+                      //     } finally {
+                      //       // Tutup dialog loading setelah selesai
+                      //       Navigator.of(context, rootNavigator: true).pop();
+                      //     }
+                      //   },
+                      //   icon: const Icon(Icons.download),
+                      // ),
                     ],
                   ),
             body: GestureDetector(

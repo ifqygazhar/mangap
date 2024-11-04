@@ -10,7 +10,17 @@ class NetworkHelper {
   ) async {
     try {
       // Coba request ke URL utama
-      final response = await client.get(Uri.parse(primaryUrl));
+      final response = await client.get(
+        Uri.parse(primaryUrl),
+        headers: {
+          'Referer': 'https://komikcast.cz/',
+          'User-Agent':
+              'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36',
+          'Accept':
+              'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+          'Accept-Language': 'en-US,en;q=0.9'
+        },
+      );
       if (response.statusCode == AppConstant.successfulHttpGetStatusCode) {
         return response;
       } else {
@@ -19,7 +29,17 @@ class NetworkHelper {
       }
     } catch (e) {
       // Jika terjadi error, coba request ke URL backup
-      final response = await client.get(Uri.parse(backupUrl));
+      final response = await client.get(
+        Uri.parse(backupUrl),
+        headers: {
+          'Referer': 'https://komikcast.cz/',
+          'User-Agent':
+              'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36',
+          'Accept':
+              'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+          'Accept-Language': 'en-US,en;q=0.9'
+        },
+      );
       if (response.statusCode == AppConstant.successfulHttpGetStatusCode) {
         return response;
       } else {

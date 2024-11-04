@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mangap/core/constants/color.dart';
+import 'package:mangap/core/utils/cache_manager_custom.dart';
 import 'package:mangap/fetures/read/presentation/bloc/read_bloc.dart';
 
 class KomikImageChapterWidget extends StatelessWidget {
@@ -35,12 +35,7 @@ class KomikImageChapterWidget extends StatelessWidget {
           key: UniqueKey(),
           imageUrl: image,
           fit: BoxFit.cover,
-          cacheManager: CacheManager(
-            Config(
-              'komik',
-              stalePeriod: const Duration(minutes: 10),
-            ),
-          ),
+          cacheManager: CustomCacheManager.instance,
         ),
       ),
     );

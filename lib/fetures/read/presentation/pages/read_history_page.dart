@@ -50,7 +50,7 @@ class ReadHistoryPage extends StatelessWidget {
                   children: [
                     const InformationCard(konteks: 'histori'),
                     SizedBox(
-                      height: 400,
+                      height: MediaQuery.of(context).size.height,
                       child: ListView.builder(
                         itemCount: state.saveRead.length,
                         itemBuilder: (context, index) {
