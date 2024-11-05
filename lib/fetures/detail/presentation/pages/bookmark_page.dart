@@ -71,7 +71,7 @@ Widget _buildContent(BuildContext context, DetailState state) {
           children: [
             const InformationCard(konteks: 'bookmark'),
             SizedBox(
-              height: MediaQuery.of(context).size.height,
+              height: MediaQuery.of(context).size.height * 0.7,
               child: ListView.builder(
                 padding: const EdgeInsets.all(8),
                 itemCount: state.bookmarks.length,
