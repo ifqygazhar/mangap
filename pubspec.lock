@@ -937,7 +937,7 @@ packages:
     source: hosted
     version: "0.28.0"
   secure_dotenv:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: secure_dotenv
       sha256: a544725e7ce5768caf31b6ac8edfefdac59a4c7dd6fc7ef55694a971e8e8d298

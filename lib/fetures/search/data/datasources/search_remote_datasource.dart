@@ -14,19 +14,16 @@ abstract class SearchRemoteDataSource {
 }
 
 class SearchRemoteDatasourceImpl implements SearchRemoteDataSource {
-  const SearchRemoteDatasourceImpl(
-      {required http.Client client, required ApiConstant constant})
-      : _client = client,
-        _constant = constant;
+  const SearchRemoteDatasourceImpl({required http.Client client})
+      : _client = client;
 
   final http.Client _client;
-  final ApiConstant _constant;
 
   @override
   Future<List<SearchEntity>> search(String keyword) async {
     final response = await NetworkHelper.fetchWithFallback(
-        "${_constant.search}$keyword",
-        "${_constant.backupSearch}$keyword",
+        "${ApiConstant.search}$keyword",
+        "${ApiConstant.backupSearch}$keyword",
         _client);
 
     final decode = jsonDecode(response.body) as ResultMap;

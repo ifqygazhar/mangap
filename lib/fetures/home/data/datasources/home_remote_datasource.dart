@@ -19,19 +19,15 @@ abstract class HomeRemoteDataSource {
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
-  HomeRemoteDataSourceImpl(
-      {required http.Client client, required ApiConstant constant})
-      : _client = client,
-        _constant = constant;
+  HomeRemoteDataSourceImpl({required http.Client client}) : _client = client;
 
   final http.Client _client;
-  final ApiConstant _constant;
 
   @override
   Future<List<KomikPopularModel>> getPopular() async {
     final response = await NetworkHelper.fetchWithFallback(
-      _constant.komikPopular,
-      _constant.backupKomikPopular,
+      "${ApiConstant.komikPopular}",
+      "${ApiConstant.backupKomikPopular}",
       _client,
     );
 
@@ -50,8 +46,8 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   @override
   Future<List<KomikRecommendedModel>> getRecommended() async {
     final response = await NetworkHelper.fetchWithFallback(
-      _constant.komikRecomended,
-      _constant.backupKomikRecomended,
+      "${ApiConstant.komikRecomended}",
+      "${ApiConstant.backupKomikRecomended}",
       _client,
     );
 
@@ -71,8 +67,8 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   @override
   Future<List<KomikGenreModel>> getGenre() async {
     final response = await NetworkHelper.fetchWithFallback(
-      _constant.genre,
-      _constant.backupGenre,
+      "${ApiConstant.genre}",
+      "${ApiConstant.backupGenre}",
       _client,
     );
 

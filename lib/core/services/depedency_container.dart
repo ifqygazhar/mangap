@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:mangap/core/constants/api_constant.dart';
+import 'package:mangap/core/local/pref/url.dart';
 import 'package:mangap/core/services/network_info.dart';
 import 'package:mangap/fetures/detail/data/datasources/detail_remote_datasoruce.dart';
 import 'package:mangap/core/local/app_database.dart';

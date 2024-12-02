@@ -14,18 +14,18 @@ abstract class ReadRemoteDataSource {
 }
 
 class ReadRempteDataSourceImpl implements ReadRemoteDataSource {
-  const ReadRempteDataSourceImpl(
-      {required http.Client client, required ApiConstant constant})
-      : _client = client,
-        _constant = constant;
+  const ReadRempteDataSourceImpl({
+    required http.Client client,
+  }) : _client = client;
 
   final http.Client _client;
-  final ApiConstant _constant;
 
   @override
   Future<List<ReadEntity>> read(String href) async {
     final response = await NetworkHelper.fetchWithFallback(
-        "${_constant.read}/$href", "${_constant.backupRead}/$href", _client);
+        "${ApiConstant.read}/$href",
+        "${ApiConstant.backupRead}/$href",
+        _client);
 
     final decode = jsonDecode(response.body) as ResultMap;
 

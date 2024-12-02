@@ -3,6 +3,7 @@ part of 'depedency_container.dart';
 final sl = GetIt.instance;
 
 Future<void> init() async {
+  await ApiConstant.initializeUrls();
   await _initHome();
 }
 
@@ -12,7 +13,6 @@ Future<void> _initHome() async {
       await $FloorAppDatabase.databaseBuilder('app_database.db').build();
 
   final sharedPreferences = await SharedPreferences.getInstance();
-  const ApiConstant apiConstant = ApiConstant();
 
   //feature main page
   sl.registerFactory(
@@ -57,7 +57,6 @@ Future<void> _initHome() async {
     ..registerLazySingleton<HomeRemoteDataSource>(
       () => HomeRemoteDataSourceImpl(
         client: sl(),
-        constant: sl(),
       ),
     );
 
@@ -119,7 +118,6 @@ Future<void> _initHome() async {
     ..registerLazySingleton<DetailRemoteDataSource>(
       () => DetailRemoteDataSourceImpl(
         client: sl(),
-        constant: sl(),
       ),
     );
 
@@ -156,7 +154,6 @@ Future<void> _initHome() async {
     ..registerLazySingleton<GenreRemoteDatasource>(
       () => GenreRemoteDataSourceImpl(
         client: sl(),
-        constant: sl(),
       ),
     );
 
@@ -185,7 +182,6 @@ Future<void> _initHome() async {
     ..registerLazySingleton<MangaRemoteDataSource>(
       () => MangaRemoteDataSourceImpl(
         client: sl(),
-        constant: sl(),
       ),
     );
 
@@ -214,7 +210,6 @@ Future<void> _initHome() async {
     ..registerLazySingleton<SearchRemoteDataSource>(
       () => SearchRemoteDatasourceImpl(
         client: sl(),
-        constant: sl(),
       ),
     );
 
@@ -256,7 +251,6 @@ Future<void> _initHome() async {
     ..registerLazySingleton<ReadRemoteDataSource>(
       () => ReadRempteDataSourceImpl(
         client: sl(),
-        constant: sl(),
       ),
     )
 
@@ -266,7 +260,6 @@ Future<void> _initHome() async {
     )
     ..registerSingleton<SharedPreferences>(sharedPreferences)
     ..registerSingleton<AppDatabase>(database)
-    ..registerSingleton<ApiConstant>(apiConstant)
     ..registerLazySingleton(InternetConnection.new)
     ..registerLazySingleton(http.Client.new);
 }

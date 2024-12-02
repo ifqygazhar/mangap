@@ -14,19 +14,16 @@ abstract class MangaRemoteDataSource {
 }
 
 class MangaRemoteDataSourceImpl implements MangaRemoteDataSource {
-  const MangaRemoteDataSourceImpl(
-      {required http.Client client, required ApiConstant constant})
-      : _client = client,
-        _constant = constant;
+  const MangaRemoteDataSourceImpl({required http.Client client})
+      : _client = client;
 
   final http.Client _client;
-  final ApiConstant _constant;
 
   @override
   Future<List<MangaEntity>> getAllManga(int page) async {
     final response = await NetworkHelper.fetchWithFallback(
-        "${_constant.allManga}/$page",
-        "${_constant.backupAllManga}/$page",
+        "${ApiConstant.allManga}/$page",
+        "${ApiConstant.backupAllManga}/$page",
         _client);
 
     final decode = jsonDecode(response.body) as ResultMap;

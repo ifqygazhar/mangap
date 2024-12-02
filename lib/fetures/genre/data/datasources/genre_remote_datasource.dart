@@ -17,13 +17,11 @@ abstract class GenreRemoteDatasource {
 }
 
 class GenreRemoteDataSourceImpl implements GenreRemoteDatasource {
-  const GenreRemoteDataSourceImpl(
-      {required http.Client client, required ApiConstant constant})
-      : _client = client,
-        _constant = constant;
+  const GenreRemoteDataSourceImpl({
+    required http.Client client,
+  }) : _client = client;
 
   final http.Client _client;
-  final ApiConstant _constant;
 
   @override
   Future<List<KomikGenreDetailDataEntity>> getGenre(
@@ -31,8 +29,8 @@ class GenreRemoteDataSourceImpl implements GenreRemoteDatasource {
     int page,
   ) async {
     final response = await NetworkHelper.fetchWithFallback(
-      "${_constant.genreDetail}$href$page",
-      "${_constant.backupGenreDetail}$href$page",
+      "${ApiConstant.genreDetail}$href$page",
+      "${ApiConstant.backupGenreDetail}$href$page",
       _client,
     );
 
@@ -51,8 +49,8 @@ class GenreRemoteDataSourceImpl implements GenreRemoteDatasource {
   @override
   Future<KomikGenreDetailEntity> getPage(String href, int page) async {
     final response = await NetworkHelper.fetchWithFallback(
-      "${_constant.genreDetail}$href$page",
-      "${_constant.backupGenreDetail}$href$page",
+      "${ApiConstant.genreDetail}$href$page",
+      "${ApiConstant.backupGenreDetail}$href$page",
       _client,
     );
 
